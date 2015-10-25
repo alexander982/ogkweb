@@ -143,4 +143,12 @@
        (for [r (db/get-diff pref num1 num2)]
          [:tr [:td (:prefix r)]
           [:td (:num r)]
+          [:td (:name r)]])]
+      [:h2 (str "Отличие " pref num2 " от " pref num1)]
+      [:table.result
+       [:tr (for [c ["Обозначение" "Номер" "Название"]]
+              [:th c])]
+       (for [r (db/get-diff pref num2 num1)]
+         [:tr [:td (:prefix r)]
+          [:td (:num r)]
           [:td (:name r)]])]])))
