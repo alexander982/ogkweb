@@ -37,11 +37,11 @@
   [pref num1 num2]
   (let [results (sql/with-connection db-spec
                   (sql/with-query-results res
-                    ["select u2.prefix, u2.num, u2.name from (unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on u2.id = c.unit_id where u.id = 
+                    ["select * from (select u2.prefix, u2.num, u2.name from (unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on u2.id = c.unit_id where u.id = 
 (select id from unit where prefix like ? and num like ?)
 minus
 select u2.prefix, u2.num, u2.name from (unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on u2.id = c.unit_id where u.id = 
-(select id from unit where prefix like ? and num like ?)"
+(select id from unit where prefix like ? and num like ?)) order by num"
                      pref
                      num1
                      pref
