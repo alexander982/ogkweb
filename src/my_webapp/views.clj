@@ -49,7 +49,8 @@
    [:p "Данные не синхронизированы с основной базой и не содержат последних изменений!"]
    [:p [:a {:href "/cont_unit_req"}
         "Просмотр состава и входимости"]] 
-   [:p [:a {:href "/search"} "Поиск детали/узла/комплектующих"]]))
+   [:p [:a {:href "/search"} "Поиск детали/узла/комплектующих"]]
+   [:p [:a {:href "/diff"} "Просмотр различий"]]))
 
 (defn cont-unit-page
   [{:keys [pref num reqtype]}]
@@ -107,6 +108,39 @@
        [:tr (for [c ["Обозначение" "Номер" "Название"]]
               [:td c])]
        (for [r (db/get-units pref num name)]
+         [:tr [:td (:prefix r)]
+          [:td (:num r)]
+          [:td (:name r)]])]])))
+
+(defn form-diff
+  [pref num1 num2]
+  [:form {:action "/diff" :method "POST"}
+   [:table
+    [:tr [:td "Обозначение:"] [:td [:input {:type "text"
+                                            :name "pref"
+                                            :value pref}]]]
+    [:tr [:td "Номер 1:"] [:td [:input {:type "text"
+                                        :name "num1"
+                                        :value num1}]]]
+    [:tr [:td "Номер 2:"] [:td [:input {:type "text"
+                                        :name "num2"
+                                        :value num2}]]]
+    [:tr [:td [:input {:type "submit" :value "Найти"}]] [:td ]]]])
+
+(defn diff-page
+  [{:keys [pref num1 num2]}]
+  (page/html5
+   (gen-page-head "Просмотр различий")
+   header-links
+   [:h1 "Введите данные"]
+   (form-diff pref num1 num2)
+   (when (or pref num1 num2)
+     [:div
+      [:h2 (str "Отличие " pref num1 " от " pref num2)]
+      [:table.result
+       [:tr (for [c ["Обозначение" "Номер" "Название"]]
+              [:th c])]
+       (for [r (db/get-diff pref num1 num2)]
          [:tr [:td (:prefix r)]
           [:td (:num r)]
           [:td (:name r)]])]])))

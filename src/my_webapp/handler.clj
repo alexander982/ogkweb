@@ -21,6 +21,12 @@
   (cc/GET "/search"
           []
           (views/search-page {}))
+  (cc/POST "/diff"
+           {params :params}
+           (views/diff-page params))
+  (cc/GET "/diff"
+          []
+          (views/diff-page {}))
   (route/resources "/")
   (route/not-found "Not Found"))
 
