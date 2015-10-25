@@ -78,7 +78,7 @@
 
 (defn form-search
   [pref num name]
-  [:form {:action "/search_by_pref_num" :method "POST"}
+  [:form {:action "/search" :method "POST"}
    [:table
     [:tr [:td "Обозначение:"] [:td [:input {:type "text"
                                             :name "pref"
@@ -86,10 +86,11 @@
     [:tr [:td "Номер:"] [:td [:input {:type "text"
                                       :name "num"
                                       :value num}]]]
-    [:tr [:td "Название"] [:td [:input {:type "text"
+    [:tr [:td "Название:"] [:td [:input {:type "text"
                                         :name "name"
                                         :value name}]]]
-    [:tr [:td [:input {:type "submit" :value "Найти"}]] [:td]]]])
+    [:tr [:td [:input {:type "submit" :value "Найти"}]]
+     [:td ]]]])
 
 (defn search-page
   [{:keys [pref num name]}]
