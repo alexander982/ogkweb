@@ -15,24 +15,12 @@
   (cc/GET "/cont_unit_req"
            []
            (views/cont-unit-page {}))
-  (cc/POST "/search_by_name"
+  (cc/POST "/search"
            {params :params}
-           (views/search-by-name params))
-  (cc/GET "/search_by_name"
+           (views/search-page params))
+  (cc/GET "/search"
           []
-          (views/search-by-name {}))
-  (cc/POST "/search_by_pref_num"
-           {params :params}
-           (views/search-by-pref-num params))
-  (cc/GET "/search_by_pref_num"
-          []
-          (views/search-by-pref-num {}))
-  (cc/POST "/search_by_num"
-           {params :params}
-           (views/search-by-num params))
-  (cc/GET "/search_by_num"
-          []
-          (views/search-by-num {}))
+          (views/search-page {}))
   (route/resources "/")
   (route/not-found "Not Found"))
 

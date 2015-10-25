@@ -3,7 +3,7 @@
 
 (def db-spec {:classname "org.h2.Driver"
               :subprotocol "h2:file"
-              :subname "~/doc/code/clojure/my-webapp/resources/db/ogkdb;IGNORECASE=true"
+              :subname "~/doc/db/h2/ogkdb;IGNORECASE=true"
               :user "sa"})
 
 (defn get-composition
@@ -22,30 +22,13 @@
                     (doall res)))]
     results))
 
-(defn get-units-by-name
-  [name]
+(defn get-units
+  [pref num name]
   (let [results (sql/with-connection db-spec
                   (sql/with-query-results res
-                    ["select prefix, num, name from unit where name like ?"
-                     (str "%" name "%")]
-                    (doall res)))]
-    results))
-
-(defn get-units-by-pref-num
-  [pref num]
-  (let [results (sql/with-connection db-spec
-                  (sql/with-query-results res
-                    ["select prefix, num, name from unit where prefix like ? and num like ?"
+                    ["select prefix, num, name from unit where prefix like ? and num like ? and name like ?"
                      (str "%" pref "%")
-                     (str "%" num "%")]
-                    (doall res)))]
-    results))
-
-(defn get-units-by-num
-  [num]
-  (let [results (sql/with-connection db-spec
-                  (sql/with-query-results res
-                    ["select prefix, num, name from unit where num like ?"
-                     (str "%" num "%")]
+                     (str "%" num "%")
+                     (str "%" name "%")]
                     (doall res)))]
     results))

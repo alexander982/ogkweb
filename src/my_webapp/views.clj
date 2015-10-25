@@ -78,37 +78,8 @@
             (list [:td (:qnt compos)]
               [:td (:pos compos)]))])]])))
 
-(defn form-search-by-name
-  [name]
-  [:form {:action "/search_by_name" :method "POST"}
-   [:p [:label "Наименование" [:input {:type "text"
-                                       :name "name"
-                                       :value name}]]]
-   [:p [:input {:type "submit" :value "Поиск"}]]])
-
-(defn search-by-name
-  [{:keys [name]}]
-  (page/html5
-   (gen-page-head "Поиск узла/детали по названию")
-   header-links
-   [:h1 "Введите название"]
-   (form-search-by-name name)
-   (when name
-     (list [:h1 "Или используйте полученные данные для поиска входимости/состава"]
-           [:p "Можно кликнуть по строке для внесения данных."]
-           (form-contain-unit-post nil nil)
-           [:h2 (str "Рузультаты поиска " name)]
-           [:table.result
-            [:tr (for [c ["Обозначение" "Номер" "Название"]]
-                   [:th c])]
-            (for [r (db/get-units-by-name name)]
-              [:tr {:onclick "insertToForm(this);"}
-               [:td (:prefix r)]
-               [:td (:num r)]
-               [:td (:name r)]])]))))
-
-(defn form-search-by-pref-num
-  [pref num]
+(defn form-search
+  [pref num name]
   [:form {:action "/search_by_pref_num" :method "POST"}
    [:table
     [:tr [:td "Обозначение:"] [:td [:input {:type "text"
@@ -117,58 +88,26 @@
     [:tr [:td "Номер:"] [:td [:input {:type "text"
                                       :name "num"
                                       :value num}]]]
+    [:tr [:td "Название"] [:td [:input {:type "text"
+                                        :name "name"
+                                        :value name}]]]
     [:tr [:td [:input {:type "submit" :value "Найти"}]] [:td]]]])
 
-(defn search-by-pref-num
-  [{:keys [pref num]}]
+(defn search-page
+  [{:keys [pref num name]}]
   (page/html5
-   (gen-page-head "Поиск по узла/детали по обозначению и номеру")
+   (gen-page-head "Поиск узла/детали")
    header-links
-   [:h1 "Введите обозначение и номер узла/детали"]
-   [:p "Либо фирму и заказной номер покупного изделия."]
-   (form-search-by-pref-num pref num)
-   (when pref
+   [:h1 "Введите данные"]
+   [:p "Допускается не заполнять все поля"]
+   (form-search pref num name)
+   (when (or pref num name)
      [:div
-      [:h1 "Или введите обозначение и номер для поиска состава/входимости"]
-      [:p "Левый клик мыши по строке таблицы вносит данные в форму запроса."]
-      (form-contain-unit-post pref num)
-      [:h2 (str "Результаты поиска: " pref num)]
+      [:h2 (str "Результаты запроса: " pref num " " name)]
       [:table.result
        [:tr (for [c ["Обозначение" "Номер" "Название"]]
-              [:th c])]
-       (for [r (db/get-units-by-pref-num pref num)]
-         [:tr {:onclick "insertToForm(this);"}
-          [:td (:prefix r)]
+              [:td c])]
+       (for [r (db/get-units pref num name)]
+         [:tr [:td (:prefix r)]
           [:td (:num r)]
           [:td (:name r)]])]])))
-
-(defn form-search-by-num
-  [num]
-  [:form {:action "/search_by_num" :method "POST"}
-   [:p [:label "Номер " [:input {:type "text"
-                               :name "num"
-                                 :value num}]]]
-   [:p [:input {:type "submit" :value "Поиск"}]]])
-
-(defn search-by-num
-  [{:keys [num]}]
-  (page/html5
-   (gen-page-head "Поиск по номеру")
-   header-links
-   [:h1 "Введите номер детали или заказной номер покупного изделия"]
-   (form-search-by-num num)
-   (when num
-     [:div
-      [:h1 "Или введите данные для поиска состава/входимости"]
-      [:p "Левый клик по строке таблицы вносит данные в форму запроса."]
-      (form-contain-unit-post nil num)
-      [:h2 (str "Рузультаты поиска номера: " num)]
-      [:table.result
-       [:tr
-        (for [c ["Обозначение" "Номер" "Название"]]
-          [:th c])
-        (for [r (db/get-units-by-num num)]
-          [:tr {:onclick "insertToForm(this);"}
-           [:td (:prefix r)]
-           [:td (:num r)]
-           [:td (:name r)]])]]])))
