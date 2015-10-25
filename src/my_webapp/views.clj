@@ -18,7 +18,7 @@
    " | "
    [:a {:href "/cont_unit_req"} "Поиск состава/входимоси"]
    " | "
-   [:a {:href "/about"} "About"]
+   [:a {:href "/search"} "Поиск узла/детали"]
    " ]"])
 
 (defn form-contain-unit-post
@@ -49,9 +49,7 @@
    [:p "Данные не синхронизированы с основной базой и не содержат последних изменений!"]
    [:p [:a {:href "/cont_unit_req"}
         "Просмотр состава и входимости"]] 
-   [:p [:a {:href "/search_by_pref_num"} "Поиск по обозначение и номеру"]]
-   [:p [:a {:href "/search_by_name"} "Поиск по названию"]]
-   [:p [:a {:href "/search_by_num"} "Поиск по номеру"]]))
+   [:p [:a {:href "/search"} "Поиск детали/узла/комплектующих"]]))
 
 (defn cont-unit-page
   [{:keys [pref num reqtype]}]
