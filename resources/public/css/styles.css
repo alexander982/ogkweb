@@ -1,0 +1,29 @@
+#header-links {
+    background-color: silver;
+    padding: 10px;
+}
+h1 {
+    color: CornflowerBlue;
+}
+table {
+    border-collapse: collapse;
+}
+
+form {
+    background-color: #fff;
+}
+
+.result tbody tr td {
+    padding: 5px;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+.result tbody tr th {
+    padding: 5px;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.selection {
+    background-color: #55ffaa;
+ }
