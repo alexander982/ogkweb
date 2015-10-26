@@ -19,6 +19,8 @@
    [:a {:href "/cont_unit_req"} "Поиск состава/входимоси"]
    " | "
    [:a {:href "/search"} "Поиск узла/детали"]
+   " | "
+   [:a {:href "/diff"} "Просмотр различий"]
    " ]"])
 
 (defn form-contain-unit-post
@@ -50,7 +52,7 @@
    [:p [:a {:href "/cont_unit_req"}
         "Просмотр состава и входимости"]] 
    [:p [:a {:href "/search"} "Поиск детали/узла/комплектующих"]]
-   [:p [:a {:href "/diff"} "Просмотр различий"]]))
+   [:p [:a {:href "/diff"} "Просмотр различий исполнений"]]))
 
 (defn cont-unit-page
   [{:keys [pref num reqtype]}]
