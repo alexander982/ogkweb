@@ -23,6 +23,21 @@
    [:a {:href "/diff"} "Просмотр различий"]
    " ]"])
 
+(defn form-hidden
+  [pref num]
+  [:div#hidenForms
+     [:table [:tr
+       [:td [:form {:action "/cont_unit_req" :method "POST"}
+         [:input {:type "hidden" :name "pref" :value pref}]
+         [:input {:type "hidden" :name "num" :value num}]
+         [:input {:type "hidden" :name "reqtype" :value "s"}]
+         [:input {:type "submit" :value "   Состав   "}]]]
+       [:td [:form {:action "/cont_unit_req" :method "POST"}
+         [:input {:type "hidden" :name "pref" :value pref}]
+         [:input {:type "hidden" :name "num" :value num}]
+         [:input {:type "hidden" :name "reqtype" :value "v"}]
+         [:input {:type "submit" :value "Входимость"}]]]]]])
+
 (defn form-contain-unit-post
   [pref num]
   [:form {:action "/cont_unit_req" :method "POST"}
@@ -59,11 +74,14 @@
   (page/html5
    (gen-page-head "Поиск состава/входимости")
    header-links
+   (form-hidden pref num)
    [:h1 "Введите данные"]
    (form-contain-unit-post pref num)
    (when pref
      [:div [:h1 "Результаты запроса"]
-      [:p (str "Состав узла: " pref num)]
+      [:p (str (if (= reqtype "s")
+                 "Состав узла: "
+                 "Входимость: ") pref num)]
       [:table.result
        (let [cols ["Обозн." "Номер" "Название" "Кол." "Поз."]]
          (if (= reqtype  "s")
@@ -72,7 +90,7 @@
        (for [compos (if (= reqtype "s")
                       (db/get-composition pref num)
                       (db/get-includes pref num))]
-         [:tr {:onclick "insertToForm(this);"} [:td (:prefix compos)]
+         [:tr {:onclick "insertToForm(this, event);"} [:td (:prefix compos)]
           [:td (:num compos)]
           [:td (:name compos)]
           (when (= reqtype "s")
@@ -100,6 +118,7 @@
   (page/html5
    (gen-page-head "Поиск узла/детали")
    header-links
+   (form-hidden pref num)
    [:h1 "Введите данные"]
    [:p "Допускается не заполнять все поля"]
    (form-search pref num name)
@@ -110,7 +129,8 @@
        [:tr (for [c ["Обозначение" "Номер" "Название"]]
               [:td c])]
        (for [r (db/get-units pref num name)]
-         [:tr [:td (:prefix r)]
+         [:tr {:onclick "insertToForm(this, event);"}
+          [:td (:prefix r)]
           [:td (:num r)]
           [:td (:name r)]])]])))
 

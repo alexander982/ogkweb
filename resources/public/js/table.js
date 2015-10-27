@@ -1,4 +1,4 @@
-function insertToForm(row) {
+function insertToForm(row, event) {
     var tbl = row.parentElement
     
     var rows = tbl.getElementsByTagName('tr')
@@ -18,4 +18,23 @@ function insertToForm(row) {
     }
 
     row.className = "selection";
+    showForm(row, event)
+}
+
+function showForm(row, event) {
+    var frm = document.getElementById('hidenForms')
+    frm.style.top = event.clientY + getScrollOffset().y + "px"
+    frm.style.left = event.clientX + getScrollOffset().x + "px"
+    console.log(frm.offsetTop)
+    //frm.getElementsByName('pref')[0].value = row.cells[0].childNodes[0].data
+    //frm.getElementsByName('num')[0].value = row.cells[1].childNodes[0].data
+}
+
+function getScrollOffset () {
+    if (window.pageXOffset != null) 
+        return {x:window.pageXOffset, y:window.pageYOffset}
+    if (document.compatMode == "CSS1Compat")
+        return {x:document.documentElement.scrollLeft,
+                y:document.documentElement.scrollTop};
+    return {x:document.body.scrollLeft, y:document.body.scrollTop}
 }
