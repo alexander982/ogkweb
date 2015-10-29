@@ -27,6 +27,12 @@
   (cc/GET "/diff"
           []
           (views/diff-page {}))
+  (cc/POST "/metals"
+           {params :params}
+           (views/metals-page params))
+  (cc/GET "/metals"
+          []
+          (views/metals-page {}))
   (route/resources "/")
   (route/not-found "Not Found"))
 

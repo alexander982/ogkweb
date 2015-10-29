@@ -48,3 +48,19 @@ select u2.prefix, u2.num, u2.name from (unit u inner join contain c on u.id = c.
                      num2]
                     (doall res)))]
     results))
+
+
+(defn get-metals
+  [pref num]
+  (let [results (sql/with-connection db-spec
+                  (sql/with-query-results res
+                    [(str  "with recursive sostav (pref, num, name, qnt, gold, silver, pl, pal, id) as (
+SELECT u2.prefix, u2.num, u2.name, c.qnt, u2.gold, u2.silver, u2.pl, u2.pal, u2.id FROM (UNIT u inner join contain c on u.id = c.cont_id ) inner join unit u2 on u2.id  = c.unit_id where u.id  = (select id  from unit  where prefix like '" pref "' and num like '" num "')
+union all
+select u.prefix, u.num, u.name, c.qnt, u.gold, u.silver, u.pl, u.pal, u.id from ( sostav s inner join contain c on s.id = c.cont_id ) inner join unit u on c.unit_id = u.id)
+select sum(cast(gold as double) * cast(qnt as int)) as gold,
+            sum(cast(silver as double)*cast(qnt as int)) as silver,
+            sum(cast(pl as double)*cast(qnt as int)) as pl,
+            sum(cast(pal as double)*cast(qnt as int)) as pal from sostav")]
+                    (doall res)))]
+    results))

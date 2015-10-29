@@ -68,7 +68,8 @@
    [:p [:a {:href "/cont_unit_req"}
         "Просмотр состава и входимости"]] 
    [:p [:a {:href "/search"} "Поиск детали/узла/комплектующих"]]
-   [:p [:a {:href "/diff"} "Просмотр различий исполнений"]]))
+   [:p [:a {:href "/diff"} "Просмотр различий исполнений"]]
+   [:p [:a {:href "/metals"} "Просмотр драгметаллов"]]))
 
 (defn cont-unit-page
   [{:keys [pref num reqtype]}]
@@ -175,3 +176,39 @@
          [:tr [:td (:prefix r)]
           [:td (:num r)]
           [:td (:name r)]])]])))
+
+(defn form-rare-metals
+  [pref num]
+  [:form {:action "/metals" :method "POST"}
+   [:table
+     [:tr [:th] [:th] [:th "Пример"]]
+     [:tr [:td "Обозначение: "]
+      [:td [:input {:type "text"
+                    :name "pref"
+                    :value pref}]]
+      [:td "ОШ-525Ф3"]]
+     [:tr [:td "Номер: "]
+      [:td [:input {:type "text"
+                    :name "num"
+                    :value num}]]
+      [:td ".00.0.000.0.00-04"]]
+     [:tr [:td [:input {:type "submit" :value "Посчитать"}]]]]])
+
+(defn metals-page
+  [{:keys [pref num]}]
+  (page/html5
+   (gen-page-head "Просмотр драгметаллов")
+   header-links
+   [:h1 "Введите данные"]
+   (form-rare-metals pref num)
+   (when (or pref num)
+     [:div
+      [:h2 (str "Содержание драгметаллов в: " pref num)]
+      [:table.result
+       [:tr (for [c ["Золото" "Серебро" "Платина" "Палладий"]]
+              [:th c])]
+       (for [r (db/get-metals pref num)]
+         [:tr [:td (:gold r)]
+          [:td (:silver r)]
+          [:td (:pl r)]
+          [:td (:pal r)]])]])))
