@@ -1,7 +1,8 @@
 (ns my-webapp.views
   (:require [my-webapp.db :as db]
             [clojure.string :as str]
-            [hiccup.page :as page]))
+            [hiccup.page :as page])
+  (:gen-class))
 
 
 (defn gen-page-head
@@ -62,7 +63,7 @@
   (page/html5
    (gen-page-head "Home")
    header-links
-   [:h1 "Выборка данных на 30.09.2015г"]
+   [:h1 "Выборка данных на 26.10.2015г"]
    [:p "Данные не синхронизированы с основной базой и не содержат последних изменений!"]
    [:p [:a {:href "/cont_unit_req"}
         "Просмотр состава и входимости"]] 
@@ -108,8 +109,8 @@
                                       :name "num"
                                       :value num}]]]
     [:tr [:td "Название:"] [:td [:input {:type "text"
-                                        :name "name"
-                                        :value name}]]]
+                                         :name "name"
+                                         :value name}]]]
     [:tr [:td [:input {:type "submit" :value "Найти"}]]
      [:td ]]]])
 
