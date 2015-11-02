@@ -3,7 +3,7 @@
 
 (def db-spec {:classname "org.h2.Driver"
               :subprotocol "h2:file"
-              :subname "~/doc/db/h2/ogkdb;IGNORECASE=true"
+              :subname (str (System/getProperty "user.dir") "\\ogkdb\\ogkdb;IGNORECASE=true")
               :user "sa"})
 
 (defn get-composition
