@@ -11,6 +11,7 @@
                  [ring/ring-jetty-adapter "1.4.0"] 
                  ]
   :main my-webapp.handler
+  :aot :all
   :plugins [[lein-ring "0.8.13"]]
   :ring {:handler my-webapp.handler/app}
   :profiles
