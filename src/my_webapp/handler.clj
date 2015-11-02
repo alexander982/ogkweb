@@ -3,7 +3,8 @@
             [compojure.core :as cc]
             [compojure.route :as route]
             [compojure.handler :as handler]
-            [ring.adapter.jetty :as jetty]))
+            [ring.adapter.jetty :as jetty])
+  (:gen-class))
 
 (cc/defroutes app-routes
   (cc/GET "/"
