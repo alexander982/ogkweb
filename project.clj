@@ -1,6 +1,6 @@
 (defproject my-webapp "0.1.0-SNAPSHOT"
-  :description "Поиск по базе данных"
-  :url "http://example.com/FIXME"
+  :description "Поиск по базе данных ОГК"
+  :url "http://192.168.0.132/"
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [hiccup "1.0.5"]
