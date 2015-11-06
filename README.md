@@ -1,19 +1,18 @@
-# my-webapp
+# Веб приложения для просмотра базы данных ОГК
 
-FIXME
+Приложение позволяет просматривать состав узлов конструкторской
+документации, входимость деталей и узлов, поиск узлов/деталей и
+просмотр содержания драгметалов.
 
-## Prerequisites
+## Требования
 
 You will need [Leiningen][] 2.0.0 or above installed.
 
 [leiningen]: https://github.com/technomancy/leiningen
 
-## Running
+## Запуск
 
 To start a web server for the application, run:
 
     lein ring server
 
-## License
-
-Copyright © 2015 FIXME
