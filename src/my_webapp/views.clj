@@ -47,12 +47,15 @@
   [pref num]
   [:form {:action "/cont_unit_req" :method "POST"}
    [:table
+    [:tr [:td] [:td] [:td "Пример:"]]
     [:tr [:td "Обозначение:"] [:td [:input {:type "text"
                                             :name "pref"
-                                            :value pref}]]]
+                                            :value pref}]]
+         [:td "ОШ-450"]]
     [:tr [:td "Номер:"] [:td [:input {:type "text"
                                       :name "num"
-                                      :value num}]]]
+                                      :value num}]]
+          [:td ".81.2.000.0.00"]]
     [:tr [:td [:label
                [:input {:type "radio" :name "reqtype"
                         :value "s" :checked "on"}]
@@ -68,8 +71,9 @@
    (gen-page-head "Home")
    header-links
    [:h1 "База ОГК"]
-   [:h2 "Выборка данных на " [:u "03.11.2015г!"]]
-   [:p "Данные не синхронизированы с основной базой и не содержат последних изменений!"]
+   [:h2 "Выборка данных на " [:u "09.11.2015г!"]]
+   [:p "Данные не синхронизированы с основной базой и не содержат
+последних изменений!"]
    [:p [:a {:href "/cont_unit_req"}
         "Просмотр состава и входимости"]]
    [:p [:a {:href "/search"} "Поиск детали/узла/комплектующих"]]
@@ -77,7 +81,8 @@
    [:p [:a {:href "/metals"} "Просмотр драгметаллов"]]
    [:h1 "Вики"]
    [:p [:a {:href "http://192.168.0.132/wiki/ru/"} "Вики"]
-    " позволяет накапливать различную информацию и предоставляет доступ к ней всем. Не стоит надеяться на свою память сохраните все " [:a {:href "http://192.168.0.132/wiki/ru/"} "здесь!"]]))
+    " позволяет накапливать различную информацию и предоставляет
+ доступ к ней всем."]))
 
 (defn cont-unit-page
   [{:keys [pref num reqtype]}]
@@ -111,12 +116,15 @@
   [pref num name]
   [:form {:action "/search" :method "POST"}
    [:table
+    [:tr [:td] [:td] [:td "Пример:"]]
     [:tr [:td "Обозначение:"] [:td [:input {:type "text"
                                             :name "pref"
-                                            :value pref}]]]
+                                            :value pref}]]
+         [:td "ОШ-450"]]
     [:tr [:td "Номер:"] [:td [:input {:type "text"
                                       :name "num"
-                                      :value num}]]]
+                                      :value num}]]
+          [:td ".81.2.000.0.00"]]
     [:tr [:td "Название:"] [:td [:input {:type "text"
                                          :name "name"
                                          :value name}]]]
@@ -148,15 +156,19 @@
   [pref num1 num2]
   [:form {:action "/diff" :method "POST"}
    [:table
+    [:tr [:td] [:td] [:td "Пример:"]]
     [:tr [:td "Обозначение:"] [:td [:input {:type "text"
                                             :name "pref"
-                                            :value pref}]]]
+                                            :value pref}]]
+         [:td "ОШ-450"]]
     [:tr [:td "Номер 1:"] [:td [:input {:type "text"
                                         :name "num1"
-                                        :value num1}]]]
+                                        :value num1}]]
+         [:td ".81.2.000.0.00"]]
     [:tr [:td "Номер 2:"] [:td [:input {:type "text"
                                         :name "num2"
-                                        :value num2}]]]
+                                        :value num2}]]
+         [:td ".81.2.000.0.00-01"]]
     [:tr [:td [:input {:type "submit" :value "Найти"}]] [:td ]]]])
 
 (defn diff-page
