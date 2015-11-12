@@ -182,20 +182,18 @@
      [:div
       [:h2 (str "Отличие " pref num1 " от " pref num2)]
       [:table.result
-       [:tr (for [c ["Обозначение" "Номер" "Название"]]
+       [:tr [:th {:colspan "3"} (str pref num1)]
+        [:th {:colspan "3"} (str pref num2)]]
+       [:tr (for [c ["Обозначение" "Номер" "Название"
+                     "Обозначение" "Номер" "Название"]]
               [:th c])]
        (for [r (db/get-diff pref num1 num2)]
-         [:tr [:td (:prefix r)]
-          [:td (:num r)]
-          [:td (:name r)]])]
-      [:h2 (str "Отличие " pref num2 " от " pref num1)]
-      [:table.result
-       [:tr (for [c ["Обозначение" "Номер" "Название"]]
-              [:th c])]
-       (for [r (db/get-diff pref num2 num1)]
-         [:tr [:td (:prefix r)]
-          [:td (:num r)]
-          [:td (:name r)]])]])))
+         [:tr [:td (:pref1 r)]
+          [:td (:num1 r)]
+          [:td (:name1 r)]
+          [:td (:pref2 r)]
+          [:td (:num2 r)]
+          [:td (:name2 r)]])]])))
 
 (defn form-rare-metals
   [pref num]
