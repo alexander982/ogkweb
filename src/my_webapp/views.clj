@@ -17,7 +17,7 @@
    "[ "
    [:a {:href "/"} "Главная"]
    " | "
-   [:a {:href "/cont_unit_req"} "Поиск состава/входимоси"]
+   [:a {:href "/cont_unit_req"} "Просмотр состава/входимоси"]
    " | "
    [:a {:href "/search"} "Поиск узла/детали"]
    " | "
@@ -68,7 +68,7 @@
 (defn home-page
   []
   (page/html5
-   (gen-page-head "Home")
+   (gen-page-head "Сайт ОГК")
    header-links
    [:h1 "База ОГК"]
    [:h2 "Выборка данных на " [:u "09.11.2015г!"]]
