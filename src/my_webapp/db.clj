@@ -37,15 +37,53 @@
   [pref num1 num2]
   (let [results (sql/with-connection db-spec
                   (sql/with-query-results res
-                    ["select * from (select u2.prefix, u2.num, u2.name from (unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on u2.id = c.unit_id where u.id = 
-(select id from unit where prefix like ? and num like ?)
+                    ["select pref1, num1, name1, pref2, num2, name2, pos1, pos2 from (select u2.prefix as pref1, u2.num as num1, u2.name as name1, c.pos as pos1 from 
+(unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on c.unit_id = u2.id 
+where u.id = (select id from unit where prefix like ? and num like ?)
 minus
-select u2.prefix, u2.num, u2.name from (unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on u2.id = c.unit_id where u.id = 
-(select id from unit where prefix like ? and num like ?)) order by num"
+select u2.prefix, u2.num, u2.name, c.pos from 
+(unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on c.unit_id = u2.id 
+where u.id = (select id from unit where prefix like ? and num like ?))
+left outer join
+(select u2.prefix as pref2, u2.num as num2, u2.name as name2, c.pos as pos2 from 
+(unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on c.unit_id = u2.id 
+where u.id = (select id from unit where prefix like ? and num like ?)
+minus
+select u2.prefix, u2.num, u2.name, c.pos from 
+(unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on c.unit_id = u2.id 
+where u.id = (select id from unit where prefix like ? and num like ?)) on pos1 = pos2
+union
+select pref1, num1, name1, pref2, num2, name2, pos1,pos2 from (select u2.prefix as pref1, u2.num as num1, u2.name as name1, c.pos as pos1 from 
+(unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on c.unit_id = u2.id 
+where u.id = (select id from unit where prefix like ? and num like ?)
+minus
+select u2.prefix, u2.num, u2.name, c.pos from 
+(unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on c.unit_id = u2.id 
+where u.id = (select id from unit where prefix like ? and num like ?))
+right outer join
+(select u2.prefix as pref2, u2.num as num2, u2.name as name2, c.pos as pos2 from 
+(unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on c.unit_id = u2.id 
+where u.id = (select id from unit where prefix like ? and num like ?)
+minus
+select u2.prefix, u2.num, u2.name, c.pos from 
+(unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on c.unit_id = u2.id 
+where u.id = (select id from unit where prefix like ? and num like ?)) on pos1 = pos2"
                      pref
                      num1
                      pref
-                     num2]
+                     num2
+                     pref
+                     num2
+                     pref
+                     num1
+                     pref
+                     num1
+                     pref
+                     num2
+                     pref
+                     num2
+                     pref
+                     num1]
                     (doall res)))]
     results))
 
