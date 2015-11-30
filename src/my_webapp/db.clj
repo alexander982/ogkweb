@@ -139,3 +139,15 @@ select sum(cast(gold as double) * cast(qnt as int)) as gold,
             sum(cast(pal as double)*cast(qnt as int)) as pal from sostav")]
                     (doall res)))]
     results))
+
+(defn get-version-date
+  []
+  (let [results (sql/with-connection db-spec
+                  (sql/with-query-results res
+                    ["select day(v_date) as day,
+    month(v_date) as month,
+    year(v_date) as year 
+    from versions 
+    where v_id = (select cv_id from cversion);"]
+                    (doall res)))]
+    results))
