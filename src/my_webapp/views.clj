@@ -71,7 +71,8 @@
    (gen-page-head "Сайт ОГК")
    header-links
    [:h1 "База ОГК"]
-   [:h2 "Выборка данных на " [:u "23.11.2015г!"]]
+   (let [[{:keys [day month year]}] (db/get-version-date)]
+     [:h2 "Выборка данных на " [:u (str day "." month "." year "!")]])
    [:p "Данные не синхронизированы с основной базой и не содержат
 последних изменений!"]
    [:p [:a {:href "/cont_unit_req"}
