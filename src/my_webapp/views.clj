@@ -51,11 +51,11 @@
     [:tr [:td "Обозначение:"] [:td [:input {:type "text"
                                             :name "pref"
                                             :value pref}]]
-         [:td "ОШ-450"]]
+     [:td "ОШ-450"]]
     [:tr [:td "Номер:"] [:td [:input {:type "text"
                                       :name "num"
                                       :value num}]]
-          [:td ".81.2.000.0.00"]]
+     [:td ".81.2.000.0.00"]]
     [:tr [:td [:label
                [:input {:type "radio" :name "reqtype"
                         :value "s" :checked "on"}]
@@ -70,20 +70,21 @@
   (page/html5
    (gen-page-head "Сайт ОГК")
    header-links
-   [:h1 "База ОГК"]
-   (let [[{:keys [day month year]}] (db/get-version-date)]
-     [:h2 "Выборка данных на " [:u (str day "." month "." year "!")]])
-   [:p "Данные не синхронизированы с основной базой и не содержат
+   [:div {:align "center"}
+    [:h1 "База ОГК"]
+    (let [[{:keys [day month year]}] (db/get-version-date)]
+      [:h2 "Выборка данных на " [:u (str day "." month "." year "!")]])
+    [:p "Данные не синхронизированы с основной базой и не содержат
 последних изменений!"]
-   [:p [:a {:href "/cont_unit_req"}
-        "Просмотр состава и входимости"]]
-   [:p [:a {:href "/search"} "Поиск детали/узла/комплектующих"]]
-   [:p [:a {:href "/diff"} "Просмотр различий исполнений"]]
-   [:p [:a {:href "/metals"} "Просмотр драгметаллов"]]
-   [:h1 "Вики"]
-   [:p [:a {:href "http://192.168.0.132/wiki/ru/"} "Вики"]
-    " позволяет накапливать различную информацию и предоставляет
- доступ к ней всем."]))
+    [:p [:a {:href "/cont_unit_req"}
+         "Просмотр состава и входимости"]]
+    [:p [:a {:href "/search"} "Поиск детали/узла/комплектующих"]]
+    [:p [:a {:href "/diff"} "Просмотр различий исполнений"]]
+    [:p [:a {:href "/metals"} "Просмотр драгметаллов"]]
+    [:h1 "Вики"]
+    [:p [:a {:href "http://192.168.0.132/wiki/ru/"} "Вики"]
+     " позволяет накапливать различную информацию и предоставляет
+ доступ к ней всем."]]))
 
 (defn cont-unit-page
   [{:keys [pref num reqtype]}]
@@ -91,27 +92,28 @@
    (gen-page-head "Поиск состава/входимости")
    header-links
    (form-hidden pref num)
-   [:h1 "Введите данные"]
-   (form-contain-unit-post pref num)
-   (when pref
-     [:div [:h1 "Результаты запроса"]
-      [:h2 (str (if (= reqtype "s")
-                 "Состав узла: "
-                 "Входимость: ") pref num)]
-      [:table.result
-       (let [cols ["Обозн." "Номер" "Название" "Кол." "Поз."]]
-         (if (= reqtype  "s")
-           (for [c cols] [:th c])
-           (for [c (take 3 cols)] [:th c])))
-       (for [compos (if (= reqtype "s")
-                      (db/get-composition pref num)
-                      (db/get-includes pref num))]
-         [:tr {:onclick "insertToForm(this, event);"} [:td (:prefix compos)]
-          [:td (:num compos)]
-          [:td (:name compos)]
-          (when (= reqtype "s")
-            (list [:td (:qnt compos)]
-              [:td (:pos compos)]))])]])))
+   [:div {:align "center"}
+    [:h1 "Введите данные"]
+    (form-contain-unit-post pref num)
+    (when pref
+      [:div [:h1 "Результаты запроса"]
+       [:h2 (str (if (= reqtype "s")
+                   "Состав узла: "
+                   "Входимость: ") pref num)]
+       [:table.result
+        (let [cols ["Обозн." "Номер" "Название" "Кол." "Поз."]]
+          (if (= reqtype  "s")
+            (for [c cols] [:th c])
+            (for [c (take 3 cols)] [:th c])))
+        (for [compos (if (= reqtype "s")
+                       (db/get-composition pref num)
+                       (db/get-includes pref num))]
+          [:tr {:onclick "insertToForm(this, event);"} [:td (:prefix compos)]
+           [:td (:num compos)]
+           [:td (:name compos)]
+           (when (= reqtype "s")
+             (list [:td (:qnt compos)]
+                   [:td (:pos compos)]))])]])]))
 
 (defn form-search
   [pref num name]
@@ -121,11 +123,11 @@
     [:tr [:td "Обозначение:"] [:td [:input {:type "text"
                                             :name "pref"
                                             :value pref}]]
-         [:td "ОШ-450"]]
+     [:td "ОШ-450"]]
     [:tr [:td "Номер:"] [:td [:input {:type "text"
                                       :name "num"
                                       :value num}]]
-          [:td ".81.2.000.0.00"]]
+     [:td ".81.2.000.0.00"]]
     [:tr [:td "Название:"] [:td [:input {:type "text"
                                          :name "name"
                                          :value name}]]]
@@ -138,63 +140,66 @@
    (gen-page-head "Поиск узла/детали")
    header-links
    (form-hidden pref num)
-   [:h1 "Введите данные"]
-   [:p "Допускается не заполнять все поля"]
-   (form-search pref num name)
-   (when (or pref num name)
-     [:div
-      [:h2 (str "Результаты запроса: " pref num " " name)]
-      [:table.result
-       [:tr (for [c ["Обозначение" "Номер" "Название"]]
-              [:td c])]
-       (for [r (db/get-units pref num name)]
-         [:tr {:onclick "insertToForm(this, event);"}
-          [:td (:prefix r)]
-          [:td (:num r)]
-          [:td (:name r)]])]])))
+   [:div {:align "center"}
+    [:h1 "Введите данные"]
+    [:p "Допускается не заполнять все поля"]
+    (form-search pref num name)
+    (when (or pref num name)
+      [:div
+       [:h2 (str "Результаты запроса: " pref num " " name)]
+       [:table.result
+        [:tr (for [c ["Обозначение" "Номер" "Название"]]
+               [:td c])]
+        (for [r (db/get-units pref num name)]
+          [:tr {:onclick "insertToForm(this, event);"}
+           [:td (:prefix r)]
+           [:td (:num r)]
+           [:td (:name r)]])]])]))
 
 (defn form-diff
   [pref num1 num2]
-  [:form {:action "/diff" :method "POST"}
-   [:table
-    [:tr [:td] [:td] [:td "Пример:"]]
-    [:tr [:td "Обозначение:"] [:td [:input {:type "text"
-                                            :name "pref"
-                                            :value pref}]]
-         [:td "ОШ-450"]]
-    [:tr [:td "Номер 1:"] [:td [:input {:type "text"
-                                        :name "num1"
-                                        :value num1}]]
-         [:td ".81.2.000.0.00"]]
-    [:tr [:td "Номер 2:"] [:td [:input {:type "text"
-                                        :name "num2"
-                                        :value num2}]]
-         [:td ".81.2.000.0.00-01"]]
-    [:tr [:td [:input {:type "submit" :value "Найти"}]] [:td ]]]])
+  [:div {:align "center"}
+   [:form {:action "/diff" :method "POST"}
+    [:table
+     [:tr [:td] [:td] [:td "Пример:"]]
+     [:tr [:td "Обозначение:"] [:td [:input {:type "text"
+                                             :name "pref"
+                                             :value pref}]]
+      [:td "ОШ-450"]]
+     [:tr [:td "Номер 1:"] [:td [:input {:type "text"
+                                         :name "num1"
+                                         :value num1}]]
+      [:td ".81.2.000.0.00"]]
+     [:tr [:td "Номер 2:"] [:td [:input {:type "text"
+                                         :name "num2"
+                                         :value num2}]]
+      [:td ".81.2.000.0.00-01"]]
+     [:tr [:td [:input {:type "submit" :value "Найти"}]] [:td ]]]]])
 
 (defn diff-page
   [{:keys [pref num1 num2]}]
   (page/html5
    (gen-page-head "Просмотр различий")
    header-links
-   [:h1 "Введите данные"]
-   (form-diff pref num1 num2)
-   (when (or pref num1 num2)
-     [:div
-      [:h2 (str "Отличие " pref num1 " от " pref num2)]
-      [:table.result
-       [:tr [:th {:colspan "3"} (str pref num1)]
-        [:th {:colspan "3"} (str pref num2)]]
-       [:tr (for [c ["Обозначение" "Номер" "Название"
-                     "Обозначение" "Номер" "Название"]]
-              [:th c])]
-       (for [r (db/get-diff pref num1 num2)]
-         [:tr [:td (:pref1 r)]
-          [:td (:num1 r)]
-          [:td (:name1 r)]
-          [:td (:pref2 r)]
-          [:td (:num2 r)]
-          [:td (:name2 r)]])]])))
+   [:div {:align "center"}
+    [:h1 "Введите данные"]
+    (form-diff pref num1 num2)
+    (when (or pref num1 num2)
+      [:div
+       [:h2 (str "Отличие " pref num1 " от " pref num2)]
+       [:table.result
+        [:tr [:th {:colspan "3"} (str pref num1)]
+         [:th {:colspan "3"} (str pref num2)]]
+        [:tr (for [c ["Обозначение" "Номер" "Название"
+                      "Обозначение" "Номер" "Название"]]
+               [:th c])]
+        (for [r (db/get-diff pref num1 num2)]
+          [:tr [:td (:pref1 r)]
+           [:td (:num1 r)]
+           [:td (:name1 r)]
+           [:td (:pref2 r)]
+           [:td (:num2 r)]
+           [:td (:name2 r)]])]])]))
 
 (defn form-rare-metals
   [pref num]
@@ -218,16 +223,17 @@
   (page/html5
    (gen-page-head "Просмотр драгметаллов")
    header-links
-   [:h1 "Введите данные"]
-   (form-rare-metals pref num)
-   (when (or pref num)
-     [:div
-      [:h2 (str "Содержание драгметаллов в: " pref num)]
-      [:table.result
-       [:tr (for [c ["Золото" "Серебро" "Платина" "Палладий"]]
-              [:th c])]
-       (for [r (db/get-metals pref num)]
-         [:tr [:td (:gold r)]
-          [:td (:silver r)]
-          [:td (:pl r)]
-          [:td (:pal r)]])]])))
+   [:div {:align "center"}
+    [:h1 "Введите данные"]
+    (form-rare-metals pref num)
+    (when (or pref num)
+      [:div
+       [:h2 (str "Содержание драгметаллов в: " pref num)]
+       [:table.result
+        [:tr (for [c ["Золото" "Серебро" "Платина" "Палладий"]]
+               [:th c])]
+        (for [r (db/get-metals pref num)]
+          [:tr [:td (:gold r)]
+           [:td (:silver r)]
+           [:td (:pl r)]
+           [:td (:pal r)]])]])]))
