@@ -240,3 +240,20 @@
            [:td (:silver r)]
            [:td (:pl r)]
            [:td (:pal r)]])]])]))
+
+(defn form-products
+  [pref name]
+  [:form {:action "/products" :method "POST"}
+   [:table
+    [:tr [:th] [:th] [:th "Пример:"]]
+    [:tr [:td  "Модель:"]
+     [:td [:input {:type "text"
+                   :name "pref"
+                   :value pref}]]
+     [:td "ОШ-525Ф3*01"]]
+    [:tr [:td "Название:"]
+     [:td [:input {:type "text"
+                   :name "name"
+                   :value name}]]
+     [:td "П/А круглошлифовальный"]]
+    [:tr [:input {:type "submit" :value "Найти"}]]]])
