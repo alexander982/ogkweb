@@ -39,7 +39,7 @@
            (views/products-page params))
   (cc/GET "/products"
           []
-          (views/produts-page {}))
+          (views/products-page {}))
   (route/resources "/")
   (route/not-found "Not Found"))
 
