@@ -151,3 +151,13 @@ select sum(cast(gold as double) * cast(qnt as int)) as gold,
     where v_id = (select cv_id from cversion);"]
                     (doall res)))]
     results))
+
+(defn get-products
+  [prefix name]
+  (let [results (sql/with-connection db-spec
+                  (sql/with-query-results res
+                    ["select cont_id, pref, name 
+from product where pref like ? and name like ?"
+                     prefix name]
+                    (doall res)))]
+    results))
