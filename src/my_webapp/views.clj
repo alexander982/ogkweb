@@ -256,7 +256,7 @@
                    :name "name"
                    :value name}]]
      [:td "П/А круглошлифовальный"]]
-    [:tr [:input {:type "submit" :value "Найти"}]]]])
+    [:tr [:td [:input {:type "submit" :value "Найти"}]]]]])
 
 (defn products-page
   [{:keys [pref name]}]
