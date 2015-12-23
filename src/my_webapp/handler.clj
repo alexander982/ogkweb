@@ -34,6 +34,12 @@
   (cc/GET "/metals"
           []
           (views/metals-page {}))
+  (cc/POST "/products"
+           {params :params}
+           (views/products-page params))
+  (cc/GET "/products"
+          []
+          (views/produts-page {}))
   (route/resources "/")
   (route/not-found "Not Found"))
 
