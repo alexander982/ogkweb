@@ -257,3 +257,21 @@
                    :value name}]]
      [:td "П/А круглошлифовальный"]]
     [:tr [:input {:type "submit" :value "Найти"}]]]])
+
+(defn products-page
+  [{:keys [pref name]}]
+  (page/html5
+   (gen-page-head "Просмотр продукции")
+   header-links
+   [:div {:align "center"}
+    [:h1 "Введите данные"]
+    (form-products pref name)
+    (when (or pref name)
+      [:div
+       [:h2 (str "Результаты поиска " pref " " name)]
+       [:table.result
+        [:tr [:th "ID"] [:th "Модель"] [:th "Название"]]
+        (for [r (db/get-products pref name)]
+          [:tr [:td (:cont_id r)]
+           [:td (:pref r)]
+           [:td (:name r)]])]])]))
