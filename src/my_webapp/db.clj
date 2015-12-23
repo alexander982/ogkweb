@@ -158,6 +158,7 @@ select sum(cast(gold as double) * cast(qnt as int)) as gold,
                   (sql/with-query-results res
                     ["select cont_id, pref, name 
 from product where pref like ? and name like ?"
-                     prefix name]
+                     (str "%" prefix "%")
+                     (str "%" name "%")]
                     (doall res)))]
     results))
