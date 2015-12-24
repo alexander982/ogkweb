@@ -23,9 +23,11 @@ function insertToForm(row, event) {
 
 function showForm(row, event) {
     var frm = document.getElementById('hidenForms')
-    frm.style.top = event.clientY + getScrollOffset().y + "px"
-    frm.style.left = event.clientX + getScrollOffset().x + "px"
-    console.log(frm.offsetTop)
+    if (frm) {
+	frm.style.top = event.clientY + getScrollOffset().y + "px"
+	frm.style.left = event.clientX + getScrollOffset().x + "px"
+	console.log(frm.offsetTop)
+    }
     //frm.getElementsByName('pref')[0].value = row.cells[0].childNodes[0].data
     //frm.getElementsByName('num')[0].value = row.cells[1].childNodes[0].data
 }
