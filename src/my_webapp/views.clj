@@ -90,7 +90,7 @@
  доступ к ней всем."]]))
 
 (defn cont-unit-page
-  [{:keys [pref num reqtype]}]
+  [{:keys [pref num reqtype cont-id]}]
   (page/html5
    (gen-page-head "Поиск состава/входимости")
    header-links
@@ -98,7 +98,7 @@
    [:div {:align "center"}
     [:h1 "Введите данные"]
     (form-contain-unit-post pref num)
-    (when pref
+    (when (or cont-id pref num)
       [:div [:h1 "Результаты запроса"]
        [:h2 (str (if (= reqtype "s")
                    "Состав узла: "
@@ -109,7 +109,9 @@
             (for [c cols] [:th c])
             (for [c (take 3 cols)] [:th c])))
         (for [compos (if (= reqtype "s")
-                       (db/get-composition pref num)
+                       (if cont-id
+                         (db/get-composition-by-id cont-id)
+                         (db/get-composition pref num))
                        (db/get-includes pref num))]
           [:tr {:onclick "insertToForm(this, event);"} [:td (:prefix compos)]
            [:td (:num compos)]
@@ -258,11 +260,19 @@
      [:td "П/А круглошлифовальный"]]
     [:tr [:td [:input {:type "submit" :value "Найти"}]]]]])
 
+(defn form-contain-hiden
+  []
+  [:form#hidenForms {:action "/cont_unit_req" :method "POST"}
+   [:input {:type "hidden" :name "cont-id"}]
+   [:input {:type "hidden" :name "reqtype" :value "s"}]
+   [:input {:type "submit" :value "Состав"}]])
+
 (defn products-page
   [{:keys [pref name]}]
   (page/html5
    (gen-page-head "Просмотр продукции")
    header-links
+   (form-contain-hiden)
    [:div {:align "center"}
     [:h1 "Введите данные"]
     (form-products pref name)
@@ -272,6 +282,7 @@
        [:table.result
         [:tr [:th "ID"] [:th "Модель"] [:th "Название"]]
         (for [r (db/get-products pref name)]
-          [:tr [:td (:cont_id r)]
+          [:tr {:onclick "insertToForm(this, event);"}
+           [:td (:cont_id r)]
            [:td (:pref r)]
            [:td (:name r)]])]])]))
