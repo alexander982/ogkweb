@@ -162,3 +162,15 @@ from product where pref like ? and name like ?"
                      (str "%" name "%")]
                     (doall res)))]
     results))
+
+(defn get-composition-by-id
+  [id]
+  (let [results (sql/with-connection db-spec
+                  (sql/with-query-results res
+                    ["select c.pos, u.prefix, u.num, u.name, c.qnt
+from unit u, contain c
+where u.id = c.unit_id and c.cont_id = ?
+order by convert(c.pos,int)"
+                     id]
+                    (doall res)))]
+    results))
