@@ -9,14 +9,22 @@ function insertToForm(row, event) {
     }
     var pref = document.getElementsByName('pref')
     var num = document.getElementsByName('num')
+    var contId = document.getElementsByName('cont-id')
 
-    for (i = 0; i < pref.length; i++) {
-	pref[i].value = row.cells[0].childNodes[0].data
-    }
-    for (i = 0; i < num.length; i++){
-	num[i].value = row.cells[1].childNodes[0].data
+    if (pref || num) {
+	for (i = 0; i < pref.length; i++) {
+	    pref[i].value = row.cells[0].childNodes[0].data
+	}
+	for (i = 0; i < num.length; i++){
+	    num[i].value = row.cells[1].childNodes[0].data
+	}
     }
 
+    if (contId) {
+	for (i = 0; i < contId.length; i++) {
+	    contId[i].value = row.cells[0].childNodes[0].data
+	}
+    }
     row.className = "selection";
     showForm(row, event)
 }
