@@ -168,9 +168,9 @@ from product where pref like ? and name like ?"
   (let [results (sql/with-connection db-spec
                   (sql/with-query-results res
                     ["select c.pos, u.prefix, u.num, u.name, c.qnt
-from unit u, contain c
-where u.id = c.unit_id and c.cont_id = ?
+from unit u inner join contain c on u.id = c.unit_id 
+where c.cont_id = ? 
 order by convert(c.pos,int)"
-                     id]
+                     (Integer/parseInt id)]
                     (doall res)))]
     results))
