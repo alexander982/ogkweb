@@ -272,7 +272,7 @@
   (page/html5
    (gen-page-head "Просмотр продукции")
    header-links
-   (form-contain-hiden)
+   #_(form-contain-hiden)
    [:div {:align "center"}
     [:h1 "Введите данные"]
     (form-products pref name)
@@ -280,9 +280,9 @@
       [:div
        [:h2 (str "Результаты поиска " pref " " name)]
        [:table.result
-        [:tr [:th "ID"] [:th "Модель"] [:th "Название"]]
+        [:tr #_[:th "ID"] [:th "Модель"] [:th "Название"]]
         (for [r (db/get-products pref name)]
           [:tr {:onclick "insertToForm(this, event);"}
-           [:td (:cont_id r)]
+           #_[:td (:cont_id r)]
            [:td (:pref r)]
            [:td (:name r)]])]])]))
