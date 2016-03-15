@@ -1,17 +1,20 @@
+var columnsJoined = false;
+
 function insertToForm(row, event) {
     var tbl = row.parentElement
     
     var rows = tbl.getElementsByTagName('tr')
-    
-    for (i = 0; i < rows.length; i++) {
-	rows[i].className = "";
-	//console.log(rows[i])
+    if(!columnsJoined){
+	for (i = 0; i < rows.length; i++) {
+	    rows[i].className = "";
+	    //console.log(rows[i])
+	}
     }
     var pref = document.getElementsByName('pref')
     var num = document.getElementsByName('num')
     var contId = document.getElementsByName('cont-id')
 
-    if (pref || num) {
+    if ((!columnsJoined)&&(pref || num)) {
 	for (i = 0; i < pref.length; i++) {
 	    pref[i].value = row.cells[0].childNodes[0].data
 	}
@@ -25,8 +28,11 @@ function insertToForm(row, event) {
 	    contId[i].value = row.cells[0].childNodes[0].data
 	}
     }
-    row.className = "selection";
-    showForm(row, event)
+    
+    if(!columnsJoined){
+	row.className = "selection";
+	showForm(row, event);
+    }
 }
 
 function showForm(row, event) {
@@ -47,4 +53,19 @@ function getScrollOffset () {
         return {x:document.documentElement.scrollLeft,
                 y:document.documentElement.scrollTop};
     return {x:document.body.scrollLeft, y:document.body.scrollTop}
+}
+
+function joinColumns() {
+    var tbl = document.getElementsByClassName("result")[0];
+    var c;
+    if(!columnsJoined){
+	for(i = 0; i < tbl.rows.length; i++){
+	    c = tbl.rows[i].cells[1].firstChild;
+	    if(c){
+		tbl.rows[i].cells[0].firstChild.data += c.data;
+	    }
+	    tbl.rows[i].deleteCell(1);
+	}
+	columnsJoined = true;
+    }
 }
