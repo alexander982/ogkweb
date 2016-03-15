@@ -105,9 +105,12 @@
                    "Входимость: ") pref num)]
        [:table.result
         (let [cols ["Обозн." "Номер" "Название" "Кол." "Поз."]]
-          (if (= reqtype  "s")
-            (for [c cols] [:th c])
-            (for [c (take 3 cols)] [:th c])))
+          (let [head (if (= reqtype  "s")
+                       (for [c cols] [:th c])
+                       (for [c (take 3 cols)] [:th c]))]
+            (conj (conj (first head)
+                        [:button {:onclick "joinColumns();"} "<"])
+                  (rest head))))
         (for [compos (if (= reqtype "s")
                        (if cont-id
                          (db/get-composition-by-id cont-id)
