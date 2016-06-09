@@ -14,8 +14,9 @@
            {params :params}
            (views/cont-unit-page params))
   (cc/GET "/cont_unit_req"
-           []
-           (views/cont-unit-page {}))
+           [cont-id reqtype]
+           (views/cont-unit-page {:cont-id cont-id
+                                  :reqtype reqtype}))
   (cc/POST "/search"
            {params :params}
            (views/search-page params))
