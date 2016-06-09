@@ -282,9 +282,11 @@
       [:div
        [:h2 (str "Результаты поиска " pref " " name)]
        [:table.result
-        [:tr #_[:th "ID"] [:th "Модель"] [:th "Название"]]
+        [:tr [:th "Модель"] [:th "Наименование"] [:th "Действие"]]
         (for [r (db/get-products pref name)]
           [:tr {:onclick "insertToForm(this, event);"}
-           #_[:td (:cont_id r)]
            [:td (:pref r)]
-           [:td (:name r)]])]])]))
+           [:td (:name r)]
+           [:td [:a {:href (str "/cont_unit_req?reqtype=s&cont-id="
+                                (:cont_id r))}
+                 "Состав"]]])]])]))
