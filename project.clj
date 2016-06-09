@@ -1,4 +1,4 @@
-(defproject my-webapp "0.1.1-SNAPSHOT"
+(defproject my-webapp "0.1.2-SNAPSHOT"
   :description "Поиск по базе данных ОГК"
   :url "http://192.168.0.132/"
   :min-lein-version "2.0.0"
