@@ -101,7 +101,11 @@
       [:div [:h1 "Результаты запроса"]
        [:h2 (str (if (= reqtype "s")
                    "Состав узла: "
-                   "Входимость: ") pref num)]
+                   "Входимость: ")
+                 (if ((complement nil?) cont-id)
+                   (let [{:keys [prefix num]} (db/get-unit-by-id cont-id)]
+                     (str prefix num))
+                   (str pref num)))]
        [:table.result
         (let [cols ["Обозн." "Номер" "Название" "Кол." "Поз."]]
           (let [head (if (= reqtype  "s")
