@@ -7,6 +7,11 @@
                             "\\ogkdb\\ogkdb;IGNORECASE=true")
               :user "sa"})
 
+(defn get-unit-by-id
+  [id]
+  (first (sql/query db-spec
+                    ["select * from unit where id = ?" id])))
+
 (defn get-composition
   [prefix num]
   (sql/query db-spec
