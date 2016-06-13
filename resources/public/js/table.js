@@ -69,3 +69,15 @@ function joinColumns() {
 	columnsJoined = true;
     }
 }
+
+function showOnlyTable(btn){
+    if (btn.innerHTML == "^") {
+	btn.innerHTML = "v";
+	document.getElementById("header-links").style.display = "none";
+	document.getElementById("reqForm").style.display = "none"; 
+    } else {
+	document.getElementById("header-links").style.display = "block";
+	document.getElementById("reqForm").style.display = "block";
+	btn.innerHTML = "^";
+    }
+}
