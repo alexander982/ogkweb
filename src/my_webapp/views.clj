@@ -94,37 +94,38 @@
    (gen-page-head "Поиск состава/входимости")
    header-links
    (form-hidden pref num)
-   [:div {:align "center"}
+   [:div#reqForm {:align "center"}
     [:h1 "Введите данные"]
-    (form-contain-unit-post pref num)
-    (when (or cont-id pref num)
-      [:div [:h1 "Результаты запроса"]
-       [:h2 (str (if (= reqtype "s")
-                   "Состав узла: "
-                   "Входимость: ")
-                 (if ((complement nil?) cont-id)
-                   (let [{:keys [prefix num]} (db/get-unit-by-id cont-id)]
-                     (str prefix num))
-                   (str pref num)))]
-       [:table.result
-        (let [cols ["Обозн." "Номер" "Название" "Кол." "Поз."]]
-          (let [head (if (= reqtype  "s")
-                       (for [c cols] [:th c])
-                       (for [c (take 3 cols)] [:th c]))]
-            (conj (conj (first head)
-                        [:button {:onclick "joinColumns();"} "<"])
-                  (rest head))))
-        (for [compos (if (= reqtype "s")
-                       (if cont-id
-                         (db/get-composition-by-id cont-id)
-                         (db/get-composition pref num))
-                       (db/get-includes pref num))]
-          [:tr {:onclick "insertToForm(this, event);"} [:td (:prefix compos)]
-           [:td (:num compos)]
-           [:td (:name compos)]
-           (when (= reqtype "s")
-             (list [:td (:qnt compos)]
-                   [:td (:pos compos)]))])]])]))
+    (form-contain-unit-post pref num)]
+   (when (or cont-id pref num)
+     [:div#resultFrame {:align "center"}
+      [:h1 "Результаты запроса"]
+      [:h2 (str (if (= reqtype "s")
+                  "Состав узла: "
+                  "Входимость: ")
+                (if ((complement nil?) cont-id)
+                  (let [{:keys [prefix num]} (db/get-unit-by-id cont-id)]
+                    (str prefix num))
+                  (str pref num)))]
+      [:table.result
+       (let [cols ["Обозн." "Номер" "Название" "Кол." "Поз."]]
+         (let [head (if (= reqtype  "s")
+                      (for [c cols] [:th c])
+                      (for [c (take 3 cols)] [:th c]))]
+           (conj (conj (first head)
+                       [:button {:onclick "joinColumns();"} "<"])
+                 (rest head))))
+       (for [compos (if (= reqtype "s")
+                      (if cont-id
+                        (db/get-composition-by-id cont-id)
+                        (db/get-composition pref num))
+                      (db/get-includes pref num))]
+         [:tr {:onclick "insertToForm(this, event);"} [:td (:prefix compos)]
+          [:td (:num compos)]
+          [:td (:name compos)]
+          (when (= reqtype "s")
+            (list [:td (:qnt compos)]
+                  [:td (:pos compos)]))])]])))
 
 (defn form-search
   [pref num name]
