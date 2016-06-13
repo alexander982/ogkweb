@@ -115,7 +115,8 @@
                       (for [c cols] [:th c])
                       (for [c (take 3 cols)] [:th c]))]
            (conj (conj (first head)
-                       [:button {:onclick "joinColumns();"} "<"])
+                       [:button {:onclick "joinColumns();"
+                                 :title "Объединить с соседней"} "<"])
                  (rest head))))
        (for [compos (if (= reqtype "s")
                       (if cont-id
