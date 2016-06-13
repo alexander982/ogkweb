@@ -99,7 +99,9 @@
     (form-contain-unit-post pref num)]
    (when (or cont-id pref num)
      [:div#resultFrame {:align "center"}
-      [:h1 "Результаты запроса"]
+      [:h1 "Результаты запроса "
+       [:button {:title "Показать/скрыть остальное"
+                 :onclick "showOnlyTable(this)"} "^"]]
       [:h2 (str (if (= reqtype "s")
                   "Состав узла: "
                   "Входимость: ")
