@@ -3,6 +3,7 @@
   :url "http://192.168.0.132/"
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.6.0"]
+                 [selmer "1.0.4"]
                  [hiccup "1.0.5"]
                  [org.clojure/java.jdbc "0.4.2"]
                  [com.h2database/h2 "1.4.189"]
