@@ -28,3 +28,14 @@ form {
 .selection {
     background-color: #55ffaa;
  }
+@media print {
+    #header-links{
+        display:none;
+    }
+    #reqForm{
+        display:none;
+    }
+    button {
+        display:none;
+    }
+}
