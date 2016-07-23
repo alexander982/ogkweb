@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-3">
+  {% include "ogk-left-nav.html" %}
+  </div>
+  <div class="col-md-4 col-md-offset-2">
+    <form>
+      <div class="form-group">
+	<label for="inputPrefix">Обозначение</label>
+	<input type="text" class="form-control" id="inputPrefix"
+	       placeholder="ОШ-450" name="pref">
+      </div>
+      <div class="form-group">
+	<label for="inputNumber">Номер</label>
+	<input type="text" class="form-control" id="inputNumber"
+	       placeholder=".81.2.000.0.00" name="num">
+      </div>
+      <button type="submit" class="button button-default">Поиск</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
