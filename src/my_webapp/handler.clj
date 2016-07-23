@@ -1,15 +1,18 @@
 (ns my-webapp.handler
-  (:require [my-webapp.views :as views]
-            [compojure.core :as cc]
-            [compojure.route :as route]
+  (:require [compojure.core :as cc]
             [compojure.handler :as handler]
+            [compojure.route :as route]
+            [my-webapp.db :as db]
+            [my-webapp.layout :as layout]
+            [my-webapp.views :as views]
             [ring.adapter.jetty :as jetty])
   (:gen-class))
 
 (cc/defroutes app-routes
   (cc/GET "/"
           []
-          (views/home-page))
+          (layout/render "home.html"
+                         {:db-update-date (:v_date (db/get-version-date))}))
   (cc/POST "/cont_unit_req"
            {params :params}
            (views/cont-unit-page params))
