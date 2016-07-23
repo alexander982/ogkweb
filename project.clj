@@ -5,6 +5,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [selmer "1.0.4"]
                  [hiccup "1.0.5"]
+                 [metosin/ring-http-response "0.6.5"]
                  [org.clojure/java.jdbc "0.6.1"]
                  [com.h2database/h2 "1.4.189"]
                  [compojure "1.5.1"]
