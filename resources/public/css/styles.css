@@ -38,4 +38,7 @@ form {
     button {
         display:none;
     }
+    #resultFrame h1{
+        display:none;
+    }
 }
