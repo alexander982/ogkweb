@@ -1,11 +1,11 @@
 (ns my-webapp.handler
   (:require [compojure.core :as cc]
-            [compojure.handler :as handler]
+            #_[compojure.handler :as handler]
             [compojure.route :as route]
             [my-webapp.db :as db]
             [my-webapp.layout :as layout]
             [my-webapp.views :as views]
-            [ring.adapter.jetty :as jetty])
+            #_[ring.adapter.jetty :as jetty])
   (:gen-class))
 
 (cc/defroutes app-routes
@@ -49,9 +49,9 @@
 
 
 (def app
-  (handler/site app-routes))
+  app-routes)
 
-(defn -main
+#_(defn -main
   [& [port]]
   (let [port (Integer. (or port
                            (System/getenv "PORT")
