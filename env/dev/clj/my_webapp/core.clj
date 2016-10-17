@@ -2,7 +2,7 @@
   (:require [my-webapp.handler :as handler]
             [luminus.repl-server :as repl]
             [luminus.http-server :as http]
-            [ogk-web.config :refer [env]]
+            [my-webapp.config :refer [env]]
             [clojure.tools.cli :refer [parse-opts]]
             [clojure.tools.logging :as log]
             [mount.core :as mount])
