@@ -7,8 +7,8 @@
   {:init
    (fn []
      (parser/cache-off!)
-     (log/info "\n-=[mpm-web started successfully using the development profile]=-"))
+     (log/info "\n-=[my-webapp started successfully using the development profile]=-"))
    :stop
    (fn []
-     (log/info "\n-=[mpm-web has shut down successfully]=-"))
+     (log/info "\n-=[my-webapp has shut down successfully]=-"))
    :middleware wrap-dev})
