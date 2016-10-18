@@ -1,22 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="row">
-  <div class="col-md-3">
-  {% include "ogk-left-nav.html" %}
-  </div>
-  <div class="col-md-4 col-md-offset-2">
-    <form>
+  <div class="col-md-offset-2 col-md-7">
+    <form class="form-horizontal" action="{{servlet-context}}/search/results">
       <div class="form-group">
-	<label for="inputPrefix">Обозначение</label>
-	<input type="text" class="form-control" id="inputPrefix"
-	       placeholder="ОШ-450" name="pref">
+        <label for="inputPrefix" class="col-md-3 control-label">Обозначение</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="inputPrefix"
+                placeholder="ОШ-999" name="pref">
+         </div>
       </div>
       <div class="form-group">
-	<label for="inputNumber">Номер</label>
-	<input type="text" class="form-control" id="inputNumber"
-	       placeholder=".81.2.000.0.00" name="num">
+        <label for="inputNumber" class="col-md-3 control-label">Номер</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="inputNumber"
+               placeholder=".00.0.000.0.00" name="num">
+        </div>
       </div>
-      <button type="submit" class="button button-default">Поиск</button>
+      <div class="form-group">
+        <label for="inputNumber" class="col-md-3 control-label">Название</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="inputName"
+               placeholder="Название" name="name">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-6">
+            <button type="submit" class="button button-default">Поиск</button>
+        </div>
+      </div>
     </form>
   </div>
 </div>
