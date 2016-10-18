@@ -154,9 +154,7 @@
 (defn get-version-date
   []
   (sql/query db-spec
-             [(str "select day(v_date) as day,"
-                   "month(v_date) as month,"
-                   "year(v_date) as year "
+             [(str "select v_date "
                    "from versions "
                    "where v_id = (select cv_id from cversion);")]))
 
