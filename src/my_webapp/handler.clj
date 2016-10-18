@@ -34,13 +34,14 @@
   (doseq [component (:stopped (mount/stop))]
     (log/info component "stopped"))
   (shutdown-agents)
-  (log/info "mpm-web has shut down!"))
+  (log/info "my-webapp has shut down!"))
 
 (cc/defroutes app-routes
   (cc/GET "/"
           []
           (layout/render "home.html"
-                         {:db-update-date (:v_date (db/get-version-date))}))
+                         {:db-update-date (:v_date
+                                           (first (db/get-version-date)))}))
   (cc/POST "/cont_unit_req"
            {params :params}
            (views/cont-unit-page params))
