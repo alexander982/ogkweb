@@ -54,7 +54,7 @@
            (views/search-page params))
   (cc/GET "/search"
           []
-          (views/search-page {}))
+          (layout/render "search.html"))
   (cc/POST "/diff"
            {params :params}
            (views/diff-page params))
