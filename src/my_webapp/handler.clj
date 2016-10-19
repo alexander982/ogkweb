@@ -58,7 +58,7 @@
           (layout/render "search.html"))
   (cc/GET "/search/results"
           [pref num name]
-          (log/info "serch/results?pref=" pref "&num=" num "&name=" name)
+          (log/info "search/results?pref=" pref "&num=" num "&name=" name)
           (layout/render "search/results.html"
                          {:results (db/get-units pref num name)
                           :pref pref
