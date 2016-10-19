@@ -83,7 +83,7 @@
            (views/products-page params))
   (cc/GET "/products"
           []
-          (views/products-page {}))
+          (layout/render "products/index.html"))
   (route/resources "/")
   (route/not-found "Not Found"))
 
