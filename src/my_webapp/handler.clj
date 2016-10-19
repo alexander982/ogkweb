@@ -10,6 +10,7 @@
             [my-webapp.db :as db]
             [my-webapp.layout :as layout]
             [my-webapp.views :as views]
+            [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             #_[ring.adapter.jetty :as jetty])
   (:gen-class))
 
@@ -46,15 +47,25 @@
            {params :params}
            (views/cont-unit-page params))
   (cc/GET "/cont_unit_req"
-           [cont-id reqtype]
-           (views/cont-unit-page {:cont-id cont-id
-                                  :reqtype reqtype}))
+          [cont-id reqtype]
+          (views/cont-unit-page {:cont-id cont-id
+                                 :reqtype reqtype}))
   (cc/POST "/search"
            {params :params}
            (views/search-page params))
   (cc/GET "/search"
           []
           (layout/render "search.html"))
+  (cc/GET "/search/results"
+          [pref num name]
+          (log/info "serch/results?pref=" pref "&num=" num "&name=" name)
+          (layout/render "search/results.html"
+                         {:results (db/get-units pref num name)
+                          :pref pref
+                          :num num
+                          :name name
+                          :db-update-date (:v_date
+                                           (first (db/get-version-date)))}))
   (cc/POST "/diff"
            {params :params}
            (views/diff-page params))
@@ -78,7 +89,8 @@
 
 
 (def app
-  app-routes)
+  (-> ((:middleware defaults) #'app-routes)
+      (wrap-defaults site-defaults)))
 
 #_(defn -main
   [& [port]]
