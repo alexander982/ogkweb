@@ -84,6 +84,15 @@
   (cc/GET "/products"
           []
           (layout/render "products/index.html"))
+  (cc/GET "/products/results"
+          [pref name]
+          (log/info "products/results?pref=" pref "&name=" name)
+          (layout/render "products/results.html"
+                         {:results (db/get-products pref name)
+                          :pref pref
+                          :name name
+                          :db-update-date (:v_date
+                                           (first (db/get-version-date)))}))
   (route/resources "/")
   (route/not-found "Not Found"))
 
