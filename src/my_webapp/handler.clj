@@ -61,6 +61,18 @@
                             :db-update-date
                             (:v_date
                              (first (db/get-version-date)))})))
+  
+  (cc/GET "/occurrence/results"
+          [id]
+          (log/info "GET occurrence/results?id=" id)
+          (let [{:keys [prefix num]} (db/get-unit-by-id id)]
+            (layout/render "occurrence/results.html"
+                           {:results (db/get-occurrence-by-id id)
+                            :pref prefix
+                            :num num
+                            :db-update-date
+                            (:v_date
+                             (first (db/get-version-date)))})))
   (cc/GET "/search"
           []
           (layout/render "search.html"))
@@ -85,7 +97,18 @@
            (views/metals-page params))
   (cc/GET "/metals"
           []
-          (views/metals-page {}))
+          (layout/render "metals/index.html"))
+  (cc/GET "/metals/results"
+          [id]
+          (log/info "GET metals/results?id=" id)
+          (let [{:keys [prefix num]} (db/get-unit-by-id id)]
+            (layout/render "metals/results.html"
+                           {:results (db/get-metals-by-id id)
+                            :pref prefix
+                            :num num
+                            :db-update-date
+                            (:v_date
+                             (first (db/get-version-date)))})))
 
   (cc/GET "/products"
           []
