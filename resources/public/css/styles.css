@@ -1,4 +1,6 @@
 .selection {
     background-color: #55ffaa;
  }
- 
+ #popup {
+    display: none;
+ }
