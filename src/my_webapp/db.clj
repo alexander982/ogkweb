@@ -25,7 +25,7 @@
 (defn get-includes
   [prefix num]
   (sql/query db-spec
-             [(str "select prefix, num, name "
+             [(str "select id, prefix, num, name "
                    "from unit where id in "
                    "(select cont_id from contain "
                    "where unit_id in "
@@ -35,7 +35,7 @@
 (defn get-occurrence-by-id
   [id]
   (sql/query db-spec
-             [(str "select prefix, num, name "
+             [(str "select id, prefix, num, name "
                    "from unit where id in "
                    "(select cont_id from contain "
                    "where unit_id = ?)")
