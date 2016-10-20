@@ -35,7 +35,7 @@
 (defn get-units
   [pref num name]
   (sql/query db-spec
-             [(str "select prefix, num, name from unit "
+             [(str "select id, prefix, num, name from unit "
                    "where prefix like ? and num like ? and name like ?")
               (str "%" pref "%")
               (str "%" num "%")
