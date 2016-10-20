@@ -32,6 +32,15 @@
                    "(select id from unit where prefix like ? and num like ?))")
               prefix num ]))
 
+(defn get-occurrence-by-id
+  [id]
+  (sql/query db-spec
+             [(str "select prefix, num, name "
+                   "from unit where id in "
+                   "(select cont_id from contain "
+                   "where unit_id = ?)")
+              (Integer/parseInt id)]))
+
 (defn get-units
   [pref num name]
   (sql/query db-spec
