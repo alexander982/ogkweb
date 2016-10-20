@@ -169,7 +169,7 @@
 (defn get-composition-by-id
   [id]
   (sql/query db-spec
-             ["select c.pos, u.prefix, u.num, u.name, c.qnt
+             ["select c.pos, u.id, u.prefix, u.num, u.name, c.qnt
                from unit u inner join contain c on u.id = c.unit_id
                where c.cont_id = ?
                order by convert(c.pos,int)"
