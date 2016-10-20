@@ -50,9 +50,7 @@
           [cont-id reqtype]
           (views/cont-unit-page {:cont-id cont-id
                                  :reqtype reqtype}))
-  (cc/POST "/search"
-           {params :params}
-           (views/search-page params))
+
   (cc/GET "/search"
           []
           (layout/render "search.html"))
@@ -78,9 +76,7 @@
   (cc/GET "/metals"
           []
           (views/metals-page {}))
-  (cc/POST "/products"
-           {params :params}
-           (views/products-page params))
+
   (cc/GET "/products"
           []
           (layout/render "products/index.html"))
