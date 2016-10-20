@@ -12,7 +12,7 @@
             </caption>
             <tr><th>Обозначение</th><th>Номер</th><th>Название</th></tr>
             {% for res in results %}
-                <tr>
+                <tr data-id="{{res.id}}">
                     <td>{{res.prefix}}</td>
                     <td>{{res.num}}</td>
                     <td>{{res.name}}</td>
@@ -21,4 +21,18 @@
         </table>
     </div>
 </div>
+<div id="popup" title="Действия">
+    <p><a href="/composition/results?id=">Состав</a></p>
+    <p><a href="/occurrence/results?id=">Входимость</a></p>
+</div>
+{% endblock %}
+{% block page-scripts %}
+{% script "/js/results.js" %}
+<script type="text/javascript">
+    $('table tr:not(:first)').click(selectOneRow);
+    $('#popup').dialog({
+        width: 90,
+        autoOpen: false
+    });
+</script>
 {% endblock %}
