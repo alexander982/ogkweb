@@ -50,7 +50,17 @@
           [cont-id reqtype]
           (views/cont-unit-page {:cont-id cont-id
                                  :reqtype reqtype}))
-
+  (cc/GET "/composition/results"
+          [id]
+          (log/info "GET composition/results?id=" id)
+          (let [{:keys [prefix num]} (db/get-unit-by-id id)]
+            (layout/render "composition/results.html"
+                           {:results (db/get-composition-by-id id)
+                            :pref prefix
+                            :num num
+                            :db-update-date
+                            (:v_date
+                             (first (db/get-version-date)))})))
   (cc/GET "/search"
           []
           (layout/render "search.html"))
