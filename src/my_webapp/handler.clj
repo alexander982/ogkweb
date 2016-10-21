@@ -92,9 +92,7 @@
   (cc/GET "/diff"
           []
           (views/diff-page {}))
-  (cc/POST "/metals"
-           {params :params}
-           (views/metals-page params))
+
   (cc/GET "/metals"
           []
           (layout/render "metals/index.html"))
