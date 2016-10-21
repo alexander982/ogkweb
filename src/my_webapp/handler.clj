@@ -82,16 +82,22 @@
           []
           (layout/render "metals/index.html"))
   (cc/GET "/metals/results"
-          [id]
-          (log/info "GET metals/results?id=" id)
-          (let [{:keys [prefix num]} (db/get-unit-by-id id)]
-            (layout/render "metals/results.html"
-                           {:results (db/get-metals-by-id id)
-                            :pref prefix
-                            :num num
-                            :db-update-date
-                            (:v_date
-                             (first (db/get-version-date)))})))
+          [id pref num]
+          (log/info "GET metals/results?id=" id "&pref=" pref "&num" num)
+          (let [update-date (:v_date
+                             (first (db/get-version-date)))]
+            (if id
+              (let [{:keys [prefix num]} (db/get-unit-by-id id)]
+                (layout/render "metals/results.html"
+                               {:results (db/get-metals-by-id id)
+                                :pref prefix
+                                :num num
+                                :db-update-date update-date}))
+              (layout/render "metals/results.html"
+                             {:results (db/get-metals pref num)
+                              :pref pref
+                              :num num
+                              :db-update-date update-date}))))
 
   (cc/GET "/products"
           []
@@ -105,6 +111,9 @@
                           :name name
                           :db-update-date (:v_date
                                            (first (db/get-version-date)))}))
+  (cc/GET "/about"
+          []
+          (layout/render "about.html"))
   (route/resources "/")
   (route/not-found "Not Found"))
 
