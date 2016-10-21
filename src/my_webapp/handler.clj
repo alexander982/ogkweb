@@ -43,13 +43,7 @@
           (layout/render "home.html"
                          {:db-update-date (:v_date
                                            (first (db/get-version-date)))}))
-  (cc/POST "/cont_unit_req"
-           {params :params}
-           (views/cont-unit-page params))
-  (cc/GET "/cont_unit_req"
-          [cont-id reqtype]
-          (views/cont-unit-page {:cont-id cont-id
-                                 :reqtype reqtype}))
+
   (cc/GET "/composition/results"
           [id]
           (log/info "GET composition/results?id=" id)
