@@ -4,8 +4,7 @@
   :min-lein-version "2.0.0"
   :dependencies [
                  [org.clojure/clojure "1.8.0"]
-                 [selmer "1.0.4"]
-                 [hiccup "1.0.5"]
+                 [selmer "1.0.4"] 
                  [metosin/ring-http-response "0.6.5"]
                  [org.clojure/java.jdbc "0.6.1"]
                  [org.clojure/tools.logging "0.3.1"]
