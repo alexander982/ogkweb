@@ -1,7 +1,6 @@
 (ns my-webapp.handler
   (:require [compojure.core :as cc]
-            [clojure.tools.logging :as log]
-            #_[compojure.handler :as handler]
+            [clojure.tools.logging :as log] 
             [compojure.route :as route]
             [luminus.logger :as logger]
             [mount.core :as mount]
@@ -10,8 +9,7 @@
             [my-webapp.db :as db]
             [my-webapp.layout :as layout]
             [my-webapp.views :as views]
-            [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
-            #_[ring.adapter.jetty :as jetty])
+            [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
   (:gen-class))
 
 (mount/defstate init-app
@@ -122,10 +120,3 @@
   (-> ((:middleware defaults) #'app-routes)
       (wrap-defaults site-defaults)))
 
-#_(defn -main
-  [& [port]]
-  (let [port (Integer. (or port
-                           (System/getenv "PORT")
-                           5000))]
-    (jetty/run-jetty #'app {:port port
-                            :join? false})))
