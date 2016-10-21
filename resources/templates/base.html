@@ -20,14 +20,20 @@
 
           <ul class="nav navbar-nav">
               <li class="nav-item">
+                  <a href="{{servlet-context}}/search"
+                     class="nav-link {% ifequal page 'search.html' %} active{%endifequal%}">
+                    Поиск
+                  </a>
+              </li>
+              <li class="nav-item">
                   <a href="{{servlet-context}}/products"
-                     class="nav-link {% ifequal page "home.html" %} active{%endifequal%}">
+                     class="nav-link {% ifequal page 'products/index.html' %} active{%endifequal%}">
                     Продукция
                   </a>
               </li>
               <li class="nav-item">
                   <a href="{{servlet-context}}/about"
-                     class="nav-link {% ifequal page "about.html" %} active{%endifequal%}">
+                     class="nav-link {% ifequal page 'about.html' %} active{%endifequal%}">
                     О проекте
                   </a>
               </li>
