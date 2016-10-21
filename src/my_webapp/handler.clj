@@ -8,7 +8,6 @@
             [my-webapp.config :refer [env]]
             [my-webapp.db :as db]
             [my-webapp.layout :as layout]
-            [my-webapp.views :as views]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
   (:gen-class))
 
