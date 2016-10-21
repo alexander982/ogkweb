@@ -78,12 +78,6 @@
                           :name name
                           :db-update-date (:v_date
                                            (first (db/get-version-date)))}))
-  (cc/POST "/diff"
-           {params :params}
-           (views/diff-page params))
-  (cc/GET "/diff"
-          []
-          (views/diff-page {}))
 
   (cc/GET "/metals"
           []
