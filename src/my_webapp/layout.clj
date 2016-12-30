@@ -15,7 +15,7 @@
      template
      (assoc params
             :page template
-            :serverlet-context *app-context*)))
+            :servlet-context *app-context*)))
    "text/html; charset=utf-8"))
 
 (defn error-page
