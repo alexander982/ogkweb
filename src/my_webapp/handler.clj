@@ -8,7 +8,9 @@
             [my-webapp.config :refer [env]]
             [my-webapp.db :as db]
             [my-webapp.layout :as layout]
-            [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
+            [my-webapp.middleware :refer [wrap-context]]
+            [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
+            [ring-ttl-session.core :refer [ttl-memory-store]])
   (:gen-class))
 
 (mount/defstate init-app
@@ -114,11 +116,14 @@
   (cc/GET "/about"
           []
           (layout/render "about.html"))
-  (route/resources "/")
+  #_(route/resources "/")
   (route/not-found "Not Found"))
 
 
 (def app
   (-> ((:middleware defaults) #'app-routes)
-      (wrap-defaults site-defaults)))
+      (wrap-defaults
+       (-> site-defaults
+           (assoc-in [:session :store] (ttl-memory-store (* 60 30)))))
+      wrap-context))
 

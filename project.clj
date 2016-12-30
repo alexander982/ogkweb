@@ -15,6 +15,7 @@
                  [ring/ring-defaults "0.2.1"]
                  [luminus-nrepl "0.1.4"]
                  [luminus-log4j "0.1.3"]
+                 [luminus/ring-ttl-session "0.3.1"]
                  [mount "0.1.10"]
                  [cprop "0.1.8"]
                  ]
