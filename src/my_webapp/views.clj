@@ -73,6 +73,9 @@
    (gen-page-head "Сайт ОГК")
    header-links
    [:div {:align "center"}
+    [:h1 "Доступна новая версия сайта!"]
+    [:h6 "В старых браузерах могут некорректно отображаться страницы!"]
+    [:p [:a {:href "/new"} "Перейти на новую версию сайта"]]
     [:h1 "База ОГК"]
     (let [[{:keys [day month year]}] (db/get-version-date)]
       [:h2 "Выборка данных на " [:u (str day "." month "." year "!")]])
