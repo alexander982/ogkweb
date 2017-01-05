@@ -8,7 +8,7 @@
             [my-webapp.config :refer [env]]
             [my-webapp.db :as db]
             [my-webapp.layout :as layout]
-            [my-webapp.middleware :refer [wrap-context]]
+            [my-webapp.middleware :refer [wrap-context wrap-internal-error]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring-ttl-session.core :refer [ttl-memory-store]])
   (:gen-class))
@@ -117,7 +117,11 @@
           []
           (layout/render "about.html"))
   #_(route/resources "/")
-  (route/not-found "Not Found"))
+  (route/not-found (:body
+                    (layout/error-page
+                     {:status 404
+                      :title "Страница не найдена!"
+                      :message "Специально обученные гномы не смогли откопать страницу, которую вы запрашиваете!"}))))
 
 
 (def app
@@ -125,5 +129,6 @@
       (wrap-defaults
        (-> site-defaults
            (assoc-in [:session :store] (ttl-memory-store (* 60 30)))))
-      wrap-context))
+      wrap-context
+      wrap-internal-error))
 
