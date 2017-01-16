@@ -4,6 +4,11 @@
     <div class="col-md-offset-2 col-md-7">
         <div class="col-md-offset-3"><h2>Поиск продукции</h2></div>
         <form class="form-horizontal" action="{{servlet-context}}/products/results">
+          {% if error %}
+          <div class="alert alert-danger">
+            {{message}}
+          </div>
+          {% endif %}
           <div class="form-group">
             <label for="inputPrefix" class="col-md-3 control-label">Обозначение</label>
             <div class="col-md-6">

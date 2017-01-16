@@ -18,6 +18,7 @@
                  [luminus/ring-ttl-session "0.3.1"]
                  [mount "0.1.10"]
                  [cprop "0.1.8"]
+                 [bouncer "1.0.0"]
                  ]
   
   :jvm-opts ["-server" "-Dconf=.lein-env"]
