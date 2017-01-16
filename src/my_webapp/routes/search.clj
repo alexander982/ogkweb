@@ -12,7 +12,7 @@
 (defn search-results-page [pref num name {flash :flash}]
   (if (every? empty? [pref num name])
     (do (log/info "GET /search/results has empty params! redirect to /search")
-        (assoc (found "/search")
+        (assoc (found (str layout/*app-context* "/search"))
                :flash
                {:error true
                 :message "Нужно указать хотябы один параметр поиска!"}))
