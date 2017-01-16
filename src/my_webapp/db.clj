@@ -192,7 +192,7 @@
   [prefix name]
   (sql/query db-spec
              ["select cont_id, pref, name 
-               from product where pref like ? and name like ?"
+               from product where pref like ? and (name like ? or name is null)"
               (str "%" prefix "%")
               (str "%" name "%")]))
 
