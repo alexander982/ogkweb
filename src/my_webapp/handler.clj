@@ -5,7 +5,6 @@
             [luminus.logger :as logger]
             [mount.core :as mount]
             [my-webapp.config :refer [env]]
-            [my-webapp.db :as db]
             [my-webapp.env :refer [defaults]]
             [my-webapp.layout :as layout]
             [my-webapp.middleware :refer [wrap-context wrap-internal-error]]
@@ -62,4 +61,3 @@
            (assoc-in [:session :store] (ttl-memory-store (* 60 30)))))
       wrap-internal-error
       wrap-context))
-
