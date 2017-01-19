@@ -1,7 +1,7 @@
 (ns my-webapp.routes.search
   (:require [clojure.tools.logging :as log]
             [compojure.core :refer [defroutes GET]]
-            [my-webapp.db :as db]
+            [my-webapp.db.core :as db]
             [my-webapp.layout :as layout]
             [ring.util.http-response :refer [found]]))
 
@@ -16,13 +16,16 @@
                :flash
                {:error true
                 :message "Нужно указать хотябы один параметр поиска!"}))
-    (layout/render "search/results.html"
-                   {:results (db/get-units pref num name)
-                    :pref pref
-                    :num num
-                    :name name
-                    :db-update-date (:v_date
-                                     (first (db/get-version-date)))})))
+    (do (log/info "GET search/results" pref num name)
+        (layout/render "search/results.html"
+                       {:results (db/get-units {:pref (str "%" pref "%")
+                                                :num (str "%" num "%")
+                                                :name (str "%" name "%")})
+                        :pref pref
+                        :num num
+                        :name name
+                        :db-update-date (:v_date
+                                         (db/get-last-db-update))}))))
 
 (defroutes search-routes
   (GET "/search" req (search-page req))
