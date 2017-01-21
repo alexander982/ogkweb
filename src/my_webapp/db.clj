@@ -204,3 +204,17 @@
                where c.cont_id = ?
                order by convert(c.pos,int)"
               (Integer/parseInt id)]))
+
+(defn get-plan-years
+  []
+  (sql/query db-spec
+             ["select distinct year from plan order by year desc"]))
+
+(defn get-plans
+  [year quarter month]
+  (sql/query db-spec
+             [(str "select model, m"
+                   month " as qnt"
+                   " from plan where year = " year
+                   " and quarter = " quarter
+                   " and  m" month " <>0")]))
