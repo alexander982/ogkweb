@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <div class="col-md-offset-2 hidden-print"><h2>Просмотр плана выпуска продукции</h2>
+    <form class="form-horizontal hidden-print" action="{{servlet-context}}/plans">
+      <div class="form-group">
+        <label for="inputYear" class="col-md-3 control-label">Год</label>
+        <div class="col-md-6">
+            <select class="form-control" id="inputYear" name="year">
+                <option disabled selected>Выберите год</option>
+                {%for year in years%}
+                    <option>{{year.year}}</option>
+                {% endfor %}
+            </select>
+         </div>
+      </div>
+      <div class="form-group">
+        <label for="inputMonth" class="col-md-3 control-label">Месяц</label>
+        <div class="col-md-6">
+            <select class="form-control" id="inputMonth" name="month">
+                <option disabled selected>Выберите месяц</option>
+                <option value="1">Январь</option>
+                <option value="2">Февраль</option>
+                <option value="3">Март</option>
+                <option value="4">Апрель</option>
+                <option value="5">Май</option>
+                <option value="6">Июнь</option>
+                <option value="7">Июль</option>
+                <option value="8">Август</option>
+                <option value="9">Сентябрь</option>
+                <option value="10">Октябрь</option>
+                <option value="11">Ноябрь</option>
+                <option value="12">Декабрь</option>
+            </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-6">
+            <button type="submit" class="button button-default">Поиск</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
