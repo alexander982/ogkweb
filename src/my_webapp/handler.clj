@@ -13,6 +13,7 @@
             [my-webapp.routes.metals :refer [metals-routes]]
             [my-webapp.routes.products :refer [products-routes]]
             [my-webapp.routes.search :refer [search-routes]]
+            [my-webapp.routes.plan :refer [plan-routes]]
             [ring-ttl-session.core :refer [ttl-memory-store]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
   (:gen-class))
@@ -47,6 +48,7 @@
    composition-routes
    metals-routes
    products-routes
+   plan-routes
    (route/not-found
     (:body
      (layout/error-page
