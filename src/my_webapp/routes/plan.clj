@@ -20,7 +20,9 @@
                   :month month
                   :plans (db/get-plans year
                                        (inc (/ (dec month) 3))
-                                       (inc (mod (dec month) 3)))}))
+                                       (inc (mod (dec month) 3)))
+                  :db-update-date
+                  (:v_date (first (db/get-version-date)))}))
 
 (defn current-month-plan [year month]
   (let [year (if (empty? year) 0 (Integer/parseInt year))
