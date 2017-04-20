@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <META name="viewport" content="width=device-width, initial-scale=1">
+    <title>ОГК</title>
+
+    <!-- styles -->
+    {% style "/css/bootstrap.min.css" %}
+    {% style "/css/jquery-ui.min.css" %}
+    {% style "/css/styles.css" %}
+  </head>
+  <body>
+      <!-- navbar -->
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="{{servlet-context}}/">Cайт ОГК</a>
+          </div>
+
+          <ul class="nav navbar-nav">
+              <li class="nav-item">
+                  <a href="{{servlet-context}}/search"
+                     class="nav-link {% ifequal page 'search.html' %} active{%endifequal%}">
+                    Поиск
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{servlet-context}}/products"
+                     class="nav-link {% ifequal page 'products/index.html' %} active{%endifequal%}">
+                    Продукция
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{servlet-context}}/plans"
+                     class="nav-link {% ifequal page 'products/index.html' %} active{%endifequal%}">
+                    План
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{servlet-context}}/about"
+                     class="nav-link {% ifequal page 'about.html' %} active{%endifequal%}">
+                    О проекте
+                  </a>
+              </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a href="http://192.168.0.132/wiki/ru"
+                   class="nav-link">
+                   Wiki
+                </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <!-- scripts -->
+    {% script "/js/jquery.js" %}
+    {% script "/js/bootstrap.min.js" %}
+    {% script "/js/jquery-ui.min.js" %}
+    {% script "/js/table.js" %}
+
+    <script type="text/javascript">
+      var context = "{{servlet-context}}";
+      var page = "{{page}}";
+    </script>
+    {% block page-scripts %}
+    {% endblock %}
+  </body>
+</html>

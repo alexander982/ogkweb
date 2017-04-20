@@ -1,57 +1,65 @@
 (ns my-webapp.handler
-  (:require [my-webapp.views :as views]
+  (:require [clojure.tools.logging :as log]
             [compojure.core :as cc]
             [compojure.route :as route]
-            [compojure.handler :as handler]
-            [ring.adapter.jetty :as jetty])
+            [luminus.logger :as logger]
+            [mount.core :as mount]
+            [my-webapp.config :refer [env]]
+            [my-webapp.env :refer [defaults]]
+            [my-webapp.layout :as layout]
+            [my-webapp.middleware :refer [wrap-context wrap-internal-error]]
+            [my-webapp.routes.composition :refer [composition-routes]]
+            [my-webapp.routes.home :refer [home-routes]]
+            [my-webapp.routes.metals :refer [metals-routes]]
+            [my-webapp.routes.products :refer [products-routes]]
+            [my-webapp.routes.search :refer [search-routes]]
+            [my-webapp.routes.plan :refer [plan-routes]]
+            [ring-ttl-session.core :refer [ttl-memory-store]]
+            [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
   (:gen-class))
 
-(cc/defroutes app-routes
-  (cc/GET "/"
-          []
-          (views/home-page))
-  (cc/POST "/cont_unit_req"
-           {params :params}
-           (views/cont-unit-page params))
-  (cc/GET "/cont_unit_req"
-           [cont-id reqtype]
-           (views/cont-unit-page {:cont-id cont-id
-                                  :reqtype reqtype}))
-  (cc/POST "/search"
-           {params :params}
-           (views/search-page params))
-  (cc/GET "/search"
-          []
-          (views/search-page {}))
-  (cc/POST "/diff"
-           {params :params}
-           (views/diff-page params))
-  (cc/GET "/diff"
-          []
-          (views/diff-page {}))
-  (cc/POST "/metals"
-           {params :params}
-           (views/metals-page params))
-  (cc/GET "/metals"
-          []
-          (views/metals-page {}))
-  (cc/POST "/products"
-           {params :params}
-           (views/products-page params))
-  (cc/GET "/products"
-          []
-          (views/products-page {}))
-  (route/resources "/")
-  (route/not-found "Not Found"))
+(mount/defstate init-app
+  :start ((or (:init defaults) identity))
+  :stop ((or (:stop defaults) identity)))
 
+(mount/defstate log
+  :start (logger/init (:log-config env)))
+
+(defn init
+  "init will be called once when app is deployed as a servlet on an
+  app server such as Tomcat put any initialization code here"
+  []
+  (doseq [component (:started (mount/start))]
+    (log/info component "started")))
+
+(defn destroy
+  "destroy will be called when your application shuts down, put any
+  clean up code here"
+  []
+  (doseq [component (:stopped (mount/stop))]
+    (log/info component "stopped"))
+  (shutdown-agents)
+  (log/info "my-webapp has shut down!"))
+
+(def app-routes
+  (cc/routes
+   home-routes
+   search-routes
+   composition-routes
+   metals-routes
+   products-routes
+   plan-routes
+   (route/not-found
+    (:body
+     (layout/error-page
+      {:status 404
+       :title "Страница не найдена!"
+       :message "Специально обученные гномы не смогли откопать страницу, которую вы запрашиваете!"})))))
 
 (def app
-  (handler/site app-routes))
-
-(defn -main
-  [& [port]]
-  (let [port (Integer. (or port
-                           (System/getenv "PORT")
-                           5000))]
-    (jetty/run-jetty #'app {:port port
-                            :join? false})))
+  (-> ((:middleware defaults) #'app-routes)
+      (wrap-defaults
+       (-> site-defaults
+           (assoc-in [:session :store] (ttl-memory-store (* 60 30)))))
+      wrap-internal-error
+      wrap-context))

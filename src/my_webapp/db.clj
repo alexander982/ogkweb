@@ -25,17 +25,26 @@
 (defn get-includes
   [prefix num]
   (sql/query db-spec
-             [(str "select prefix, num, name "
+             [(str "select id, prefix, num, name "
                    "from unit where id in "
                    "(select cont_id from contain "
                    "where unit_id in "
                    "(select id from unit where prefix like ? and num like ?))")
               prefix num ]))
 
+(defn get-occurrence-by-id
+  [id]
+  (sql/query db-spec
+             [(str "select id, prefix, num, name "
+                   "from unit where id in "
+                   "(select cont_id from contain "
+                   "where unit_id = ?)")
+              (Integer/parseInt id)]))
+
 (defn get-units
   [pref num name]
   (sql/query db-spec
-             [(str "select prefix, num, name from unit "
+             [(str "select id, prefix, num, name from unit "
                    "where prefix like ? and num like ? and name like ?")
               (str "%" pref "%")
               (str "%" num "%")
@@ -151,12 +160,31 @@
                     "sum(cast(pal as double)*cast(qnt as int)) as pal "
                     "from sostav")]))
 
+(defn get-metals-by-id
+  [id]
+  (sql/query db-spec
+             [(str  "with recursive sostav "
+                    "(pref, num, name, qnt, gold, silver, pl, pal, id) as ("
+                    "SELECT u2.prefix, u2.num, u2.name, c.qnt,"
+                    " u2.gold, u2.silver, u2.pl, u2.pal, u2.id FROM "
+                    "(UNIT u inner join contain c on u.id = c.cont_id ) "
+                    "inner join unit u2 on u2.id  = c.unit_id "
+                    "where u.id  = " id
+                    " union all "
+                    "select u.prefix, u.num, u.name, c.qnt,"
+                    "u.gold, u.silver, u.pl, u.pal, u.id "
+                    "from ( sostav s inner join contain c on s.id = c.cont_id) "
+                    "inner join unit u on c.unit_id = u.id) "
+                    "select sum(cast(gold as double)*cast(qnt as int)) as gold,"
+                    "sum(cast(silver as double)*cast(qnt as int)) as silver,"
+                    "sum(cast(pl as double)*cast(qnt as int)) as pl,"
+                    "sum(cast(pal as double)*cast(qnt as int)) as pal "
+                    "from sostav")]))
+
 (defn get-version-date
   []
   (sql/query db-spec
-             [(str "select day(v_date) as day,"
-                   "month(v_date) as month,"
-                   "year(v_date) as year "
+             [(str "select v_date "
                    "from versions "
                    "where v_id = (select cv_id from cversion);")]))
 
@@ -164,15 +192,29 @@
   [prefix name]
   (sql/query db-spec
              ["select cont_id, pref, name 
-               from product where pref like ? and name like ?"
+               from product where pref like ? and (name like ? or name is null)"
               (str "%" prefix "%")
               (str "%" name "%")]))
 
 (defn get-composition-by-id
   [id]
   (sql/query db-spec
-             ["select c.pos, u.prefix, u.num, u.name, c.qnt
+             ["select c.pos, u.id, u.prefix, u.num, u.name, c.qnt
                from unit u inner join contain c on u.id = c.unit_id
                where c.cont_id = ?
                order by convert(c.pos,int)"
               (Integer/parseInt id)]))
+
+(defn get-plan-years
+  []
+  (sql/query db-spec
+             ["select distinct year from plan order by year desc"]))
+
+(defn get-plans
+  [year quarter month]
+  (sql/query db-spec
+             [(str "select model, m"
+                   month " as qnt"
+                   " from plan where year = " year
+                   " and quarter = " quarter
+                   " and  m" month " <>0 order by kpprod")]))

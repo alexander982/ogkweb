@@ -1,44 +1,8 @@
-#hidenForms {
-    position: absolute;
-    top: -100px;
-    left: -100px;
-}
-#header-links {
-    background-color: silver;
-    padding: 10px;
-    text-align: center;
-}
-h1 {
-    color: CornflowerBlue;
-}
-table {
-    border-collapse: collapse;
-}
-
-form {
-    background-color: wite;
-}
-
-.result  td , .result th{
-    padding: 5px;
-    border-collapse: collapse;
-    border: 1px solid black;
-}
-
 .selection {
     background-color: #55ffaa;
  }
-@media print {
-    #header-links{
-        display:none;
-    }
-    #reqForm{
-        display:none;
-    }
-    button {
-        display:none;
-    }
-    #resultFrame h1{
-        display:none;
-    }
-}
+
+ #popup {
+    display: none;
+ }
+
