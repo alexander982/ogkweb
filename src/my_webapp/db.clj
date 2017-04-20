@@ -217,4 +217,4 @@
                    month " as qnt"
                    " from plan where year = " year
                    " and quarter = " quarter
-                   " and  m" month " <>0")]))
+                   " and  m" month " <>0 order by kpprod")]))
