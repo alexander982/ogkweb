@@ -20,6 +20,7 @@
                  [mount "0.1.10"]
                  [cprop "0.1.8"]
                  [bouncer "1.0.0"]
+                 [buddy "1.3.0"]
                  ]
   
   :jvm-opts ["-server" "-Dconf=.lein-env"]
