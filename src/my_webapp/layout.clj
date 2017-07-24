@@ -3,7 +3,7 @@
             [selmer.filters :as filters]
             [ring.util.http-response :refer [content-type ok]]))
 
-(declare ^:dynamic *idenity*)
+(declare ^:dynamic *identity*)
 (declare ^:dynamic *app-context*)
 (parser/set-resource-path! (clojure.java.io/resource "templates"))
 
@@ -15,6 +15,7 @@
      template
      (assoc params
             :page template
+            :identity *identity*
             :servlet-context *app-context*)))
    "text/html; charset=utf-8"))
 
