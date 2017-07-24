@@ -218,3 +218,37 @@
                    " from plan where year = " year
                    " and quarter = " quarter
                    " and  m" month " <>0 order by kpprod")]))
+
+(defn create-user!
+  [login pass first-name last-name]
+  (sql/execute! db-spec
+             [(str "insert into users"
+                   "(login,pass,first_name,last_name)"
+                   "values (?,?,?,?)")
+              login pass first-name last-name]))
+
+(defn get-users-count
+  []
+  (sql/query db-spec
+             ["select count(*) as count from users"]))
+
+(defn set-admin-user!
+  [id]
+  (sql/execute! db-spec
+                ["update users set admin=true where id=?" id]))
+
+(defn update-user-token!
+  [id token]
+  (sql/execute! db-spec
+                ["update users set remember_token=? where id=?"]
+                token id))
+
+(defn get-user
+  [id]
+  (sql/query db-spec
+             ["select * from users where id=?" id]))
+
+(defn get-user-by-login
+  [login]
+  (sql/query db-spec
+             ["select * from users where login=?" login]))
