@@ -7,7 +7,8 @@
             [my-webapp.config :refer [env]]
             [my-webapp.env :refer [defaults]]
             [my-webapp.layout :as layout]
-            [my-webapp.middleware :refer [wrap-context wrap-internal-error]]
+            [my-webapp.middleware :refer [wrap-context wrap-internal-error wrap-identity]]
+            [my-webapp.routes.auth :refer [auth-routes]]
             [my-webapp.routes.composition :refer [composition-routes]]
             [my-webapp.routes.home :refer [home-routes]]
             [my-webapp.routes.metals :refer [metals-routes]]
@@ -49,6 +50,7 @@
    metals-routes
    products-routes
    plan-routes
+   auth-routes
    (route/not-found
     (:body
      (layout/error-page
@@ -58,6 +60,7 @@
 
 (def app
   (-> ((:middleware defaults) #'app-routes)
+      wrap-identity
       (wrap-defaults
        (-> site-defaults
            (assoc-in [:session :store] (ttl-memory-store (* 60 30)))))
