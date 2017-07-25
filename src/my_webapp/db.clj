@@ -252,3 +252,8 @@
   [login]
   (sql/query db-spec
              ["select * from users where login=?" login]))
+
+(defn get-user-by-token
+  [token]
+  (sql/query db-spec
+             ["select * from users where remember_token=?"] token))
