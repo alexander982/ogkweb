@@ -7,7 +7,7 @@
             [my-webapp.config :refer [env]]
             [my-webapp.env :refer [defaults]]
             [my-webapp.layout :as layout]
-            [my-webapp.middleware :refer [wrap-context wrap-internal-error wrap-identity]]
+            [my-webapp.middleware :refer [wrap-context wrap-internal-error wrap-auth]]
             [my-webapp.routes.auth :refer [auth-routes]]
             [my-webapp.routes.composition :refer [composition-routes]]
             [my-webapp.routes.home :refer [home-routes]]
@@ -60,7 +60,7 @@
 
 (def app
   (-> ((:middleware defaults) #'app-routes)
-      wrap-identity
+      wrap-auth
       (wrap-defaults
        (-> site-defaults
            (assoc-in [:session :store] (ttl-memory-store (* 60 30)))))
