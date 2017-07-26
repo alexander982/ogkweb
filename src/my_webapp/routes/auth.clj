@@ -38,7 +38,6 @@
       (do (db/create-user! login
                            (hashers/encrypt password)
                            nil
-                           nil
                            nil)
           (log/info "user " login " registered")
           (assoc (found (str layout/*app-context* "/auth/login"))
@@ -75,7 +74,7 @@
                                :login v/required
                                :password v/required)
         _ (log/info "client" (:remote-addr req)
-                    "is trying to login: " login)
+                    "is trying to login with: " login)
         _ (log/debug "validation: " (first validation))
         errors (first validation)]
     (if errors
@@ -102,7 +101,7 @@
                                (:id user))]
             (if (= remember "true")
               (assoc-in resp [:cookies "remember-token"]
-                        {:value (get-user-token login)
+                        {:value (get-user-token (:id user))
                          :path "/"
                          :http-only true
                          :max-age (* 30 24 60 60)})
