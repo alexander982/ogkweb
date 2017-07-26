@@ -7,7 +7,7 @@
             [my-webapp.config :refer [env]]
             [my-webapp.env :refer [defaults]]
             [my-webapp.layout :as layout]
-            [my-webapp.middleware :refer [wrap-context wrap-internal-error wrap-auth]]
+            [my-webapp.middleware :refer [wrap-base]]
             [my-webapp.routes.auth :refer [auth-routes]]
             [my-webapp.routes.composition :refer [composition-routes]]
             [my-webapp.routes.home :refer [home-routes]]
@@ -15,8 +15,7 @@
             [my-webapp.routes.products :refer [products-routes]]
             [my-webapp.routes.search :refer [search-routes]]
             [my-webapp.routes.plan :refer [plan-routes]]
-            [ring-ttl-session.core :refer [ttl-memory-store]]
-            [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
+            )
   (:gen-class))
 
 (mount/defstate init-app
@@ -59,10 +58,4 @@
        :message "Специально обученные гномы не смогли откопать страницу, которую вы запрашиваете!"})))))
 
 (def app
-  (-> ((:middleware defaults) #'app-routes)
-      wrap-auth
-      (wrap-defaults
-       (-> site-defaults
-           (assoc-in [:session :store] (ttl-memory-store (* 60 30)))))
-      wrap-internal-error
-      wrap-context))
+  (wrap-base #'app-routes))
