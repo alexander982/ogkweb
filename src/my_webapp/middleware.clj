@@ -5,6 +5,7 @@
             [my-webapp.db :as db]
             [my-webapp.layout :refer [*app-context* *identity* error-page]]
             [my-webapp.routes.auth.backend :as b]
+            [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             )
   (:import [javax.servlet ServletContext]))
 
@@ -26,6 +27,14 @@
         (error-page {:status 500
                      :title "Случилось что-то очень плохое!"
                      :message "Отправлена группа специально обученных гномов для устранения проблемы!"})))))
+
+(defn wrap-csrf [handler]
+  (wrap-anti-forgery
+   handler
+   {:error-response
+    (error-page
+     {:status 403
+      :title "Invalid anti-forgery token"})}))
 
 (defn wrap-identity [handler]
   (fn [request]
