@@ -1,6 +1,7 @@
 (ns my-webapp.layout
   (:require [selmer.parser :as parser]
             [selmer.filters :as filters]
+            [clojure.tools.logging :as log]
             [ring.util.http-response :refer [content-type ok]]
             [ring.util.anti-forgery :refer [anti-forgery-field]]
             [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
@@ -12,16 +13,17 @@
 
 (defn render
   [template & [params]]
-  (content-type
-   (ok
-    (parser/render-file
-     template
-     (assoc params
-            :page template
-            :identity *identity*
-            :csrf-token *anti-forgery-token*
-            :servlet-context *app-context*)))
-   "text/html; charset=utf-8"))
+  (let [_ (log/debug "identity " *identity*)]
+    (content-type
+     (ok
+      (parser/render-file
+       template
+       (assoc params
+              :page template
+              :identity *identity*
+              :csrf-token *anti-forgery-token*
+              :servlet-context *app-context*)))
+     "text/html; charset=utf-8")))
 
 (defn error-page
   "error-details should be a map containing the following keys:
