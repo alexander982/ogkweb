@@ -1,11 +1,15 @@
 (ns my-webapp.middleware
   (:require [clojure.tools.logging :as log]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
+            [my-webapp.env :refer [defaults]]
             [my-webapp.config :refer [env]]
             [my-webapp.db :as db]
             [my-webapp.layout :refer [*app-context* *identity* error-page]]
             [my-webapp.routes.auth.backend :as b]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
+            [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
+            [ring.middleware.flash :refer [wrap-flash]]
+            [ring-ttl-session.core :refer [ttl-memory-store]]
             )
   (:import [javax.servlet ServletContext]))
 
@@ -38,16 +42,23 @@
 
 (defn wrap-identity [handler]
   (fn [request]
-    (let [id (if-let [identity (get-in request [:session :identity])]
-               identity
-               (if-let [token (get-in request
-                                      [:cookies "remember-token" :value])]
-                 (:id (db/get-user-by-token {:token token}))))]
-      (binding [*identity* id]
-               (handler request)))))
+    (binding [*identity* (:identity request)]
+      (handler request))))
 
 (defn wrap-auth [handler]
-  (-> handler
-      wrap-identity
-      (wrap-authentication b/backend)
-      (wrap-authorization b/backend)))
+  (let [backend (b/backend)]
+    (-> handler
+        wrap-identity
+        (wrap-authentication backend)
+        (wrap-authorization backend))))
+
+(defn wrap-base [handler]
+  (-> ((:middleware defaults) handler)
+      wrap-auth
+      wrap-flash
+      (wrap-defaults
+       (-> site-defaults
+           (assoc-in [:security :anti-forgery] false)
+           (assoc-in [:session :store] (ttl-memory-store (* 60 24)))))
+      wrap-context
+      wrap-internal-error))
