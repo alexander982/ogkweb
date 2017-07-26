@@ -240,8 +240,7 @@
 (defn update-user-token!
   [id token]
   (sql/execute! db-spec
-                ["update users set remember_token=? where id=?"]
-                token id))
+                ["update users set remember_token=? where id=?" token id]))
 
 (defn get-user
   [id]
@@ -256,4 +255,4 @@
 (defn get-user-by-token
   [token]
   (sql/query db-spec
-             ["select * from users where remember_token=?"] token))
+             ["select * from users where remember_token like ?" token]))
