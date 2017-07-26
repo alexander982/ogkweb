@@ -10,14 +10,17 @@
   (reify
     proto/IAuthentication
     (-parse [_ request]
-      (if-let [id (:identity (:session request))]
-        (do (log/info "there is identity " id)
-          id)
-        (if-let [token (get-in request
-                               [:cookies "remember-token" :value])]
-          (do (log/info "there is token" token)
-              (:id (first (db/get-user-by-token token))))
-          (log/info "nothin here (:"))))
+      (let [_ (log/debug "session: " (:session request))]
+        (if-let [id (:identity (:session request))]
+          (do (log/debug "there is identity " id)
+              id)
+          (if-let [token (get-in request
+                                 [:cookies "remember-token" :value])]
+            (let [_ (log/debug "there is token" token)
+                  id (:id (first (db/get-user-by-token token)))
+                  _ (log/debug "user id: " id)]
+              id)
+            (log/debug "not authenticated")))))
     (-authenticate [_ request data]
       (authfn data))
 
