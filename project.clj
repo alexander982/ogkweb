@@ -4,7 +4,7 @@
   :min-lein-version "2.0.0"
   :dependencies [
                  [org.clojure/clojure "1.8.0"]
-                 [selmer "1.0.4"] 
+                 [selmer "1.0.4"]
                  [metosin/ring-http-response "0.6.5"]
                  [org.clojure/java.jdbc "0.6.1"]
                  [org.clojure/tools.logging "0.3.1"]
@@ -38,6 +38,7 @@
              :resource-paths ["env/prod/rosources"]}
 
    :dev [:project/dev :profiles/dev]
+   :test [:project/test :profiles/test]
    
    :project/dev {:dependencies [[ring/ring-mock "0.3.0"]
                                 [ring/ring-devel "1.5.0"]
@@ -45,6 +46,8 @@
                                 [luminus-jetty "0.1.4"]
                                 [directory-naming/naming-java "0.8"]]
                  :repl-options {:init-ns user}
-                 :source-paths ["env/dev/clj"]
+                 :source-paths ["env/dev/clj" "test/clj"]
                  :resource-paths ["env/dev/resources"]}
-   :profiles/dev {}})
+   :project/test {:resource-paths ["env/dev/resources" "env/test/resources"]}
+   :profiles/dev {}
+   :profiles/test {}})
