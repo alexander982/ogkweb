@@ -5,6 +5,7 @@
   :dependencies [
                  [org.clojure/clojure "1.8.0"]
                  [selmer "1.0.4"]
+                 [ring-middleware-format "0.7.0"]
                  [metosin/ring-http-response "0.6.5"]
                  [org.clojure/java.jdbc "0.6.1"]
                  [org.clojure/tools.logging "0.3.1"]
