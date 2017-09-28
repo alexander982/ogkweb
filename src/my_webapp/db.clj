@@ -50,6 +50,73 @@
               (str "%" num "%")
               (str "%" name "%")]))
 
+(defn get-diff-by-ids
+  [id1 id2]
+  (sql/query db-spec
+             [(str "select pref1, num1, name1, qnt1, pref2, num2, name2, qnt2, pos1, pos2 "
+                   "from (select u2.prefix as pref1,"
+                   "u2.num as num1, u2.name as name1,"
+                   "c.pos as pos1, c.qnt as qnt1 from "
+                   "(unit u inner join contain c on u.id = c.cont_id) "
+                   "inner join unit u2 on c.unit_id = u2.id "
+                   "where u.id = ? "
+                   "minus "
+                   "select u2.prefix, u2.num, u2.name, c.pos, c.qnt from "
+                   "(unit u inner join contain c on u.id = c.cont_id) "
+                   "inner join "
+                   "unit u2 on c.unit_id = u2.id "
+                   "where u.id = ? )"
+                   "left outer join "
+                   "(select u2.prefix as pref2, u2.num as num2,"
+                   "u2.name as name2, c.pos as pos2, c.qnt as qnt2 "
+                   "from "
+                   "(unit u inner join contain c on u.id = c.cont_id) "
+                   "inner join "
+                   "unit u2 on c.unit_id = u2.id "
+                   "where u.id = ? "
+                   "minus "
+                   "select u2.prefix, u2.num, u2.name, c.pos, c.qnt from "
+                   "(unit u inner join contain c on u.id = c.cont_id) "
+                   "inner join "
+                   "unit u2 on c.unit_id = u2.id "
+                   "where u.id = ?) "
+                   "on pos1 = pos2 "
+                   "union "
+                   "select pref1, num1, name1, qnt1, pref2, num2, name2, qnt2, pos1, pos2 "
+                   "from "
+                   "(select u2.prefix as pref1, u2.num as num1, "
+                   "u2.name as name1, c.pos as pos1, c.qnt as qnt1 "
+                   "from "
+                   "(unit u inner join contain c on u.id = c.cont_id) "
+                   "inner join "
+                   "unit u2 on c.unit_id = u2.id "
+                   "where u.id = ? "
+                   "minus "
+                   "select u2.prefix, u2.num, u2.name, c.pos, c.qnt from "
+                   "(unit u inner join contain c on u.id = c.cont_id) "
+                   "inner join "
+                   "unit u2 on c.unit_id = u2.id "
+                   "where u.id = ?)"
+                   "right outer join "
+                   "(select u2.prefix as pref2, u2.num as num2, "
+                   "u2.name as name2, c.pos as pos2, c.qnt as qnt2 "
+                   "from "
+                   "(unit u inner join contain c on u.id = c.cont_id) "
+                   "inner join "
+                   "unit u2 on c.unit_id = u2.id "
+                   "where u.id = ? "
+                   "minus "
+                   "select u2.prefix, u2.num, u2.name, c.pos, c.qnt from "
+                   "(unit u inner join contain c on u.id = c.cont_id) "
+                   "inner join "
+                   "unit u2 on c.unit_id = u2.id "
+                   "where u.id = ? )"
+                   "on pos1 = pos2")
+              id1 id2
+              id2 id1
+              id1 id2
+              id2 id1]))
+
 (defn get-diff
   [pref num1 num2]
   (sql/query db-spec
