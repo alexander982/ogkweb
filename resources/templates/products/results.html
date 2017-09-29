@@ -31,11 +31,8 @@
 {% block page-scripts %}
 {% script "/js/results.js" %}
 <script type="text/javascript">
-    $('table tr:not(:first)').click(selectOneRow);
-    $('#popup').dialog({
-        width: 90,
-        height: 120,
-        autoOpen: false
+    $(document).ready(function() {
+        $('tr:not(:first)').mouseenter(enterRow);
     });
 </script>
 {% endblock %}
