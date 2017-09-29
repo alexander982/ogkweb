@@ -14,11 +14,12 @@ function selectOneRow (e){
 
 function enterRow(e) {
     $('tr.selection').toggleClass('selection');
+    var bottomOffset = 15;
     var popup = $('#popup');
     var offset = $(this).offset();
     var ttop = 0;
-    if ((popup.height() + offset.top + 5) > $(document).height()) {
-        ttop = $(document).height() - popup.height() - 15;
+    if ((popup.height() + offset.top + bottomOffset) > $(document).height()) {
+        ttop = $(document).height() - popup.height() - bottomOffset;
     } else {
         ttop = offset.top;
     }
