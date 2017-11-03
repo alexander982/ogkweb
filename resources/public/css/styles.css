@@ -2,6 +2,13 @@
     background-color: #55ffaa;
  }
 
+#floatform {
+    position:fixed;
+    right:80px;
+    top:58px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+
  #popup {
     padding: 5px;
     display: none;
