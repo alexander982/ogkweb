@@ -36,3 +36,7 @@ function enterRow(e) {
     popup.show();
     $(this).addClass('selection');
 }
+function clickRow(e) {
+    $('#prefixfield').attr('value', $(this).find('td.pref').text());
+    $('#numfield').attr('value', $(this).find('td.num').text());
+}
