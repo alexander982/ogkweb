@@ -33,6 +33,10 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('tr:not(:first)').mouseenter(enterRow);
+        $(document).click(function(){
+            $('#popup').hide();
+            $('tr.selection').toggleClass('selection');
+        });
     });
 </script>
 {% endblock %}
