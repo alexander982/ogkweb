@@ -25,4 +25,5 @@ function enterRow(e) {
 function clickRow(e) {
     $('#prefixfield').attr('value', $(this).find('td.pref').text());
     $('#numfield').attr('value', $(this).find('td.num').text());
+    e.stopPropagation();
 }
