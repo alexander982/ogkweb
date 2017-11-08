@@ -9,6 +9,18 @@
     box-shadow: 0 0 6px rgba(0,0,0,0.5);
 }
 
+#diffForm {
+    display: none;
+    position:fixed;
+    right:80px;
+    top:140px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+
+#diffForm label {
+        margin: 10px;
+}
+
 .table-bordered > tbody > tr > th,
 .table-bordered > tbody > tr > td {
     border: 1px solid #bbbbbb;
