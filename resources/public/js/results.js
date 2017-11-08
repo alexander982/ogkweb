@@ -27,3 +27,26 @@ function clickRow(e) {
     $('#numfield').val($(this).find('td.num').text());
     e.stopPropagation();
 }
+function toDiff(e){
+    e.preventDefault();
+    var id = $(this).attr('href').slice(1);
+    $('#diffForm').show();
+    var id1 = $('#firstId');
+    var id2 = $('#secondId');
+    var tr = $('tr[data-id=' + id + ']');
+    if (id1.val() == "") {
+        id1.val(id);
+        $('label[for="firstId"]').text(tr.find('td.pref').text() +
+            tr.find('td.num').text());
+    } else if (id2.val() == "") {
+        id2.val(id);
+        $('label[for="secondId"]').text(tr.find('td.pref').text() +
+            tr.find('td.num').text());
+    } else {
+        id1.val(id2.val());
+        $('label[for="firstId"]').text($('label[for="secondId"]').text());
+        id2.val(id);
+        $('label[for="secondId"]').text(tr.find('td.pref').text() +
+            tr.find('td.num').text());
+    }
+}
