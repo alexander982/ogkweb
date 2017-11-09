@@ -55,6 +55,6 @@ function diff(e){
     console.log('diff');
     if ($('#firstId').val() == "" || $('#secondId').val() == "") {
         e.preventDefault();
-        alert("Выберите еще узел для сравнения!");
+        alert("Р’С‹Р±РµСЂРёС‚Рµ РµС‰Рµ СѓР·РµР» РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ!");
     }
 }
