@@ -50,3 +50,11 @@ function toDiff(e){
             tr.find('td.num').text());
     }
 }
+
+function diff(e){
+    console.log('diff');
+    if ($('#firstId').val() == "" || $('#secondId').val() == "") {
+        e.preventDefault();
+        alert("Выберите еще узел для сравнения!");
+    }
+}
