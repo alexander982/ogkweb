@@ -12,7 +12,7 @@
                 <tr><th>Обозначение</th><th>Название</th></tr>
             {% endif %}
                 <tr data-id="{{res.cont_id}}">
-                    <td>{{res.pref}}</td>
+                    <td class="pref">{{res.pref}}</td>
                     <td>{{res.name}}</td>
                 </tr>
             {% if forloop.last%}
@@ -26,6 +26,21 @@
 <div id="popup" title="Действия">
     <p><a href="{{servlet-context}}/composition/results?id=">Состав</a></p>
     <p><a href="{{servlet-context}}/metals/results?id=">Драгметаллы</a></p>
+    <p><a id="aDiff" href="=" title="Добавить для сравнения">К сравнению</a></p>
+</div>
+<div id="diffForm" class="hidden-print">
+    <form>
+        <div class="form-group">
+            <label for="firstId">Select..</label>
+            <input type="hidden" id="firstId" name="id1">
+        </div>
+        <div class="form-group">
+            <label for="secondId">Select..</label>
+            <input type="hidden" id="secondId" name="id2">
+        </div>
+        <button type="submit" class="btn btn-default"
+            formaction="{{servlet-context}}/diff/results">Сравнить</button>
+    </form>
 </div>
 {% endblock %}
 {% block page-scripts %}
@@ -37,6 +52,8 @@
             $('#popup').hide();
             $('tr.selection').toggleClass('selection');
         });
+        $('#aDiff').click(toDiff);
+        $('#diffForm form').submit(diff);
     });
 </script>
 {% endblock %}
