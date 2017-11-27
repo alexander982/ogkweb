@@ -7,7 +7,9 @@
             [my-webapp.config :refer [env]]
             [my-webapp.env :refer [defaults]]
             [my-webapp.layout :as layout]
-            [my-webapp.middleware :refer [wrap-context wrap-internal-error]]
+            [my-webapp.middleware :refer [wrap-context wrap-internal-error
+                                          wrap-formats]]
+            [my-webapp.routes.api :refer [api-routes]]
             [my-webapp.routes.diff :refer [diff-routes]]
             [my-webapp.routes.composition :refer [composition-routes]]
             [my-webapp.routes.home :refer [home-routes]]
@@ -44,6 +46,7 @@
 
 (def app-routes
   (cc/routes
+   (wrap-formats api-routes)
    diff-routes
    home-routes
    search-routes

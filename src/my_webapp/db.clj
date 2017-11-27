@@ -285,3 +285,9 @@
                    " from plan where year = " year
                    " and quarter = " quarter
                    " and  m" month " <>0 order by kpprod")]))
+
+(defn get-docs-by-fname
+  [fname]
+  (sql/query db-spec
+             ["select * from docs where fname like ?"
+              (str "%" fname "%")]))
