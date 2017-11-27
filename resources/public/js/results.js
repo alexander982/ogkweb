@@ -23,10 +23,29 @@ function enterRow(e) {
     $(this).addClass('selection');
 }
 function clickRow(e) {
-    $('#prefixfield').val($(this).find('td.pref').text());
-    $('#numfield').val($(this).find('td.num').text());
+    var pref = $(this).find('td.pref').text();
+    var num = $(this).find('td.num').text();
+    $('#prefixfield').val(pref);
+    $('#numfield').val(num);
+    $('#docs li').remove();
+    $.getJSON(context + "/api/docs", {fname: pref + num.slice(0, num.indexOf('-'))},
+        function(response){
+           var list = $('#docs ul');
+           list.html(createList(response.archive, response.docs));
+           $('#docs').show();
+        });
     e.stopPropagation();
 }
+
+function createList(path, docs) {
+    var res = '';
+    for (var i = 0; i < docs.length; i++) {
+        res += '<li><a href="http://192.168.0.129' + path + docs[i].fpath + docs[i].fname + 
+            '">' + docs[i].fname + '</a></li>'
+    }
+    return res;
+}
+
 function toDiff(e){
     e.preventDefault();
     var id = $(this).attr('href').slice(1);
