@@ -58,11 +58,17 @@
       {% block content %}
       {% endblock %}
     </div>
+    <div class="navbar-fixed-bottom hidden-print" id="footer">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <p class="text-center">Copyright &copy; 2016-2017 Козлов А.С.</p>
+            </div>
+        </div>
+    </div>
 
     <!-- scripts -->
     {% script "/js/jquery.js" %}
     {% script "/js/bootstrap.min.js" %}
-    {% script "/js/table.js" %}
 
     <script type="text/javascript">
       var context = "{{servlet-context}}";
