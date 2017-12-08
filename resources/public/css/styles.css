@@ -38,3 +38,7 @@
 #footer {
     background: white;
 }
+
+#history {
+    display: none;
+}
