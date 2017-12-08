@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-md-offset-2 col-md-7">
     <div class="col-md-offset-3"><h2>Поиск изделия</h2></div>
-    <form class="form-horizontal" action="{{servlet-context}}/search/results">
+    <form class="form-horizontal" action="{{servlet-context}}/search/results" id="searchForm">
       {% if error %}
       <div class="alert alert-danger">
         {{message}}
@@ -38,4 +38,17 @@
     </form>
   </div>
 </div>
+<div class="row">
+    <div id="history" class="col-md-offset-3 col-md-4">
+    <h3>История поиска</h3>
+    <li class="list-unstyled">
+    </li>
+</div>
+</div>
+{% endblock %}
+{% block page-scripts %}
+{% script "/js/searchHistory.js" %}
+<script type="text/javascript">
+    $(document).ready(initPage);
+</script>
 {% endblock %}
