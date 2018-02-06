@@ -11,6 +11,7 @@
                                           wrap-formats]]
             [my-webapp.routes.api :refer [api-routes]]
             [my-webapp.routes.diff :refer [diff-routes]]
+            [my-webapp.routes.docs :refer [docs-routes]]
             [my-webapp.routes.composition :refer [composition-routes]]
             [my-webapp.routes.home :refer [home-routes]]
             [my-webapp.routes.metals :refer [metals-routes]]
@@ -54,6 +55,7 @@
    metals-routes
    products-routes
    plan-routes
+   docs-routes
    (route/not-found
     (:body
      (layout/error-page
