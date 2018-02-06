@@ -291,3 +291,8 @@
   (sql/query db-spec
              ["select * from docs where fname like ?"
               (str "%" fname "%")]))
+
+(defn get-doc-by-id
+  [id]
+  (sql/query db-spec
+             ["select * from docs where id = ?" id]))
