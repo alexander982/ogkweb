@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="row">
-    <div class="col-md-offset-1 col-md-9">
+    <div class="col-md-offset-1 col-md-8">
         {% for res in results %}
             {% if forloop.first %}
                 <h3>Состав {{pref}} {{num}}</h3>
@@ -26,6 +26,9 @@
             <h3>По вашему запросу ничего не найдено</h3>
         {% endfor %}
     </div>
+    <div id="docs" class="hidden-print col-md-1">
+        <ul class="list-unstyled"></ul>
+    </div> 
 </div>
 <div id="popup" class="hidden-print" title="Действия">
     <p><a href="{{servlet-context}}/composition/results?id=">Состав</a></p>
