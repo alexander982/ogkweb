@@ -31,16 +31,16 @@ function clickRow(e) {
     $.getJSON(context + "/api/docs", {fname: pref + num.slice(0, num.indexOf('-'))},
         function(response){
            var list = $('#docs ul');
-           list.html(createList(response.archive, response.docs));
+           list.html(createList(response.docs));
            $('#docs').show();
         });
     e.stopPropagation();
 }
 
-function createList(path, docs) {
+function createList(docs) {
     var res = '';
     for (var i = 0; i < docs.length; i++) {
-        res += '<li><a href="http://192.168.0.129' + path + docs[i].fpath + docs[i].fname + 
+        res += '<li><a href="'+ context + '/docs?id=' +docs[i].id + 
             '">' + docs[i].fname + '</a></li>'
     }
     return res;
