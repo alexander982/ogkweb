@@ -1,5 +1,6 @@
 (ns my-webapp.routes.docs
   (:require [my-webapp.db :as db]
+            [my-webapp.layout :refer [error-page]]
             [clojure.tools.logging :as log]
             [compojure.core :refer [defroutes GET]]
             [ring.util.response :refer [response]]
@@ -17,6 +18,12 @@
 
 (defroutes docs-routes
   (GET "/docs" [id]
-       (-> (clojure.java.io/input-stream (get-file-name id))
-           response
-           (content-type "image/tiff"))))
+       (try (-> (clojure.java.io/input-stream (get-file-name id))
+                response
+                (content-type "image/tiff"))
+            (catch java.io.FileNotFoundException e
+              (log/warn "File not found " id)
+              (error-page
+               {:status 404
+                :title "Файл не найден!"
+                :message "Файл не найден либо архив не доступен"})))))
