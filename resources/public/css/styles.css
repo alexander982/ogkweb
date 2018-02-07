@@ -3,6 +3,7 @@
  }
 
 #floatform {
+    background: white;
     position:fixed;
     right:80px;
     top:58px;
@@ -10,6 +11,7 @@
 }
 
 #diffForm {
+    background: white;
     display: none;
     position:fixed;
     right:80px;
@@ -23,7 +25,9 @@
 
 #docs {
     display: none;
-    margin-top: 220px;
+    position:fixed;
+    right:80px;
+    top:300px;
 }
 
 .table-bordered > tbody > tr > th,
@@ -32,6 +36,7 @@
 }
 
  #popup {
+    background: white;
     padding: 5px;
     display: none;
     box-shadow: 0 0 6px rgba(0,0,0,0.5);
