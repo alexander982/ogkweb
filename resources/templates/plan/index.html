@@ -21,7 +21,7 @@
         </tr>
         {% for plan in plans %}
             <tr data-id="{{plan.unit_id}}">
-                <td>{{plan.model}}</td>
+                <td class="pref">{{plan.model}}</td>
                 <td>{{plan.qnt}}</td>
             </tr>
         {% endfor %}
@@ -33,6 +33,20 @@
     <p><a href="{{servlet-context}}/composition/results?id=">Состав</a></p>
     <p><a href="{{servlet-context}}/metals/results?id=">Драгметаллы</a></p>
     <p><a id="aDiff" href="=" title="Добавить для сравнения">К сравнению</a></p>
+</div>
+<div id="diffForm" class="hidden-print">
+    <form>
+        <div class="form-group">
+            <label for="firstId">Select..</label>
+            <input type="hidden" id="firstId" name="id1">
+        </div>
+        <div class="form-group">
+            <label for="secondId">Select..</label>
+            <input type="hidden" id="secondId" name="id2">
+        </div>
+        <button type="submit" class="btn btn-default"
+            formaction="{{servlet-context}}/diff/results">Сравнить</button>
+    </form>
 </div>
 {% endblock %}
 {% block page-scripts %}
