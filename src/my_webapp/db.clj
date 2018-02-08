@@ -280,7 +280,7 @@
 (defn get-plans
   [year quarter month]
   (sql/query db-spec
-             [(str "select model, m"
+             [(str "select unit_id, model, m"
                    month " as qnt"
                    " from plan where year = " year
                    " and quarter = " quarter
