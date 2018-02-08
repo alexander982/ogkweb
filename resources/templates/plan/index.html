@@ -20,7 +20,7 @@
             <th>Модель</th><th>Кол.</th>
         </tr>
         {% for plan in plans %}
-            <tr>
+            <tr data-id="{{plan.unit_id}}">
                 <td>{{plan.model}}</td>
                 <td>{{plan.qnt}}</td>
             </tr>
@@ -29,4 +29,23 @@
      </div>
   </div>
 </div>
+<div id="popup" class="hidden-print">
+    <p><a href="{{servlet-context}}/composition/results?id=">Состав</a></p>
+    <p><a href="{{servlet-context}}/metals/results?id=">Драгметаллы</a></p>
+    <p><a id="aDiff" href="=" title="Добавить для сравнения">К сравнению</a></p>
+</div>
+{% endblock %}
+{% block page-scripts %}
+{% script "/js/results.js" %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('tr:not(:first)').mouseenter(enterRow).click(clickRow);
+        $(document).click(function(){
+            $('#popup').hide();
+            $('tr.selection').toggleClass('selection');
+        });
+        $('#aDiff').click(toDiff);
+        $('#diffForm form').submit(diff);
+    });
+</script>
 {% endblock %}
