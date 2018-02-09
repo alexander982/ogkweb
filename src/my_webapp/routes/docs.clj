@@ -6,7 +6,7 @@
             [ring.util.response :refer [response]]
             [ring.util.http-response :refer [content-type ok]]))
 
-(def path-to-docs "y:")
+(def path-to-docs "//celeron-e3400/arxiv")
 
 (defn get-file-name
   [id]
