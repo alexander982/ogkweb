@@ -35,18 +35,9 @@
     <p><a href="{{servlet-context}}/metals/results?id=">Драгметаллы</a></p>
     <p><a id="aDiff" href="=" title="Добавить для сравнения">К сравнению</a></p>
 </div>
-<div id="floatform" class="hidden-print">
-    <form class="form-inline">
-        <div class="from-group">
-            <input type="text" class="form-control" id="prefixfield" name="pref"
-                placeholder="ОШ-450" value="{{pref}}" size="11">
-            <input type="text" class="form-control" id="numfield" name="num"
-                placeholder=".80.0.000.0.00" value="{{num}}" size="14">
-        </div>
-        <button type="submit" class="btn btn-default"
-            formaction="{{servlet-context}}/search/results">Поиск</button>
-    </form>
-</div>
+
+{% include "search_form.html" %}
+
 <div id="diffForm" class="hidden-print">
     <form>
         <div class="form-group">
