@@ -19,7 +19,7 @@
                    "from unit u, contain c "
                    "where u.id = c.unit_id and c.cont_id in "
                    "(select id from unit where prefix like ? and num like ?) "
-                   "order by u.prefix, u.num")
+                   "order by convert(c.pos,int)")
               prefix num]))
 
 (defn get-includes
