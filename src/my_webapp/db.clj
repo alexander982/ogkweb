@@ -15,7 +15,7 @@
 (defn get-composition
   [prefix num]
   (sql/query db-spec
-             [(str "select c.pos, u.prefix, u.num, u.name, c.qnt "
+             [(str "select c.pos, u.id, u.prefix, u.num, u.name, c.qnt "
                    "from unit u, contain c "
                    "where u.id = c.unit_id and c.cont_id in "
                    "(select id from unit where prefix like ? and num like ?) "
