@@ -77,3 +77,32 @@ function diff(e){
         alert("Выберите еще узел для сравнения!");
     }
 }
+
+function joinBtn() {
+    var tr = $('tr:first');
+    $('th:contains(Обозначение)').append(
+    '<button id="joinBtn" onclick="joinColumns()"title="Объединить">&lt;</button>');
+    var btn =$('#joinBtn');
+    btn.css({"position": "absolute",
+    "top": "" + (tr.position().top + 1) + "px",
+    "left": "" + (tr.position().left - 26) + "px"});
+    btn.hide();
+    tr.mouseenter(function(e){btn.show();});
+    tr.mouseleave(function(e){btn.hide();});
+}
+
+function joinColumns() {
+    var tr = $('tr:not(:first)');
+    var pattern = /\.\d{1}\.\d{3}\.\d{1}\.\d{2}/
+    tr.each(function (index) {
+        var num = $(this).find('td.num');
+        if (num) {
+            if (num.text().search(pattern) != -1) {
+                var pref = $(this).find('td.pref');
+                pref.text(pref.text() + num.text());
+                pref.prop('colspan',2);
+                num.remove();
+            }
+        }
+    });
+}
