@@ -25,17 +25,18 @@ function enterRow(e) {
 function clickRow(e) {
     var pref = $(this).find('td.pref').text();
     var num = $(this).find('td.num').text();
+    var t;
     if (num) {
         $('#prefixfield').val(pref);
         $('#numfield').val(num);
     } else {
-        var t = pref.match(/(.*?)\.((УДЩ|\d{2})\.\d{1}\.\d{3}\.\d{1}\.\d{2})(-\d{2})?/)
-        console.log(t);
+        t = pref.match(/(.*?)\.((УДЩ|\d{2})\.\d{1}\.\d{3}\.\d{1}\.\d{2})(-\d{2})?/)
         $('#prefixfield').val(t[1]);
         $('#numfield').val(t[2])
     }
     $('#docs li').remove();
-    $.getJSON(context + "/api/docs", {fname: pref + num.slice(0, num.indexOf('-'))},
+    $.getJSON(context + "/api/docs", {fname: ((num)? pref : pref.slice(0, pref.lastIndexOf('-'))) +
+        num.slice(0, num.indexOf('-'))},
         function(response){
            var list = $('#docs ul');
            list.html(createList(response.docs));
