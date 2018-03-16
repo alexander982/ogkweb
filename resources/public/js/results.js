@@ -30,7 +30,7 @@ function clickRow(e) {
         $('#prefixfield').val(pref);
         $('#numfield').val(num);
     } else {
-        t = pref.match(/(.*?)\.((УДЩ|\d{2})\.\d{1}\.\d{3}\.\d{1}\.\d{2})(-\d{2})?/)
+        t = pref.match(/(.*?)(\.(УДЩ|\d{2})\.\d{1}\.\d{3}\.\d{1}(\.|\/)\d{2})(-\d{2})?/)
         $('#prefixfield').val(t[1]);
         $('#numfield').val(t[2])
     }
@@ -100,13 +100,11 @@ function joinBtn() {
 }
 
 function joinColumns() {
-    console.log('join func');
     var tr = $('tr:not(:first)');
-    var pattern = /\.\d{1}\.\d{3}\.\d{1}\.\d{2}/
+    var pattern = /\.\d{1}\.\d{3}\.\d{1}(\.|\/)\d{2}/
     tr.each(function (index) {
         var num = $(this).find('td.num');
         if (num.length > 0) {
-            console.log('joining..');
             if (num.text().search(pattern) != -1) {
                 var pref = $(this).find('td.pref');
                 pref.text(pref.text() + num.text());
@@ -114,12 +112,11 @@ function joinColumns() {
                 num.remove();
             }
         } else {
-            console.log("disjoin")
             var pref = $(this).find('td.pref');
             var t = pref.
                         text().
-                        match(/(.*?)(\.(УДЩ|\d{2})\.\d{1}\.\d{3}\.\d{1}\.\d{2})(-\d{2})?/);
-            $('<td class="num">' + t[2] + '</td>').insertAfter(pref);
+                        match(/(.*?)(\.(УДЩ|\d{2})\.\d{1}\.\d{3}\.\d{1}(\.|\/)\d{2})(-\d{2})?/);
+            $('<td class="num">' + t[2] + ((t[5])? t[5]:"") + '</td>').insertAfter(pref);
             pref.text(t[1]);
             pref.prop('colspan',1);
         }
