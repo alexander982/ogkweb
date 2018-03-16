@@ -26,17 +26,19 @@ function clickRow(e) {
     var pref = $(this).find('td.pref').text();
     var num = $(this).find('td.num').text();
     var t;
+    var areq;
     if (num) {
         $('#prefixfield').val(pref);
         $('#numfield').val(num);
+        areq = pref + num.slice(0, num.indexOf('-'));
     } else {
-        t = pref.match(/(.*?)(\.(УДЩ|\d{2})\.\d{1}\.\d{3}\.\d{1}(\.|\/)\d{2})(-\d{2})?/)
+        t = pref.match(/(.*?)(\.(УДЩ|\d{2})\.\d{1}\.\d{3}\.\d{1}(\.|\/)\d{2})(-\d{2})?/);
         $('#prefixfield').val(t[1]);
-        $('#numfield').val(t[2])
+        $('#numfield').val(t[2]);
+        areq = t[1] + t[2];
     }
     $('#docs li').remove();
-    $.getJSON(context + "/api/docs", {fname: ((num)? pref : pref.slice(0, pref.lastIndexOf('-'))) +
-        num.slice(0, num.indexOf('-'))},
+    $.getJSON(context + "/api/docs", {fname: areq },
         function(response){
            var list = $('#docs ul');
            list.html(createList(response.docs));
