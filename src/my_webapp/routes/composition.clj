@@ -4,29 +4,31 @@
             [compojure.core :refer [defroutes GET]]))
 
 (defn composition-results [id pref n]
-  (let [{:keys [prefix num]} (if id
+  (let [{:keys [prefix num name]} (if id
                                (db/get-unit-by-id id)
-                               {:prefix pref :num n})]
+                               {:prefix pref :num n :name nil})]
     (layout/render "composition/results.html"
                    {:results (if id
                                (db/get-composition-by-id id)
                                (db/get-composition prefix num))
                     :pref prefix
                     :num num
+                    :name name
                     :db-update-date
                     (:v_date
                      (first (db/get-version-date)))})))
 
 (defn occurrence-results [id pref n]
-  (let [{:keys [prefix num]} (if id
+  (let [{:keys [prefix num name]} (if id
                                (db/get-unit-by-id id)
-                               {:prefix pref :num n})]
+                               {:prefix pref :num n :name nil})]
     (layout/render "occurrence/results.html"
                    {:results (if id
                                (db/get-occurrence-by-id id)
                                (db/get-includes prefix num))
                     :pref prefix
                     :num num
+                    :name name
                     :db-update-date
                     (:v_date
                      (first (db/get-version-date)))})))
