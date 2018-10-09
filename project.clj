@@ -3,7 +3,7 @@
   :url "http://192.168.0.132/"
   :min-lein-version "2.0.0"
   :dependencies [
-                 [org.clojure/clojure "1.8.0"]
+                 [org.clojure/clojure "1.9.0"]
                  [selmer "1.0.4"] 
                  [metosin/ring-http-response "0.6.5"]
                  [org.clojure/java.jdbc "0.6.1"]
@@ -19,7 +19,7 @@
                  [mount "0.1.10"]
                  [cprop "0.1.8"]
                  [bouncer "1.0.0"]
-                 [conman "0.5.8"]
+                 [conman "0.8.2"]
                  ]
   
   :jvm-opts ["-server" "-Dconf=.lein-env"]
