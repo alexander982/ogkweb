@@ -7,12 +7,17 @@
             [my-webapp.config :refer [env]]
             [my-webapp.env :refer [defaults]]
             [my-webapp.layout :as layout]
-            [my-webapp.middleware :refer [wrap-context wrap-internal-error]]
+            [my-webapp.middleware :refer [wrap-context wrap-internal-error
+                                          wrap-formats]]
+            [my-webapp.routes.api :refer [api-routes]]
+            [my-webapp.routes.diff :refer [diff-routes]]
+            [my-webapp.routes.docs :refer [docs-routes]]
             [my-webapp.routes.composition :refer [composition-routes]]
             [my-webapp.routes.home :refer [home-routes]]
             [my-webapp.routes.metals :refer [metals-routes]]
             [my-webapp.routes.products :refer [products-routes]]
             [my-webapp.routes.search :refer [search-routes]]
+            [my-webapp.routes.plan :refer [plan-routes]]
             [ring-ttl-session.core :refer [ttl-memory-store]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
   (:gen-class))
@@ -42,11 +47,15 @@
 
 (def app-routes
   (cc/routes
+   (wrap-formats api-routes)
+   diff-routes
    home-routes
    search-routes
    composition-routes
    metals-routes
    products-routes
+   plan-routes
+   docs-routes
    (route/not-found
     (:body
      (layout/error-page

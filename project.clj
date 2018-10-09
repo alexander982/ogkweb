@@ -1,10 +1,11 @@
-(defproject my-webapp "0.1.2-SNAPSHOT"
+(defproject my-webapp "0.1.4-SNAPSHOT"
   :description "Поиск по базе данных ОГК"
   :url "http://192.168.0.132/"
   :min-lein-version "2.0.0"
   :dependencies [
                  [org.clojure/clojure "1.9.0"]
                  [selmer "1.0.4"] 
+                 [ring-middleware-format "0.7.0"]
                  [metosin/ring-http-response "0.6.5"]
                  [org.clojure/java.jdbc "0.6.1"]
                  [org.clojure/tools.logging "0.3.1"]
@@ -39,6 +40,7 @@
              :resource-paths ["env/prod/rosources"]}
 
    :dev [:project/dev :profiles/dev]
+   :test [:project/test :profiles/test]
    
    :project/dev {:dependencies [[ring/ring-mock "0.3.0"]
                                 [ring/ring-devel "1.5.0"]
@@ -46,6 +48,8 @@
                                 [luminus-jetty "0.1.4"]
                                 [directory-naming/naming-java "0.8"]]
                  :repl-options {:init-ns user}
-                 :source-paths ["env/dev/clj"]
+                 :source-paths ["env/dev/clj" "test/clj"]
                  :resource-paths ["env/dev/resources"]}
-   :profiles/dev {}})
+   :project/test {:resource-paths ["env/dev/resources" "env/test/resources"]}
+   :profiles/dev {}
+   :profiles/test {}})

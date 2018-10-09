@@ -2,6 +2,7 @@
   (:require [clojure.tools.logging :as log]
             [my-webapp.config :refer [env]]
             [my-webapp.layout :refer [*app-context* error-page]]
+            [ring.middleware.format :refer [wrap-restful-format]]
             )
   (:import [javax.servlet ServletContext]))
 
@@ -13,6 +14,15 @@
                      (catch IllegalArgumentException _ context))
                 (:app-context env))]
       (handler request))))
+
+(defn wrap-formats [handler]
+  (let [wrapped (wrap-restful-format
+                  handler
+                  {:formats [:json :json-kw :transit-json :transit-msgpack]})]
+    (fn [request]
+      ;; disable wrap-formats for websockets
+      ;; since they're not compatible with this middleware
+      ((if (:websocket? request) handler wrapped) request))))
 
 (defn wrap-internal-error [handler]
   (fn [request]

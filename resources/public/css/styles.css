@@ -1,6 +1,54 @@
 .selection {
     background-color: #55ffaa;
  }
- #popup {
+
+#floatform {
+    background: white;
+    position:fixed;
+    right:80px;
+    top:58px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+
+#diffForm {
+    background: white;
     display: none;
+    position:fixed;
+    right:80px;
+    top:140px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+
+#diffForm label {
+        margin: 10px;
+}
+
+#docs {
+    display: none;
+    position:fixed;
+    right:80px;
+    top:300px;
+}
+
+.table-bordered > tbody > tr > th,
+.table-bordered > tbody > tr > td {
+    border: 1px solid #bbbbbb;
+}
+
+ #popup {
+    background: white;
+    padding: 5px;
+    display: none;
+    box-shadow: 0 0 6px rgba(0,0,0,0.5);
  }
+ 
+.container {
+    margin-bottom: 60px;
+}
+#footer {
+    background: white;
+}
+
+#history {
+    display: none;
+}
