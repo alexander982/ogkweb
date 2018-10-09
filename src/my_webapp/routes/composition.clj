@@ -5,12 +5,13 @@
 
 (defn composition-results [id pref n]
   (let [{:keys [prefix num name]} (if id
-                               (db/get-unit-by-id id)
+                                    (db/get-unit-by-id {:id  id})
                                {:prefix pref :num n :name nil})]
     (layout/render "composition/results.html"
                    {:results (if id
-                               (db/get-composition-by-id id)
-                               (db/get-composition prefix num))
+                               (db/get-composition-by-id {:id id})
+                               (db/get-composition {:pref prefix
+                                                    :num num}))
                     :pref prefix
                     :num num
                     :name name
@@ -20,12 +21,13 @@
 
 (defn occurrence-results [id pref n]
   (let [{:keys [prefix num name]} (if id
-                               (db/get-unit-by-id id)
+                                    (db/get-unit-by-id {:id id})
                                {:prefix pref :num n :name nil})]
     (layout/render "occurrence/results.html"
                    {:results (if id
-                               (db/get-occurrence-by-id id)
-                               (db/get-includes prefix num))
+                               (db/get-occurrence-by-id {:id  id})
+                               (db/get-includes {:pref  prefix
+                                                 :num  num}))
                     :pref prefix
                     :num num
                     :name name
