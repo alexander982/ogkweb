@@ -16,3 +16,7 @@
 (conman/bind-connection *db*
                         "sql/ather.sql"
                         "sql/ogk.sql")
+
+(defn get-metals [id]
+  (update-id-param {:id id})
+  (get-metals-by-id))
