@@ -103,3 +103,11 @@ right outer join
         inner join unit u2 on c.unit_id = u2.id
              where u.id = :id1 )
 on pos1 = pos2
+
+--:name get-plan-years :? :*
+select distinct year from plan order by year desc;
+
+--:name get-plans :? :*
+select unit_id, model, :i:month as qnt from plan
+where year = :year and quarter = :quarter and :i:month <> 0
+order by kpprod;
