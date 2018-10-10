@@ -1,7 +1,7 @@
 (ns my-webapp.routes.plan
   (:require [clojure.tools.logging :as log]
             [compojure.core :refer [defroutes GET]] 
-            [my-webapp.db :as db]
+            [my-webapp.db.core :as db]
             [my-webapp.layout :as layout])
   (:import [java.util GregorianCalendar]))
 
@@ -18,15 +18,19 @@
                               year (if (= 13 month+1) (inc year) year)]
                           {:year year :month month})
                   :month month
-                  :plans (db/get-plans year
-                                       (inc (/ (dec month) 3))
-                                       (inc (mod (dec month) 3)))
+                  :plans (db/get-plans {:year year
+                                        :quarter
+                                        (inc (int (/ (dec month) 3)))
+                                        :month 
+                                        (str "m"(inc (mod (dec month) 3)))})
                   :db-update-date
-                  (:v_date (first (db/get-version-date)))}))
+                  (:v_date (db/get-last-db-update))}))
 
 (defn current-month-plan [year month]
   (let [year (if (empty? year) 0 (Integer/parseInt year))
-        month (if (empty? month) 0 (Integer/parseInt month))]
+        month (if (empty? month) 0 (Integer/parseInt month))
+        _ (log/debug "month: " month
+                     " year: " year)]
     (if (some zero? [year month])
       (let [date (GregorianCalendar/getInstance)
             year (.get date GregorianCalendar/YEAR)
