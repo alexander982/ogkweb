@@ -111,3 +111,9 @@ select distinct year from plan order by year desc;
 select unit_id, model, :i:month as qnt from plan
 where year = :year and quarter = :quarter and :i:month <> 0
 order by kpprod;
+
+--:name get-docs-by-fname :? :*
+select * from docs where fname like :fname;
+
+--:name get-doc-by-id :? :1
+select * from docs where id = :id;
