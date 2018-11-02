@@ -52,6 +52,23 @@ select sum(cast(gold as double)*cast(qnt as int)) as gold,
        sum(cast(pal as double)*cast(qnt as int)) as pal
 from sostav;
 
+--:name get-parts-with-metals :? :*
+with recursive sostav (pref, num, name, qnt, gold, silver, pl, pal, id, par_id) as (
+    SELECT u2.prefix, u2.num, u2.name, c.qnt,
+        u2.gold, u2.silver, u2.pl, u2.pal, u2.id, @id_
+    FROM (UNIT u inner join contain c on u.id = c.cont_id)
+    inner join unit u2 on u2.id  = c.unit_id
+    where u.id = @id_
+    union all
+    select u.prefix, u.num, u.name, c.qnt, u.gold, u.silver, u.pl, u.pal, u.id, c.cont_id
+    from ( sostav s inner join contain c on s.id = c.cont_id)
+    inner join unit u on c.unit_id = u.id)
+select *
+from sostav where cast(gold as double) > 0.0 or
+     cast(silver as double) > 0.0 or
+     cast(pl as double) > 0.0 or
+     cast(pal as double) > 0.0;
+
 --:name get-products :? :*
 select cont_id, pref, name from product 
 where pref like :pref and (name like :name or name is null)
