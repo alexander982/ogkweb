@@ -12,13 +12,13 @@ select u2.id, c.qnt, c.pos, u2.prefix, u2.num, u2.name from
 inner join unit u2 on c.unit_id = u2.id
 where u.id in (select id from unit
                where prefix like :pref and num like :num)
-order by c.pos;
+order by convert(c.pos,int);
 
 --:name get-composition-by-id :? :*
 select u2.id, c.qnt, c.pos, u2.prefix, u2.num, u2.name from 
 (unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on c.unit_id = u2.id 
 where u.id = :id
-order by c.pos;
+order by convert(c.pos,int);
 
 --:name get-includes :? :*
 select u2.id, u2.prefix, u2.num, u2.name
