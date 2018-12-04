@@ -134,3 +134,26 @@ select * from docs where fname like :fname;
 
 --:name get-doc-by-id :? :1
 select * from docs where id = :id;
+
+--:name create-user! :! :n
+insert into users
+(login, pass, first_name, last_name)
+values(:login, :pass, :first-name, :last-name);
+
+--:name get-user :? :1
+select * from users where id = :id;
+
+--:name get-users :? :*
+select * from users limit :limit offset :offset;
+
+--:name get-user-by-login :? :1
+select * from users where login = :login;
+
+--:name get-user-by-token :? :1
+select * from users where remember_token = :token;
+
+--:name update-user-token! :! :n
+update users set remember_token = :token where id = :id;
+
+--:name set-admin! :! :n
+update users set admin = :value where id = :id;
