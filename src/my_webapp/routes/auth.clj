@@ -98,7 +98,7 @@
           (let [_ (log/info "user: " login " successfully login")
                 resp (assoc-in (found (str layout/*app-context* "/"))
                                [:session :identity]
-                               user)]
+                               (dissoc user :pass :remember_token))]
             (if (= remember "true")
               (assoc-in resp [:cookies "remember-token"]
                         {:value (get-user-token (:id user))
