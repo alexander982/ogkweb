@@ -1,5 +1,5 @@
 (ns my-webapp.routes.auth
-  (:require [my-webapp.db :as db]
+  (:require [my-webapp.db.core :as db]
             [my-webapp.layout :as layout]
             [buddy.hashers :as hashers]
             [bouncer.core :as b]
@@ -35,10 +35,10 @@
              :flash
              {:errors (first validation)
               :login login})
-      (do (db/create-user! login
-                           (hashers/encrypt password)
-                           nil
-                           nil)
+      (do (db/create-user! {:login login
+                            :pass (hashers/encrypt password)
+                            :first-name nil
+                            :last-name nil})
           (log/info "user " login " registered")
           (assoc (found (str layout/*app-context* "/auth/login"))
                  :flash
@@ -62,11 +62,11 @@
 
 (defn get-user-token
   [id]
-  (let [user (db/get-user id)]
+  (let [user (db/get-user {:id id})]
     (if-let [token (:remember_token user)]
       token
       (let [token (new-token 60)]
-        (db/update-user-token! id token)
+        (db/update-user-token! {:id id :token token})
         token))))
 
 (defn login-user [login password remember req]
@@ -82,13 +82,13 @@
              :flash
              {:login login
               :errors errors})
-      (let [[user] (db/get-user-by-login login)
+      (let [user (db/get-user-by-login {:login login})
             wrong-login-password (or (empty? user)
                                      (not (hashers/check password
                                                          (:pass user))))
             _ (log/debug "user: " user)
             _ (log/debug "password OK? " (hashers/check password
-                                                          (:pass user)))]
+                                                        (:pass user)))]
         (if wrong-login-password
           (assoc (found (str layout/*app-context* "/auth/login"))
                  :flash
@@ -98,7 +98,7 @@
           (let [_ (log/info "user: " login " successfully login")
                 resp (assoc-in (found (str layout/*app-context* "/"))
                                [:session :identity]
-                               (:id user))]
+                               user)]
             (if (= remember "true")
               (assoc-in resp [:cookies "remember-token"]
                         {:value (get-user-token (:id user))
