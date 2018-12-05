@@ -12,6 +12,7 @@
             [my-webapp.routes.api :refer [api-routes]]
             [my-webapp.routes.diff :refer [diff-routes]]
             [my-webapp.routes.docs :refer [docs-routes]]
+            [my-webapp.routes.admin :refer [admin-routes]]
             [my-webapp.routes.auth :refer [auth-routes]]
             [my-webapp.routes.composition :refer [composition-routes]]
             [my-webapp.routes.home :refer [home-routes]]
@@ -57,6 +58,7 @@
    plan-routes
    docs-routes
    auth-routes
+   admin-routes
    (route/not-found
     (:body
      (layout/error-page
