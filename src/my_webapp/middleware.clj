@@ -6,7 +6,7 @@
             [ring.middleware.format :refer [wrap-restful-format]]
             [my-webapp.db :as db]
             [my-webapp.layout :refer [*app-context* *identity* error-page]]
-            [my-webapp.routes.auth.backend :as b]
+            [my-webapp.auth.backend :as b]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring.middleware.flash :refer [wrap-flash]]

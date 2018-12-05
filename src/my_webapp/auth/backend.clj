@@ -1,4 +1,4 @@
-(ns my-webapp.routes.auth.backend
+(ns my-webapp.auth.backend
   (:require [my-webapp.db :as db]
             [buddy.auth :refer [authenticated?]]
             [buddy.auth.http :as http]
