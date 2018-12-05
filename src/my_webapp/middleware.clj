@@ -1,5 +1,6 @@
 (ns my-webapp.middleware
   (:require [clojure.tools.logging :as log]
+            [buddy.auth.accessrules :as acr]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [my-webapp.env :refer [defaults]]
             [my-webapp.config :refer [env]]
@@ -7,6 +8,7 @@
             [my-webapp.db :as db]
             [my-webapp.layout :refer [*app-context* *identity* error-page]]
             [my-webapp.auth.backend :as b]
+            [my-webapp.auth.rules :as r]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring.middleware.flash :refer [wrap-flash]]
@@ -55,10 +57,17 @@
     (binding [*identity* (:identity request)]
       (handler request))))
 
+(defn on-error [request response]
+  (error-page {:status 403
+               :title "Not authorized"
+               :message "Недостаточно прав для просмотра"}))
+
 (defn wrap-auth [handler]
   (let [backend (b/backend)]
     (-> handler
         wrap-identity
+        (acr/wrap-access-rules {:rules r/rules
+                                :on-error on-error})
         (wrap-authentication backend)
         (wrap-authorization backend))))
 
