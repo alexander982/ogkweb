@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-2">
+    {% include "admin/left-nav-bar.html" %}
+  </div>
+  <div class="col-md-10">
+    <h3>Список последних обновлений</h3>
+       <table class="table table-condensed">
+        <tr>
+            <th>Id</th><th>Date</th>
+        </tr>
+        {% for update in updates %}
+            <tr data-id="{{user.id}}">
+                <td>{{update.v_id}}</td>
+                <td>{{update.v_date}}</td>
+            </tr>
+        {% endfor %}
+       </table>
+  </div>
+</div>
+{% endblock %}
