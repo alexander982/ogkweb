@@ -152,6 +152,9 @@ select * from users where login = :login;
 --:name get-user-by-token :? :1
 select * from users where remember_token = :token;
 
+--:name update-user :! :n
+update users set :i:field = :value where id = :id;
+
 --:name update-user-token! :! :n
 update users set remember_token = :token where id = :id;
 
