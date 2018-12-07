@@ -1,5 +1,5 @@
 (ns my-webapp.auth.backend
-  (:require [my-webapp.db :as db]
+  (:require [my-webapp.db.core :as db]
             [buddy.auth :refer [authenticated?]]
             [buddy.auth.http :as http]
             [buddy.auth.protocols :as proto]
@@ -17,9 +17,9 @@
           (if-let [token (get-in request
                                  [:cookies "remember-token" :value])]
             (let [_ (log/debug "there is token" token)
-                  id (:id (first (db/get-user-by-token token)))
+                  id (db/get-user-by-token {:token token})
                   _ (log/debug "user id: " id)]
-              id)
+              (dissoc id :pass :remember_token))
             (log/debug "not authenticated")))))
     (-authenticate [_ request data]
       (authfn data))
