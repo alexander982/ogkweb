@@ -1,5 +1,6 @@
 (ns my-webapp.auth.backend
   (:require [my-webapp.db.core :as db]
+            [my-webapp.routes.auth :refer [update-user-last-login]]
             [buddy.auth :refer [authenticated?]]
             [buddy.auth.http :as http]
             [buddy.auth.protocols :as proto]
@@ -19,6 +20,7 @@
             (let [_ (log/debug "there is token" token)
                   id (db/get-user-by-token {:token token})
                   _ (log/debug "user id: " id)]
+              (update-user-last-login (:id id))
               (dissoc id :pass :remember_token))
             (log/debug "not authenticated")))))
     (-authenticate [_ request data]
