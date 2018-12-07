@@ -69,6 +69,12 @@
         (db/update-user-token! {:id id :token token})
         token))))
 
+(defn update-user-last-login
+  [id]
+  (db/update-user {:field "last_login"
+                   :value (java.util.Date.)
+                   :id id}))
+
 (defn login-user [login password remember req]
   (let [validation (b/validate {:login login :password password}
                                :login v/required
@@ -99,6 +105,7 @@
                 resp (assoc-in (found (str layout/*app-context* "/"))
                                [:session :identity]
                                (dissoc user :pass :remember_token))]
+            (update-user-last-login (:id user))
             (if (= remember "true")
               (assoc-in resp [:cookies "remember-token"]
                         {:value (get-user-token (:id user))
