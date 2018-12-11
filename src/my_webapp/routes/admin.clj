@@ -17,7 +17,12 @@
   []
   (layout/render "admin/updates.html" {:updates (db/get-updates)}))
 
+(defn database-page
+  [{flash :flash}]
+  (layout/render "admin/dbase.html" {:message (:message flash)}))
+
 (defroutes admin-routes
   (GET "/admin" [] (admin-page))
+  (GET "/admin/base" req (database-page req))
   (GET "/admin/users" [] (users-page))
   (GET "/admin/updates" [] (updates-page)))
