@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-2">
+    {% include "admin/left-nav-bar.html" %}
+  </div>
+  <div class="col-md-10">
+    <h3>Управление базой данных</h3>
+       <ul>
+         <li class="list-unstyled">
+           <form method="post">
+             {% csrf-field %}
+             <div class="form-group">
+               <button type="submit"
+                       class="btn btn-link"
+                       formaction="{{servlet-context}}/admin/backup">
+                 Создать резервную копию</button>
+               {% if message.backup %}
+               <span class="help-block">{{message.backup|first}}</span>
+               {% endif %}
+             </div>
+           </form>
+       </ul>
+  </div>
+</div>
+{% endblock %}
