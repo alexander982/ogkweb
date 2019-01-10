@@ -2,7 +2,8 @@
   (:require [my-webapp.db.core :as db]
             [my-webapp.layout :as layout]
             [clojure.tools.logging :as log]
-            [compojure.core :refer [defroutes GET POST]]))
+            [compojure.core :refer [defroutes GET POST]]
+            [ring.util.http-response :refer [found]]))
 
 (defn admin-page
   []
@@ -21,8 +22,16 @@
   [{flash :flash}]
   (layout/render "admin/dbase.html" {:message (:message flash)}))
 
+(defn backup-database
+  []
+  (db/backup-database)
+  (assoc (found (str layout/*app-context* "/admin/base"))
+             :flash
+             {:message "Резервная копия создана."}))
+
 (defroutes admin-routes
   (GET "/admin" [] (admin-page))
   (GET "/admin/base" req (database-page req))
+  (POST "/admin/backup" [] (backup-database))
   (GET "/admin/users" [] (users-page))
   (GET "/admin/updates" [] (updates-page)))
