@@ -18,5 +18,6 @@
   (mount/start #'my-webapp.db.core/*db*)
   (binding [*ns* 'my-webapp.db.core]
     (conman/bind-connection my-webapp.db.core/*db*
+                            "sql/admin.sql"
                             "sql/ogk.sql"
                             "sql/ather.sql")))

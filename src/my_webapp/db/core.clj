@@ -14,6 +14,7 @@
   :stop (conman/disconnect! *db*))
 
 (conman/bind-connection *db*
+                        "sql/admin.sql"
                         "sql/ather.sql"
                         "sql/ogk.sql")
 
