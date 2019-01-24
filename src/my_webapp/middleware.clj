@@ -4,14 +4,14 @@
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [my-webapp.env :refer [defaults]]
             [my-webapp.config :refer [env]]
-            [ring.middleware.format :refer [wrap-restful-format]]
-            [my-webapp.db :as db]
+            [ring.middleware.format :refer [wrap-restful-format]] 
             [my-webapp.layout :refer [*app-context* *identity* error-page]]
             [my-webapp.auth.backend :as b]
             [my-webapp.auth.rules :as r]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring.middleware.flash :refer [wrap-flash]]
+            [ring.middleware.session :refer [wrap-session]]
             [ring-ttl-session.core :refer [ttl-memory-store]]
             )
   (:import [javax.servlet ServletContext]))
@@ -75,6 +75,7 @@
   (-> ((:middleware defaults) handler)
       wrap-auth
       wrap-flash
+      wrap-session
       (wrap-defaults
        (-> site-defaults
            (assoc-in [:security :anti-forgery] false)
