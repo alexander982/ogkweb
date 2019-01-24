@@ -7,7 +7,9 @@
 (defn wrap-log [handler]
   (fn [request]
     (log/debug "request: " request)
-    (handler request)))
+    (let [response (handler request)
+          _ (log/debug "response: " (dissoc response :body))]
+      response)))
 
 (defn wrap-dev [handler]
   (-> handler
