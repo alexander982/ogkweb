@@ -27,7 +27,7 @@
   (db/backup-database)
   (assoc (found (str layout/*app-context* "/admin/base"))
              :flash
-             {:message "Резервная копия создана."}))
+             {:message {:backup ["Резервная копия создана."]}}))
 
 (defroutes admin-routes
   (GET "/admin" [] (admin-page))
