@@ -11,8 +11,7 @@
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring.middleware.flash :refer [wrap-flash]]
-            [ring.middleware.session :refer [wrap-session]]
-            [ring-ttl-session.core :refer [ttl-memory-store]]
+            [ring.middleware.session :refer [wrap-session]] 
             )
   (:import [javax.servlet ServletContext]))
 
@@ -79,6 +78,6 @@
       (wrap-defaults
        (-> site-defaults
            (assoc-in [:security :anti-forgery] false)
-           (assoc-in [:session :store] (ttl-memory-store (* 60 24)))))
+           (dissoc :session)))
       wrap-context
       wrap-internal-error))
