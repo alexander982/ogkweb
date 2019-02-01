@@ -35,7 +35,9 @@
             [migratus-lein "0.3.9"]]
   
   :uberwar
-  {:handler my-webapp.handler/app}
+  {:handler my-webapp.handler/app
+   :init my-webapp.handler/init
+   :destroy my-webapp.handler/destroy}
   
   :profiles
   {:uberjar {:omit-source true
