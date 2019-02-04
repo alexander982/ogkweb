@@ -37,14 +37,18 @@ function clickRow(e) {
         $('#numfield').val(t[2]);
         areq = t[1] + t[2];
     }
+    renderDocs(areq);
+    e.stopPropagation();
+}
+
+function renderDocs(fname) {
     $('#docs li').remove();
-    $.getJSON(context + "/api/docs", {fname: areq },
+    $.getJSON(context + "/api/docs", {fname: fname},
         function(response){
            var list = $('#docs ul');
            list.html(createList(response.docs));
            $('#docs').show();
         });
-    e.stopPropagation();
 }
 
 function createList(docs) {
