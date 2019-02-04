@@ -51,6 +51,11 @@ function renderDocs(fname) {
         });
 }
 
+function clickHeader(){
+    var fname = $('h3[data-name]').data('name');
+    renderDocs(fname);
+}
+
 function createList(docs) {
     var res = '';
     for (var i = 0; i < docs.length; i++) {
