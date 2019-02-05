@@ -11,13 +11,13 @@
 
 (defn products-results [pref name]
   (if (every? empty? [pref name])
-    (do (log/info
+    (do (log/debug
          "GET /products/result has empty params! Redirect to /products")
         (assoc (found (str layout/*app-context* "/products"))
                :flash
                {:error true
                 :message "Нужно указать хотябы один параметр поиска!"}))
-    (do (log/info "GET /products/result" pref name)
+    (do (log/debug "GET /products/result" pref name)
         (layout/render "products/results.html"
                        {:results (db/get-products {:pref (str "%" pref "%")
                                                    :name (str "%" name "%")})
