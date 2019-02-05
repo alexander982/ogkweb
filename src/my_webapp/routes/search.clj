@@ -11,12 +11,12 @@
 
 (defn search-results-page [pref num name {flash :flash}]
   (if (every? empty? [pref num name])
-    (do (log/info "GET /search/results has empty params! redirect to /search")
+    (do (log/debug "GET /search/results has empty params! redirect to /search")
         (assoc (found (str layout/*app-context* "/search"))
                :flash
                {:error true
                 :message "Нужно указать хотябы один параметр поиска!"}))
-    (do (log/info "GET search/results" pref num name)
+    (do (log/debug "GET search/results" pref num name)
         (layout/render "search/results.html"
                        {:results (db/get-units {:pref (str "%" pref "%")
                                                 :num (str "%" num "%")
