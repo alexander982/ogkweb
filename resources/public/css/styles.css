@@ -2,6 +2,10 @@
     background-color: #55ffaa;
  }
 
+.clicked {
+    background-color: mediumturquoise;
+}
+
 #floatform {
     background: white;
     position:fixed;
