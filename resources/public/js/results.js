@@ -27,6 +27,7 @@ function clickRow(e) {
     var num = $(this).find('td.num').text();
     var t;
     var areq;
+    $('tr.clicked').toggleClass('clicked');
     if (num) {
         $('#prefixfield').val(pref);
         $('#numfield').val(num);
@@ -38,6 +39,7 @@ function clickRow(e) {
         areq = t[1] + t[2];
     }
     renderDocs(areq);
+    $(this).addClass('clicked');
     e.stopPropagation();
 }
 
