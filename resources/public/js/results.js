@@ -1,11 +1,12 @@
 function enterRow(e) {
     $('tr.selection').toggleClass('selection');
-    var bottomOffset = 15;
+    var bottomOffset = 45;
     var popup = $('#popup');
     var offset = $(this).offset();
     var ttop = 0;
-    if ((popup.height() + offset.top + bottomOffset) > $(document).height()) {
-        ttop = $(document).height() - popup.height() - bottomOffset;
+    var xOffset = document.documentElement.scrollTop;
+    if ((popup.height() + offset.top + bottomOffset) > (xOffset + $(window).height())) {
+        ttop = $(window).height() + xOffset - popup.height() - bottomOffset;
     } else {
         ttop = offset.top;
     }
