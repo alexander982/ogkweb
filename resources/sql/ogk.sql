@@ -20,16 +20,15 @@ where c.cont_id = :id
 order by convert(c.pos,int);
 
 --:name get-includes :? :*
-select u2.id, u2.prefix, u2.num, u2.name
-from (unit u inner join contain c on u.id = c.unit_id)
-inner join unit u2 on c.cont_id = u2.id
-where u.id in (select id from unit
+select u.id, u.prefix, u.num, u.name
+from contain c inner join unit u on u.id = c.cont_id
+where c.unit_id in (select id from unit
                where prefix like :pref and num like :num);
 
 --:name get-occurrence-by-id :? :*
-select u2.id, u2.prefix, u2.num, u2.name 
-from (unit u inner join contain c on u.id = c.unit_id) inner join unit u2 on c.cont_id = u2.id 
-where u.id = :id;
+select u.id, u.prefix, u.num, u.name
+from contain c inner join unit u on u.id = c.cont_id
+where c.unit_id = :id;
 
 --:name update-id-param :!
 SET @id_=:id;
