@@ -7,17 +7,16 @@ select id, prefix, num, name from unit
 where prefix like :pref and num like :num and name like :name;
 
 --:name get-composition :? :*
-select u2.id, c.qnt, c.pos, u2.prefix, u2.num, u2.name from
-(unit u inner join contain c on u.id = c.cont_id)
-inner join unit u2 on c.unit_id = u2.id
-where u.id in (select id from unit
+select u.id, c.qnt, c.pos, u.prefix, u.num, u.name from 
+contain c inner join unit u on u.id = c.unit_id 
+where c.cont_id in (select id from unit
                where prefix like :pref and num like :num)
 order by convert(c.pos,int);
 
 --:name get-composition-by-id :? :*
-select u2.id, c.qnt, c.pos, u2.prefix, u2.num, u2.name from 
-(unit u inner join contain c on u.id = c.cont_id) inner join unit u2 on c.unit_id = u2.id 
-where u.id = :id
+select u.id, c.qnt, c.pos, u.prefix, u.num, u.name from 
+contain c inner join unit u on u.id = c.unit_id 
+where c.cont_id = :id
 order by convert(c.pos,int);
 
 --:name get-includes :? :*
