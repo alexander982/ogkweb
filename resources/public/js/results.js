@@ -56,7 +56,13 @@ function renderDocs(fname) {
 
 function clickHeader(){
     var fname = $('h3[data-name]').data('name');
-    renderDocs(fname);
+    var lastIdx = fname.lastIndexOf('-');
+    var firstIdx = fname.indexOf('-');
+    if (firstIdx != lastIdx){
+        renderDocs(fname.slice(0, lastIdx));
+    } else {
+        renderDocs(fname);
+    }
 }
 
 function createList(docs) {
