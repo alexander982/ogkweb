@@ -20,4 +20,5 @@
     (conman/bind-connection my-webapp.db.core/*db*
                             "sql/admin.sql"
                             "sql/ogk.sql"
-                            "sql/ather.sql")))
+                            "sql/ather.sql"
+                            "sql/params.sql")))
