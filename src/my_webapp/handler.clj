@@ -19,6 +19,7 @@
             [my-webapp.routes.metals :refer [metals-routes]]
             [my-webapp.routes.products :refer [products-routes]]
             [my-webapp.routes.search :refer [search-routes]]
+            [my-webapp.routes.params :refer [params-routes]]
             [my-webapp.routes.plan :refer [plan-routes]]
             )
   (:gen-class))
@@ -56,6 +57,7 @@
    metals-routes
    products-routes
    plan-routes
+   params-routes
    docs-routes
    auth-routes
    admin-routes
