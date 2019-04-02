@@ -41,6 +41,50 @@
   (assoc (found (str layout/*app-context* "/params"))
          :flash {:error "Параметр был удален!"}))
 
+(defn unit-params-page
+  [id flash]
+  (layout/render "params/values/index.html" {:unit
+                                             (db/get-unit-by-id {:id id})
+                                             :params
+                                             (db/get-all-params)
+                                             :unit-params
+                                             (db/get-unit-params {:id id})
+                                             :message (:message flash)}))
+
+(defn add-unit-params!
+  [unit-id param-id user-id]
+  (db/add-unit-params! {:unit-id unit-id
+                       :param-id param-id
+                       :updated-by user-id
+                       :value nil})
+  (assoc (found (str layout/*app-context* "/unit/params?id=" unit-id))
+         :flash {:message "Параметр добавлен!"}))
+
+(defn edit-unit-params-page
+  [id flash]
+  (layout/render "params/values/edit.html" {:unit
+                                            (db/get-unit-by-id {:id id})
+                                            :params
+                                            (db/get-all-params)
+                                            :unit-params
+                                            (db/get-unit-params {:id id})
+                                            :message (:message flash)}))
+(defn update-unit-param!
+  [unit-id param-id value user-id]
+  (db/update-unit-param! {:unit-id unit-id
+                          :param-id param-id
+                          :value value
+                          :updated-by user-id})
+  (assoc (found (str layout/*app-context* "/unit/params/edit?id=" unit-id))
+         :flash {:message "Значение сохранено"}))
+
+(defn delete-unit-param!
+  [unit-id param-id]
+  (db/delete-unit-param! {:unit-id unit-id
+                          :param-id param-id})
+  (assoc (found (str layout/*app-context* "/unit/params/edit?id=" unit-id))
+         :flash {:error "Значение удалено"}))
+
 (defroutes params-routes
   (GET "/params" req (params-page req))
   (POST "/params" [name type]
@@ -50,4 +94,20 @@
   (POST "/params/edit" [id :<< as-int  name type]
         (edit-param! id name type))
   (POST "/params/delete" [id :<< as-int]
-        (delete-param! id)))
+        (delete-param! id))
+  (GET "/unit/params" [id :<< as-int :as {flash :flash}]
+       (unit-params-page id flash))
+  (POST "/unit/params" [id :<< as-int
+                        param :<< as-int
+                        :as {{user-id :id} :identity}]
+        (add-unit-params! id param user-id))
+  (GET "/unit/params/edit" [id :<< as-int :as {flash :flash}]
+       (edit-unit-params-page id flash))
+  (POST "/unit/params/edit" [unit-id
+                             param-id
+                             value
+                             :as {{user-id :id} :identity}]
+        (update-unit-param! unit-id param-id value user-id))
+  (POST "/unit/params/delete" [unit-id :<< as-int
+                               param-id :<< as-int]
+        (delete-unit-param! unit-id param-id)))
