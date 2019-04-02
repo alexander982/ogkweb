@@ -68,7 +68,8 @@
                                             (db/get-all-params)
                                             :unit-params
                                             (db/get-unit-params {:id id})
-                                            :message (:message flash)}))
+                                            :message (:message flash)
+                                            :error (:error flash)}))
 (defn update-unit-param!
   [unit-id param-id value user-id]
   (db/update-unit-param! {:unit-id unit-id
