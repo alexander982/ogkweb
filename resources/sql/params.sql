@@ -1,5 +1,5 @@
 --:name get-all-params :? :*
-select * from params;
+select * from params order by name;
 
 --:name create-param! :! :n
 insert into params
