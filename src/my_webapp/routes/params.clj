@@ -52,12 +52,12 @@
                                              :message (:message flash)}))
 
 (defn add-unit-params!
-  [unit-id param-id user-id]
+  [unit-id param-id user-id referer]
   (db/add-unit-params! {:unit-id unit-id
                        :param-id param-id
                        :updated-by user-id
                        :value nil})
-  (assoc (found (str layout/*app-context* "/unit/params?id=" unit-id))
+  (assoc (found referer)
          :flash {:message "Параметр добавлен!"}))
 
 (defn edit-unit-params-page
@@ -99,8 +99,8 @@
        (unit-params-page id flash))
   (POST "/unit/params" [id :<< as-int
                         param :<< as-int
-                        :as {{user-id :id} :identity}]
-        (add-unit-params! id param user-id))
+                        :as {{user-id :id} :identity {referer "referer"} :headers}]
+        (add-unit-params! id param user-id referer))
   (GET "/unit/params/edit" [id :<< as-int :as {flash :flash}]
        (edit-unit-params-page id flash))
   (POST "/unit/params/edit" [unit-id
