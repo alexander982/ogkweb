@@ -59,7 +59,7 @@
 (defn on-error [request response]
   (error-page {:status 403
                :title "Not authorized"
-               :message "Недостаточно прав для просмотра"}))
+               :message "Недостаточно прав. Или не выполнен вход на сайт"}))
 
 (defn wrap-auth [handler]
   (let [backend (b/backend)]
