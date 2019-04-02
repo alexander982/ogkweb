@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-{% if identity %}
 <div class="row">
   <div class="col-md-offset-2 col-md-7">
     <div class="col-md-offset-3"><h2>Добавить параметр</h2>
@@ -36,7 +35,6 @@
     </form>
   </div>
 </div>
-{% endif %}
 <div class="row">
     <div class="col-md-offset-1 col-md-10">
       <h3>Список параметров {{unit.prefix}}{{unit.num}} {{unit.name}}</h3>
