@@ -17,17 +17,17 @@
   (let [validation
         (b/validate
          user
-         :login [v/required
+         :login [[v/required :message "Необходимо ввести логин"]
                  [v/min-count 4
-                  :message "must be more than 3 chars long"]]
-         :password [v/required
+                  :message "Должно быть больше 3-х символов"]]
+         :password [[v/required :message "Необходимо ввести пароль"]
                     [v/min-count 6
-                     :message "must be more than 6 chars long"]
+                     :message "Должно быть не меньше 6-ти символов"]
                     [#(= % (:password1 user))
-                     :message "passwords don't match"]]
-         :password1 [v/required
+                     :message "Пароли не совпадают"]]
+         :password1 [[v/required :message "Необходимо ввести пароль"]
                      [v/min-count 6
-                      :message "must be more than 6 chars long"]])
+                      :message "Должно быть не меньше 6-ти символов"]])
         _ (log/info "validation results: " (first validation))
         _ (log/info "user to register: " login)]
     (if (first validation)
@@ -99,8 +99,8 @@
           (assoc (found (str layout/*app-context* "/auth/login"))
                  :flash
                  {:login login
-                  :errors {:login (list "wrong login or password")
-                           :password (list "wrong login or password")}})
+                  :errors {:login (list "Неверный логин или пароль")
+                           :password (list "Неверный логин или пароль")}})
           (let [_ (log/info "user: " login " successfully login")
                 resp (assoc-in (found (str layout/*app-context* "/"))
                                [:session :identity]
