@@ -53,7 +53,8 @@
                                 [prone "1.1.1"]
                                 [luminus-jetty "0.1.4"]
                                 [directory-naming/naming-java "0.8"]]
-                 :repl-options {:init-ns user}
+                 :repl-options {:init-ns user
+                                :timeout 120000}
                  :source-paths ["env/dev/clj" "test/clj"]
                  :resource-paths ["env/dev/resources"]}
    :project/test {:resource-paths ["env/dev/resources" "env/test/resources"]}
