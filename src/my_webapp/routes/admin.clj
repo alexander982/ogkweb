@@ -29,9 +29,19 @@
              :flash
              {:message {:backup ["Резервная копия создана."]}}))
 
+(defn params-page
+  []
+  (layout/render "admin/params.html" {:results (db/get-all-params)}))
+
+(defn values-page
+  []
+  (layout/render "admin/param-values.html" {:results (db/get-values)}))
+
 (defroutes admin-routes
   (GET "/admin" [] (admin-page))
   (GET "/admin/base" req (database-page req))
   (POST "/admin/backup" [] (backup-database))
   (GET "/admin/users" [] (users-page))
-  (GET "/admin/updates" [] (updates-page)))
+  (GET "/admin/updates" [] (updates-page))
+  (GET "/admin/params" [] (params-page))
+  (GET "/admin/values" [] (values-page)))
