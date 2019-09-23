@@ -34,6 +34,10 @@
     top:300px;
 }
 
+.tr-gray {
+    color:gray;
+}
+
 .table-bordered > tbody > tr > th,
 .table-bordered > tbody > tr > td {
     border: 1px solid #bbbbbb;
