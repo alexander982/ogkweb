@@ -11,7 +11,8 @@
                 </caption>
                 <tr><th>Обозначение</th><th>Название</th></tr>
             {% endif %}
-                <tr data-id="{{res.cont_id}}">
+                <tr data-id="{{res.cont_id}}" {% ifequal res.code_prod "30"%} title="Для просчета цены" class="tr-gray"
+{% endifequal %}                > 
                     <td class="pref">{{res.pref}}</td>
                     <td>{{res.name}}</td>
                 </tr>
