@@ -68,7 +68,7 @@ from sostav where cast(gold as double) > 0.0 or
      cast(pal as double) > 0.0;
 
 --:name get-products :? :*
-select cont_id, pref, name from product 
+select cont_id, pref, name, code_prod from product 
 where pref like :pref and (name like :name or name is null)
 
 --:name get-diff-by-ids :? :*
