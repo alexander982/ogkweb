@@ -49,7 +49,9 @@
     (layout/render "auth/login.html" {:just-registered?
                                       (:just-registered? flash)
                                       :login (:login flash)
-                                      :errors (:errors flash)})))
+                                      :errors (:errors flash)
+                                      :redir-from
+                                      (:redir-from flash)})))
 
 (defn new-token [length]
   (let [r (-> (range 48 58) ;;numeric symbols
