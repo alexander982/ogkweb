@@ -7,7 +7,8 @@
         {%endif%}
         <form class="form-horizontal" action="{{servlet-context}}/auth/login"
         method="POST">
-            {% csrf-field %}
+          {% csrf-field %}
+          <input type="hidden" name="redir-to" value="{{redir-from}}">
             <div class="form-group {%if errors.login%}has-error{%endif%}">
                 <label for="inputLogin" class="control-label">Логин</label>
                 <input type="text" class="form-control" id="inputLogin"
