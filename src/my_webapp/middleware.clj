@@ -11,8 +11,8 @@
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring.middleware.flash :refer [wrap-flash]]
-            [ring.middleware.session :refer [wrap-session]] 
-            )
+            [ring.middleware.session :refer [wrap-session]]
+            [ring.util.http-response :refer [found]])
   (:import [javax.servlet ServletContext]))
 
 (defn wrap-context [handler]
@@ -57,9 +57,8 @@
       (handler request))))
 
 (defn on-access-error [request response]
-  (error-page {:status 403
-               :title "Not authorized"
-               :message "Недостаточно прав. Или не выполнен вход на сайт"}))
+  (assoc (found (str *app-context* "/auth/login"))
+         :flash {:redir-from (get-in request [:headers "referer"])}))
 
 (defn wrap-auth [handler]
   (let [backend (b/backend)]
