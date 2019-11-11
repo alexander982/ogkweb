@@ -56,7 +56,7 @@
     (binding [*identity* (:identity request)]
       (handler request))))
 
-(defn on-error [request response]
+(defn on-access-error [request response]
   (error-page {:status 403
                :title "Not authorized"
                :message "Недостаточно прав. Или не выполнен вход на сайт"}))
@@ -66,7 +66,7 @@
     (-> handler
         wrap-identity
         (acr/wrap-access-rules {:rules r/rules
-                                :on-error on-error})
+                                :on-error on-access-error})
         (wrap-authentication backend)
         (wrap-authorization backend))))
 
