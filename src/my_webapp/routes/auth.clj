@@ -84,7 +84,8 @@
         _ (log/info "client" (:remote-addr req)
                     "is trying to login with: " login)
         _ (log/debug "validation: " (first validation))
-        errors (first validation)]
+        errors (first validation)
+        redir-to (get-in req [:params :redir-to])]
     (if errors
       (assoc (found (str layout/*app-context* "/auth/login"))
              :flash
@@ -104,7 +105,7 @@
                   :errors {:login (list "Неверный логин или пароль")
                            :password (list "Неверный логин или пароль")}})
           (let [_ (log/info "user: " login " successfully login")
-                resp (assoc-in (found (str layout/*app-context* "/"))
+                resp (assoc-in (found redir-to)
                                [:session :identity]
                                (dissoc user :pass :remember_token))]
             (update-user-last-login (:id user))
