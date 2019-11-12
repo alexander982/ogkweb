@@ -58,7 +58,8 @@
 
 (defn on-access-error [request response]
   (assoc (found (str *app-context* "/auth/login"))
-         :flash {:redir-from (get-in request [:headers "referer"])}))
+         :flash {:redir-from (get-in request [:headers "referer"])
+                 :alert "Для продолжения необходимо выполнить вход!"}))
 
 (defn wrap-auth [handler]
   (let [backend (b/backend)]
