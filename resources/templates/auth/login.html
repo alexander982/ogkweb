@@ -5,6 +5,9 @@
         {%if just-registered?%}
         <div class="alert alert-success" role="alert"><p>Вы успешно зарегистрированы. Теперь можно войти.</p></div>
         {%endif%}
+        {%if alert %}
+        <div class="alert alert-danger" role="alert"><p>{{alert}}</p></div>
+        {%endif%}
         <form class="form-horizontal" action="{{servlet-context}}/auth/login"
         method="POST">
           {% csrf-field %}
