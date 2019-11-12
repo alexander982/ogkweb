@@ -51,7 +51,8 @@
                                       :login (:login flash)
                                       :errors (:errors flash)
                                       :redir-from
-                                      (:redir-from flash)})))
+                                      (:redir-from flash)
+                                      :alert (:alert flash)})))
 
 (defn new-token [length]
   (let [r (-> (range 48 58) ;;numeric symbols
