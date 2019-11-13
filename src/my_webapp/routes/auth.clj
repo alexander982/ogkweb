@@ -44,14 +44,16 @@
                  :flash
                  {:just-registered? true})))))
 
-(defn login-form [{flash :flash}]
+(defn login-form [{flash :flash :as req}]
   (let [_ (log/info "flash:" flash)]
     (layout/render "auth/login.html" {:just-registered?
                                       (:just-registered? flash)
                                       :login (:login flash)
                                       :errors (:errors flash)
                                       :redir-from
-                                      (:redir-from flash)
+                                      (if-let [r (:redir-from flash)]
+                                        r
+                                        (get-in req [:headers "referer"]))
                                       :alert (:alert flash)})))
 
 (defn new-token [length]
