@@ -57,8 +57,7 @@ function renderDocs(fname) {
 function clickHeader(){
     var fname = $('h3[data-name]').data('name');
     var lastIdx = fname.lastIndexOf('-');
-    var firstIdx = fname.indexOf('-');
-    if (firstIdx != lastIdx){
+    if ((fname.length - 3) == lastIdx){
         renderDocs(fname.slice(0, lastIdx));
     } else {
         renderDocs(fname);
