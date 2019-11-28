@@ -134,7 +134,7 @@ function joinColumns() {
             var pref = $(this).find('td.pref');
             var t = pref.
                         text().
-                        match(/(.*?)(\.(УДЩ|\d{2})\.\d{1}\.\d{3}\.\d{1}(\.|\/)\d{2})(-\d{2})?/);
+                        match(/(.*?)(\.(У.{1}Щ|\d{2})\.\d{1}\.\d{3}\.\d{1}(\.|\/)\d{2})(-\d{2})?/);
             $('<td class="num">' + t[2] + ((t[5])? t[5]:"") + '</td>').insertAfter(pref);
             pref.text(t[1]);
             pref.prop('colspan',1);
