@@ -13,7 +13,10 @@
                     <tr><th>Поз.</th><th>Обозначение</th><th>Номер</th>
                         <th>Название</th><th>Кол.</th></tr>
             {% endif %}
-                <tr data-id="{{res.id}}">
+                    <tr data-id="{{res.id}}"
+                        {% ifequal res.code "0"%}
+                        title="Занулёвано" class="tr-gray"
+                        {% endifequal %}>
                     <td>{{res.pos}}</td>
                     <td class="pref">{{res.prefix}}</td>
                     <td class="num">{{res.num}}</td>
