@@ -14,7 +14,7 @@ where c.cont_id in (select id from unit
 order by convert(c.pos,int);
 
 --:name get-composition-by-id :? :*
-select u.id, c.qnt, c.pos, u.prefix, u.num, u.name from 
+select u.id, c.qnt, c.pos, u.prefix, u.num, u.name, c.code from
 contain c inner join unit u on u.id = c.unit_id 
 where c.cont_id = :id
 order by convert(c.pos,int);
