@@ -12,3 +12,6 @@ from ((users us inner join unit_param v on v.updated_by = us.id)
  inner join unit u on u.id = v.unit_id
 order by v.updated desc
 limit 50;
+
+--:name update-version-date :! :n
+update versions set v_date = :date where v_id = :id;
