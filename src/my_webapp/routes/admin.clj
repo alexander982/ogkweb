@@ -29,6 +29,13 @@
              :flash
              {:message {:backup ["Резервная копия создана."]}}))
 
+(defn update-version-date
+  [id date]
+  (db/update-version-date {:id id :date date})
+  (assoc (found (str layout/*app-context* "/admin/updates"))
+         :flash
+         {:message {:update ["Дата изменена."]}}))
+
 (defn params-page
   []
   (layout/render "admin/params.html" {:results (db/get-all-params)}))
@@ -43,5 +50,6 @@
   (POST "/admin/backup" [] (backup-database))
   (GET "/admin/users" [] (users-page))
   (GET "/admin/updates" [] (updates-page))
+  (POST "/admin/updates" [id date] (update-version-date id date))
   (GET "/admin/params" [] (params-page))
   (GET "/admin/values" [] (values-page)))
