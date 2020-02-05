@@ -11,12 +11,20 @@
             <th>Id</th><th>Date</th>
         </tr>
         {% for update in updates %}
+        {% comment %} TODO: remove user.id {% endcomment %}
             <tr data-id="{{user.id}}">
                 <td>{{update.v_id}}</td>
-                <td>{{update.v_date}}</td>
+                <td data-id="{{update.v_id}}">{{update.v_date}}</td>
             </tr>
         {% endfor %}
        </table>
   </div>
 </div>
+{% endblock %}
+
+{% block page-scripts %}
+{% script "/js/admin.js" %}
+<script type="text/javascript">
+  $('td[data-id]').click(cellClick);
+</script>
 {% endblock %}
