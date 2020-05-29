@@ -22,6 +22,7 @@
             [my-webapp.routes.search :refer [search-routes]]
             [my-webapp.routes.params :refer [params-routes]]
             [my-webapp.routes.plan :refer [plan-routes]]
+            [my-webapp.routes.statements :refer [statements-routes]]
             )
   (:gen-class))
 
@@ -63,6 +64,7 @@
    docs-routes
    auth-routes
    admin-routes
+   statements-routes
    (route/not-found
     (:body
      (layout/error-page
