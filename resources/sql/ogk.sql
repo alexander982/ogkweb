@@ -81,7 +81,7 @@ with recursive sostav (pref, num, name, qnt, code, id, par_id) as (
 select s.pref, s.num, s.name, s.qnt, s.id, s.par_id as node_id, unit.prefix || unit.num as node
 from sostav  s inner join unit on par_id = unit.id
 where code = 41 and pref like :firm
-order by s.num, s.name;
+order by s.pref, s.num, s.name;
 
 --:name get-products :? :*
 select cont_id, pref, name, code_prod from product 
