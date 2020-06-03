@@ -6,14 +6,19 @@
 (defn statements-result [id firm]
   (let [firm-name (if firm
                     firm
-                    "SIEMENS")
+                    "")
         firm-param (str "%" firm-name "%")
         {:keys [prefix num name]} (db/get-unit-by-id {:id id})]
     (db/update-id-param {:id id})
     (layout/render "statement/index.html"
-                   {:results (db/get-statement-by-firm {:id id :firm firm-param})
+                   {:results (map vec
+                                  (partition-by
+                                   :pref
+                                   (db/get-statement-by-firm
+                                    {:id id :firm firm-param})))
                     :db-update-date (:v_date
                                      (db/get-last-db-update))
+                    :id id
                     :pref prefix
                     :num num
                     :name name
