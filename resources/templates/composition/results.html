@@ -31,9 +31,7 @@
         {% endfor %}
     </div>
 </div>
-<div id="docs" class="hidden-print">
-    <ul class="list-unstyled"></ul>
-</div> 
+
 <div id="popup" class="hidden-print" title="Действия">
     <p><a href="{{servlet-context}}/composition/results?id=">Состав</a></p>
     <p><a href="{{servlet-context}}/occurrence/results?id=">Входимость</a></p>
@@ -42,6 +40,7 @@
     <p><a href="{{servlet-context}}/unit/params?id=">Параметры</a></p>
 </div>
 
+{% include "docs_panel.html" %}
 {% include "search_form.html" %}
 
 {% endblock %}

@@ -24,9 +24,7 @@
         {% endfor %}
     </div>
 </div>
-<div id="docs" class="hidden-print">
-    <ul class="list-unstyled"></ul>
-</div>  
+
 <div id="popup" class="hidden-print">
     <p><a href="{{servlet-context}}/composition/results?id=">Состав</a></p>
     <p><a href="{{servlet-context}}/occurrence/results?id=">Входимость</a></p>
@@ -36,6 +34,7 @@
     <p><a id="aDiff" href="=" title="Добавить для сравнения">К сравнению</a></p>
 </div>
 
+{% include "docs_panel.html" %}
 {% include "search_form.html" %}
 
 <div id="diffForm" class="hidden-print">
