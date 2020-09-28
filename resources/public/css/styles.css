@@ -32,6 +32,9 @@
     position:fixed;
     right:80px;
     top:300px;
+	height: 35%;
+	width: 260px;
+	overflow-y: auto;
 }
 
 .tr-gray {
