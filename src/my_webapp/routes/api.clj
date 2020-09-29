@@ -10,8 +10,12 @@
   {:archive archive-path
    :docs (db/get-docs-by-fname {:fname (str "%" fname "%")})})
 
+(defn json-content
+  [data]
+  (content-type
+   (ok data)
+   "application/json; charset=utf-8"))
+
 (defroutes api-routes
   (GET "/api/docs" [fname]
-       (content-type
-        (ok
-         (get-docs fname)) "application/json; charset=utf-8")))
+       (json-content (get-docs fname))))
