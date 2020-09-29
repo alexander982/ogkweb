@@ -18,4 +18,6 @@
 
 (defroutes api-routes
   (GET "/api/docs" [fname]
-       (json-content (get-docs fname))))
+       (json-content (get-docs fname)))
+  (GET "/api/params" [id]
+       (json-content (db/get-unit-params {:id id}))))
