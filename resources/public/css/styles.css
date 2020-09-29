@@ -37,6 +37,16 @@
 	overflow-y: auto;
 }
 
+#params {
+    display: none;
+    position:fixed;
+    right:80px;
+    bottom:2%;
+	height: 30%;
+	width: 260px;
+	overflow-y: auto;
+}
+
 .tr-gray {
     color:gray;
 }
