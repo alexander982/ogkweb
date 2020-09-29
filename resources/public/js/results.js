@@ -26,6 +26,7 @@ function enterRow(e) {
 function clickRow(e) {
     var pref = $(this).find('td.pref').text();
     var num = $(this).find('td.num').text();
+	var id = $(this).data('id');
     var t;
     var areq;
     $('tr.clicked').toggleClass('clicked');
@@ -40,6 +41,7 @@ function clickRow(e) {
         areq = t[1] + t[2];
     }
     renderDocs(areq);
+	renderParams(id);
     $(this).addClass('clicked');
     e.stopPropagation();
 }
@@ -51,6 +53,16 @@ function renderDocs(fname) {
            var list = $('#docs ul');
            list.html(createList(response.docs));
            $('#docs').show();
+        });
+}
+
+function renderParams(id) {
+	$('#params li').remove();
+	    $.getJSON(context + "/api/params", {id: id},
+        function(response){
+           var list = $('#params ul');
+           list.html(createParamsList(response, id));
+           $('#params').show();
         });
 }
 
@@ -71,6 +83,19 @@ function createList(docs) {
             '">' + docs[i].fname + '</a></li>'
     }
     return res;
+}
+
+function createParamsList(params, id) {
+	var res = '';
+	if (params.length != 0) {
+		for (var i = 0; i < params.length; i++) {
+			res += '<li><p><b>' + params[i].name + '</b></p>' +
+				'<p>' + params[i].value + '</p></li>'
+		}
+		res += '<li><a href="'+ context + '/unit/params/edit?id=' + id + 
+				'">Редактировать параметры</a></li>'
+	}
+	return res;
 }
 
 function toDiff(e){
