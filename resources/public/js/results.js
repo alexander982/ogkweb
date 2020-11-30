@@ -46,6 +46,16 @@ function clickRow(e) {
     e.stopPropagation();
 }
 
+function clickProdRow(e) {
+    var id = $(this).data('id');
+    $('tr.clicked').toggleClass('clicked');
+    if (id) {
+        renderParams(id);
+    }
+    $(this).addClass('clicked');
+    e.stopPropagation();
+}
+
 function renderDocs(fname) {
     $('#docs li').remove();
     $.getJSON(context + "/api/docs", {fname: fname},
