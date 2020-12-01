@@ -56,7 +56,7 @@
 {% script "/js/results.js" %}
 <script type="text/javascript">
     $(document).ready(function() {
-        $('tr:not(:first)').mouseenter(enterRow).click(clickRow);
+        $('tr:not(:first)').mouseenter(enterRow).click(clickProdRow);
         $(document).click(function(){
             $('#popup').hide();
             $('tr.selection').toggleClass('selection');
