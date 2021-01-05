@@ -51,6 +51,9 @@
             formaction="{{servlet-context}}/diff/results">Сравнить</button>
     </form>
 </div>
+
+{% include "parameter_panel.html" %}
+
 {% endblock %}
 {% block page-scripts %}
 {% script "/js/results.js" %}
