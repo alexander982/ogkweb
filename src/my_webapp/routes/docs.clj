@@ -1,18 +1,17 @@
 (ns my-webapp.routes.docs
-  (:require [my-webapp.db.core :as db]
+  (:require [my-webapp.config :refer [env]]
+            [my-webapp.db.core :as db]
             [my-webapp.layout :refer [error-page]]
             [clojure.tools.logging :as log]
             [compojure.core :refer [defroutes GET]]
             [ring.util.response :refer [response]]
             [ring.util.http-response :refer [content-type ok]]))
 
-(def path-to-docs "//celeron-e3400/arxiv")
-
 (defn get-file-name
   [id]
   (let [doc (db/get-doc-by-id {:id id})
         _ (log/debug "found doc: " doc)
-        str (str path-to-docs (:fpath doc) (:fname doc))
+        str (str (:path-to-docs env) (:fpath doc) (:fname doc))
         _ (log/debug "file name: " str)]
     str))
 
