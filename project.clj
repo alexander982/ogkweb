@@ -30,7 +30,7 @@
   :main my-webapp.core
   :migratus {:store :database :db ~(get (System/getenv) "DATABASE_URL")}
   
-  :plugins [[lein-uberwar "0.2.0"]
+  :plugins [[lein-uberwar "0.2.1"]
             [lein-cprop "1.0.1"]
             [migratus-lein "0.3.9"]]
   
