@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-offset-3 col-md-9">
+        {% for res in results %}
+            {% if forloop.first %}
+                <h3>Результаты поиска {{pref}} {{name}}</h3>
+                <table class="table-bordered table-condensed">
+                <caption>
+                    <h6 class="bg-danger">Выборка данных на {{db-update-date|date:"dd.MM.yyyy"}}</h6>
+                </caption>
+                <tr><th>Обозначение</th><th>Название</th></tr>
+            {% endif %}
+                <tr data-id="{{res.cont_id}}" {% ifequal res.code_prod "30"%} title="Для просчета цены" class="tr-gray"
+{% endifequal %}                > 
+                    <td class="pref">{{res.pref}}</td>
+                    <td>{{res.name}}</td>
+                </tr>
+            {% if forloop.last%}
+                </table>
+            {% endif %}
+        {% empty %}
+            <h3>По вашему запросу ничего не найдено</h3>
+        {% endfor %}
+    </div>
+</div>
+<div id="popup" title="Действия">
+    <p><a href="{{servlet-context}}/composition/results?id=">Состав</a></p>
+    <p><a href="{{servlet-context}}/metals/results?id=">Драгметаллы</a></p>
+    <p><a href="{{servlet-context}}/unit/params?id=">Параметры</a></p>
+    <p><a href="{{servlet-context}}/materials?id=">Материалы</a></p>
+    <p><a href="{{servlet-context}}/statements?id=">Покупные</a></p>
+    <p><a id="aDiff" href="=" title="Добавить для сравнения">К сравнению</a></p>
+</div>
+<div id="diffForm" class="hidden-print">
+    <form>
+        <div class="form-group">
+            <label for="firstId">Select..</label>
+            <input type="hidden" id="firstId" name="id1">
+        </div>
+        <div class="form-group">
+            <label for="secondId">Select..</label>
+            <input type="hidden" id="secondId" name="id2">
+        </div>
+        <button type="submit" class="btn btn-default"
+            formaction="{{servlet-context}}/diff/results">Сравнить</button>
+    </form>
+</div>
+
+{% include "parameter_panel.html" %}
+
+{% endblock %}
+{% block page-scripts %}
+{% script "/js/results.js" %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('tr:not(:first)').mouseenter(enterRow).click(clickProdRow);
+        $(document).click(function(){
+            $('#popup').hide();
+            $('tr.selection').toggleClass('selection');
+        });
+        $('#aDiff').click(toDiff);
+        $('#diffForm form').submit(diff);
+    });
+</script>
+{% endblock %}

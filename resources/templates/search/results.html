@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-offset-1 col-md-7">
+        {% for res in results %}
+            {% if forloop.first %}
+                <h3>Результаты поиска {{pref}} {{num}} {{name}}</h3>
+                <table class="table-bordered table-condensed">
+                    <caption>
+                        <h6 class="bg-danger">Выборка данных на {{db-update-date|date:"dd.MM.yyyy"}}</h6>
+                    </caption>
+                    <tr><th>Обозначение</th><th>Номер</th><th>Название</th></tr>
+            {% endif %}
+                    <tr data-id="{{res.id}}">
+                        <td class="pref">{{res.prefix}}</td>
+                        <td class="num">{{res.num}}</td>
+                        <td>{{res.name}}</td>
+                    </tr>
+            {% if forloop.last%}
+                </table>
+            {% endif %}
+        {% empty %}
+            <h3>По вашему запросу ничего не найдено</h3>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="popup" class="hidden-print">
+    <p><a href="{{servlet-context}}/composition/results?id=">Состав</a></p>
+    <p><a href="{{servlet-context}}/occurrence/results?id=">Входимость</a></p>
+    <p><a href="{{servlet-context}}/metals/results?id=">Драгметаллы</a></p>
+    <p><a href="{{servlet-context}}/unit/params?id=">Параметры</a></p>
+    <p><a href="{{servlet-context}}/statements?id=">Покупные</a></p>
+    <p><a id="aDiff" href="=" title="Добавить для сравнения">К сравнению</a></p>
+</div>
+
+{% include "docs_panel.html" %}
+{% include "search_form.html" %}
+{% include "parameter_panel.html" %}
+
+<div id="diffForm" class="hidden-print">
+    <form>
+        <div class="form-group">
+            <label for="firstId">Select..</label>
+            <input type="hidden" id="firstId" name="id1">
+        </div>
+        <div class="form-group">
+            <label for="secondId">Select..</label>
+            <input type="hidden" id="secondId" name="id2">
+        </div>
+        <button type="submit" class="btn btn-default"
+            formaction="{{servlet-context}}/diff/results">Сравнить</button>
+    </form>
+</div>
+{% endblock %}
+{% block page-scripts %}
+{% script "/js/results.js" %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('tr:not(:first)').mouseenter(enterRow).click(clickRow);
+        $(document).click(function(){
+            $('#popup').hide();
+            $('tr.selection').toggleClass('selection');
+        });
+        $('#aDiff').click(toDiff);
+        $('#diffForm form').submit(diff);
+        joinBtn();
+    });
+</script>
+{% endblock %}

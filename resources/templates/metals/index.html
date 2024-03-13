@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-offset-2 col-md-7">
+    <div class="col-md-offset-3"><h2>Просмотр содержания драгметаллов</h2>
+        <h3>Введите узел</h3></div>
+    <form class="form-horizontal" action="{{servlet-context}}/metals/results">
+      <div class="form-group">
+        <label for="inputPrefix" class="col-md-3 control-label">Обозначение</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="inputPrefix"
+                placeholder="ОШ-999" name="pref">
+         </div>
+      </div>
+      <div class="form-group">
+        <label for="inputNumber" class="col-md-3 control-label">Номер</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="inputNumber"
+               placeholder=".00.0.000.0.00" name="num">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-6">
+            <button type="submit" class="button button-default">Поиск</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

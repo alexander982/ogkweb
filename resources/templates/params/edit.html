@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-offset-2 col-md-7">
+    <div class="col-md-offset-3"><h2>Редактировать параметр</h2></div>
+    <form class="form-horizontal" action="{{servlet-context}}/params/edit" id="editParamsForm" method="post">
+      {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+      {% endif %}
+      {% if message %}
+      <div class="alert alert-success" role="alert">
+        {{message}}
+      </div>
+      {% endif %}
+      <div class="form-group">
+        <input type="hidden" value="{{id}}" name="id">
+        <label for="inputParamName" class="col-md-3 control-label">Имя параметра</label>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="inputParamName"
+                placeholder="Введите имя" name="name" value="{{name}}">
+         </div>
+      </div>
+      <div class="form-group">
+        <label for="inputParamType" class="col-md-3 control-label">Тип</label>
+        <div class="col-md-6">
+            <select class="form-control" id="inputParamType" name="type">
+                <option value="n"{% ifequal type "n" %}selected{%endifequal%}>Число</option>
+                <option value="t" {% ifequal type "t" %}selected{%endifequal%}>Текст</option>
+            </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-6">
+          <button type="submit" class="button button-default">Сохранить</button>
+	  <button type="submit" class="button button-default"
+		  formaction="{{servlet-context}}/params/delete"
+		  frommethod="post">Удалить</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block page-scripts %}
+
+{% endblock %}

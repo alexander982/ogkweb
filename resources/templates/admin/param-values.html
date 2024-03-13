@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-2">
+    {% include "admin/left-nav-bar.html" %}
+  </div>
+  <div class="col-md-10">
+    <ul>
+        <li><a href="{{servlet-context}}/admin/params">Все параметры</a></li>
+        <li><a href="{{servlet-context}}/admin/values">Значения</a></li>
+    </ul>
+    <h3>Последние значения</h3>
+       <table class="table table-condensed">
+        <tr>
+            <th>Узел</th><th>Имя параметра</th><th>Значение</th><th>Пользователь</th>
+            <th>Изменен</th>
+        </tr>
+        {% for res in results %}
+            <tr data-id="{{res.id}}">
+                <td>{{res.prefix}} {{res.num}} {{res.name}}</td>
+                <td>{{res.param}}</td>
+                <td>{{res.value}}</td>
+                <td>{{res.login}}</td>
+                <td>{{res.updated}}</td>
+            </tr>
+        {% endfor %}
+       </table>
+  </div>
+</div>
+{% endblock %}
